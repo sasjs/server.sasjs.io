@@ -8,5 +8,5 @@ If you are running older versions of SAS, or SAS on a desktop, then this product
 * Prepare for a future SAS 9 or Viya migration
 * Execute SAS code from a browser, from your own or a remote machine
 
-SASjs Server is MIT open source and the repository is available here:  https://github.com/sasjs/server
+SASjs Server is MIT open source and the repository is available here:  [https://github.com/sasjs/server](https://github.com/sasjs/server).
 
