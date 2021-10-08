@@ -9,10 +9,10 @@ To improve responsiveness, it is critical to prelaunch SAS sessions.  But how to
 
 The solution, was to take the following steps:
 
-1 - Launch SAS with an autoexec and a dummy SYSIN program (as sas won't start without a SYSIN)
-2 - Immediately delete the SYSIN file with SAS in the autoexec, and loop until the "real" program appears
+1. Launch SAS with an autoexec and a dummy program (SAS won't start without SYSIN)
+2. Delete the dummy file in the autoexec, then loop until the "real" program appears
 
-The actual SAS code used to achieve this is shown below:
+The actual SAS code used for this:
 
 ```sas
 data _null_;
@@ -30,10 +30,10 @@ data _null_;
 run;
 ```
 
-We can now prespawn a SAS session, leave it running until a request arrives, then perform the following in parallel:
+With this loop in place, SASjs Server can prespawn a SAS session and wait until a request arrives. It will then perform the following in parallel:
 
 1. Spawn a new session (ready for the next request)
-2. Inject the code into an existing session
+2. Inject the _PROGRAM code into an existing (HOT) session
 
 This is a simplistic overview.  In reality it's a bit more complicated as we need to create a unique folder for each session, keep track of the sessions, and ensure we don't launch a session that is just about to expire.  We also need to work across multiple threads.
 
