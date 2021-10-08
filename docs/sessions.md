@@ -40,6 +40,7 @@ This is a simplistic overview.  In reality it's a bit more complicated as we nee
 The full process flow is therefore as follows:
 
 <!--
+# https://sketchviz.com
 # http://www.graphviz.org/content/cluster
 digraph G {
   graph [fontname = "Handlee"];
@@ -92,6 +93,6 @@ digraph G {
 
 -->
 
-![session diagram](/docs/img/sessiondiagram.png)
+![session diagram](/img/sessiondiagram.png)
 
-<div><a href='//sketchviz.com/@allanbowe/418e65123ae6562831ee0f37be0fc974'><img src='https://sketchviz.com/@allanbowe/418e65123ae6562831ee0f37be0fc974/961b34ae402743ca5c316f7d50554e59a9204f9f.sketchy.png' style='max-width: 100%;'></a><br/><span style='font-size: 80%;color:#555;'>Hosted on <a href='//sketchviz.com/' style='color:#555;'>Sketchviz</a></span></div>
+<div><a href='https://sketchviz.com/@allanbowe/418e65123ae6562831ee0f37be0fc974'><img src='https://sketchviz.com/@allanbowe/418e65123ae6562831ee0f37be0fc974/961b34ae402743ca5c316f7d50554e59a9204f9f.sketchy.png' style='max-width: 100%;'></a><br/><span style='font-size: 80%;color:#555;'>Hosted on <a href='//sketchviz.com/' style='color:#555;'>Sketchviz</a></span></div>
