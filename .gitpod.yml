@@ -1,0 +1,7 @@
+tasks:
+  - init: npm install
+
+vscode:
+  extensions:
+    - esbenp.prettier-vscode@5.9.2:/ZjVG4nabMGxTqOcyglnfQ==
+    - sasjs.sasjs-for-vscode
