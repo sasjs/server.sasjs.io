@@ -5,7 +5,8 @@ nav:
   - Installation: installation.md
   - Configuration: configuration.md
   - Developer Guide:
-      - sessions: sessions.md
+      - Sessions: sessions.md
+      - Stored Programs: storedprograms.md
   - FAQ: faq.md
 
 markdown_extensions:
