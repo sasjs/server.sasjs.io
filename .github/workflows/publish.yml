@@ -26,3 +26,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           CUSTOM_DOMAIN: server.sasjs.io
+
+      - name: OpenAPI Generator Action
+        uses: kpurdon/openapi-generator-action@v0.0.1
+        with:
+            args: "generate -i them/swagger.yaml -g typescript-fetch -o ./api"
