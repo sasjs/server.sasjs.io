@@ -28,14 +28,13 @@ jobs:
           CUSTOM_DOMAIN: server.sasjs.io
 
       - name: Copy over swagger docs
-        run: cp -R theme/api api
+        run: cp -R theme/api api  && ls && pwd
         env:
           GITHUB_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Commit and push
         uses: EndBug/add-and-commit@v5
         with:
-          branch: gh-pages
           message: 'Update branch'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
