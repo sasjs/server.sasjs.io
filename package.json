@@ -7,6 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "apidocs": "openapi-generator-cli generate -i theme/swagger.yaml -g typescript-angular -o openapi --additional-properties=ngVersion=6.1.7,npmName=restClient,supportsES6=true,npmVersion=6.9.0,withInterfaces=true",
     "postinstall": "[ -d .git ] && git config core.hooksPath ./.git-hooks || true"
   },
   "repository": {
@@ -24,5 +25,8 @@
     "url": "https://github.com/sasjs/server.sasjs.io/issues"
   },
   "homepage": "https://server.sasjs.io",
-  "devDependencies": {}
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.4.12"
+  },
+  "dependencies": {}
 }
