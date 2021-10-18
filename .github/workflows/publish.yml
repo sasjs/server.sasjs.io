@@ -28,7 +28,7 @@ jobs:
           CUSTOM_DOMAIN: server.sasjs.io
 
       - name: Copy over swagger docs
-        run: cp -R theme/api .
+        run: cp -R theme/api api
         env:
           GITHUB_TOKEN: ${{ secrets.NPM_TOKEN }}
 
