@@ -7,7 +7,7 @@ nav:
   - User Guide:
       - SASjs Drive: drive.md
   - Developer Guide:
-      - API: api.md
+      - API: /api/index.html
       - Sessions: sessions.md
       - Stored Programs: storedprograms.md
   - FAQ: faq.md
