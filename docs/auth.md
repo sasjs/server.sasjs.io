@@ -23,7 +23,7 @@ Behind the scenes, the following flow will occur:
 
 The following diagram illustrates:
 
-![viya flow](/img/viyaflow.svg)
+![viya flow](draw.io/viyaflow.svg)
 
 ## Oauth0
 
