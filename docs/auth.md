@@ -34,7 +34,7 @@ The following diagram illustrates:
 Auth0 is a third party authentication provider, which supports all major authentication methods - such as SAML, SSO, LDAP, Social Logins, etc etc.
 
 ## Username / Password
-This authentication mode is recommended for Desktop Apps (running SAS locally), or - for server deploys - where there is no Viya, no internet acecss, or no appetite for Oauth0.
+This authentication mode is recommended for Desktop Apps (running SAS locally), or - for server deploys - where there is no Viya, no internet acecss, or no appetite for Oauth0.  Once the user authenticates (using `/SASjsLogon`) a SESSION_ID is generated, which is stored in a cookie, and can also be passed in the `Authorisation:` header for API requests.
 
 
 
