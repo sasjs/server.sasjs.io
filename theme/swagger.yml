@@ -198,7 +198,6 @@ paths:
           description: success
     patch:
       summary: Modify a folder in SASjs Drive
-      requestBody:
       responses:
         '200':
           description: success
