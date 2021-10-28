@@ -175,6 +175,33 @@ paths:
       responses:
         '200':
           description: success
+  /SASjsApi/drive/folder:
+    summary: Interface with the virtual file system
+    get:
+      summary: Fetch folder content from SASjs Drive
+      parameters:
+        - name: depth
+          in: query
+          description: Number of subfolders under which to return
+            content. Default is 0 (full depth).
+          example: 3
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: Returns the folder content
+    post:
+      summary: Create a folder in SASjs Drive
+      responses:
+        '200':
+          description: success
+    patch:
+      summary: Modify a folder in SASjs Drive
+      requestBody:
+      responses:
+        '200':
+          description: success
   /SASjsApi/stp/execute:
     get:
       summary: Execute a Stored Program and return raw content
