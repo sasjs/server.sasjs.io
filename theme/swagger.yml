@@ -178,6 +178,11 @@ paths:
       responses:
         '200':
           description: success
+    delete:
+      summary: Delete a file in SASjs Drive
+      responses:
+        '200':
+          description: success
   /SASjsApi/drive/folder:
     get:
       summary: Fetch folder content from SASjs Drive
@@ -200,6 +205,11 @@ paths:
           description: success
     patch:
       summary: Modify a folder in SASjs Drive
+      responses:
+        '200':
+          description: success
+    delete:
+      summary: Delete a folder in SASjs Drive
       responses:
         '200':
           description: success
