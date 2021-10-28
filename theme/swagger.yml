@@ -18,7 +18,8 @@ paths:
           description: Returns OpenAPI specification
   /SASjsApi/auth/authorize:
     post:
-      summary: Accept a valid login, plus a CLIENT_ID, and return an AUTH_CODE
+      summary: Authorise a login
+      description: Accept a valid login, plus a CLIENT_ID, and return an AUTH_CODE
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -31,10 +32,11 @@ paths:
                   type: string
       responses:
         '200':
-          description: JSON with 2 parts -
+          description: Returns an AUTH_CODE
   /SASjsApi/auth/token:
     post:
-      summary: Accept a client/secret/auth code and return access / refresh tokens
+      summary: Get Tokens
+      description: Accepts client/secret/auth code and returns access/refresh tokens
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -50,7 +52,7 @@ paths:
           description: JSON with 2 parts -
   /SASjsApi/auth/token/terminate:
     post:
-      summary: Terminate auth token
+      summary: Terminate tokens
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -66,7 +68,8 @@ paths:
           description: JSON with 2 parts -
   /SASjsApi/auth/jwt/generate:
     post:
-      summary:  Accept a CLIENT_ID and AUTH_CODE and returning a JWT
+      summary:  Get JWT
+      description: Accepts a CLIENT_ID and AUTH_CODE and returns a JWT
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -82,7 +85,7 @@ paths:
           description: JSON with 2 parts -
   /SASjsApi/auth/jwt/refresh:
     post:
-      summary: Refresh the JWT
+      summary: Refresh JWT
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -134,7 +137,7 @@ paths:
   /SASjsApi/drive/file:
     summary: Interface with the virtual file system
     get:
-      summary: Fetch file content from SASjs Drive
+      summary: Fetch content from SASjs Drive
       parameters:
         - name: filepath
           in: query
@@ -176,7 +179,6 @@ paths:
         '200':
           description: success
   /SASjsApi/drive/folder:
-    summary: Interface with the virtual file system
     get:
       summary: Fetch folder content from SASjs Drive
       parameters:
@@ -203,7 +205,7 @@ paths:
           description: success
   /SASjsApi/stp/execute:
     get:
-      summary: Execute a Stored Program and return raw content
+      summary: Execute Stored Program, return raw content
       description:
         Trigger a SAS program using it's location in the `_program` parameter.
         Enable debugging using the `_debug` parameter.  Additional URL parameters are
@@ -229,7 +231,7 @@ paths:
             by the Stored Program.  If _debug is 131 or greater, then the log is also
             written to the output.
     post:
-      summary: Execute a Stored Program and return JSON
+      summary: Execute Stored Program, return JSON
       description:
         Trigger a SAS program using it's location in the `_program` parameter.
         Enable debugging using the `_debug` parameter.  Additional URL parameters are
@@ -265,7 +267,8 @@ paths:
             written to the output.
   /SASjsApi/user:
     post:
-      summary: 'Create user with the following attributes: UserId, UserName, Password, isAdmin, isActive.'
+      summary: Create User
+      description: 'Create user with the following attributes: UserId, UserName, Password, isAdmin, isActive.'
       requestBody:
         content:
           application/x-www-form-urlencoded:
