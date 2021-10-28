@@ -52,7 +52,7 @@ paths:
           description: JSON with 2 parts -
   /SASjsApi/auth/token/terminate:
     post:
-      summary: Terminate tokens
+      summary: Terminate Tokens
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -101,7 +101,7 @@ paths:
           description: JSON with 2 parts -
   /SASjsApi/auth/password:
     patch:
-      summary: Modify user password
+      summary: Modify Password
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -117,7 +117,7 @@ paths:
           description: JSON with 2 parts -
   /SASjsApi/drive/deploy:
     post:
-      summary: Deploy content to SASjs Drive
+      summary: Deploy ServicePack to SASjs Drive
       description:
         Creates/updates files within SASjs Drive using provided payload.
       parameters:
@@ -137,7 +137,7 @@ paths:
   /SASjsApi/drive/file:
     summary: Interface with the virtual file system
     get:
-      summary: Fetch content from SASjs Drive
+      summary: Get file from SASjs Drive
       parameters:
         - name: filepath
           in: query
@@ -149,7 +149,7 @@ paths:
         '200':
           description: Returns the raw file content
     post:
-      summary: Create a file in SASjs Drive
+      summary: Create file in SASjs Drive
       requestBody:
         content:
           application/x-www-form-urlencoded:
