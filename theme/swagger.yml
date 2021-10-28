@@ -18,9 +18,9 @@ paths:
           description: Returns OpenAPI specification
   /SASjsApi/deploy:
     post:
-      summary: Deploy file tree to SASjs Server
+      summary: Deploy content to SASjs Drive
       description:
-        Creates file tree within SASjs Server using provided payload.
+        Creates/updates files within SASjs Drive using provided payload.
       parameters:
         - name: fileTree
           in: query
@@ -35,9 +35,9 @@ paths:
         '400':
           description:
             Failure
-  /SASjsApi/files/execute:
-    post:
-      summary: Execute a Stored Program from SASjs Drive
+  /SASjsApi/stp/execute:
+    get:
+      summary: Execute a Stored Program and return raw content
       description:
         Trigger a SAS program using it's location in the `_program` parameter.
         Enable debugging using the `_debug` parameter.  Additional URL parameters are
@@ -62,7 +62,42 @@ paths:
             Contains whatever content is written to the `_webout` fileref
             by the Stored Program.  If _debug is 131 or greater, then the log is also
             written to the output.
-  /SASjsApi/files/file:
+    post:
+      summary: Execute a Stored Program and return JSON
+      description:
+        Trigger a SAS program using it's location in the `_program` parameter.
+        Enable debugging using the `_debug` parameter.  Additional URL parameters are
+        turned into SAS macro variables.  Any files provided are placed into the session
+        and corresponding `_WEBIN_XXX` variables are created.
+      parameters:
+        - name: _program
+          in: query
+          example: '/Public/some/process'
+          schema:
+            type: string
+          required: true
+        - name: _debug
+          in: query
+          schema:
+            type: integer
+            enum: [0, 131]
+          required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  webout:
+                    type: string
+                  log:
+                    type: string
+          description:
+            Contains whatever content is written to the `_webout` fileref
+            by the Stored Program.  If _debug is 131 or greater, then the log is also
+            written to the output.
+  /SASjsApi/drive/file:
     summary: Interface with the virtual file system
     get:
       summary: Fetch file content from SASjs Drive
@@ -76,7 +111,6 @@ paths:
       responses:
         '200':
           description: Returns the raw file content
-  /SASjsApi/files/create:
     post:
       summary: Create a file in SASjs Drive
       requestBody:
@@ -92,7 +126,6 @@ paths:
       responses:
         '200':
           description: JSON with 2 parts -
-  /SASjsApi/files/update:
     patch:
       summary: Modify a file in SASjs Drive
       requestBody:
@@ -188,7 +221,7 @@ paths:
       responses:
         '200':
           description: JSON with 2 parts -
-  /SASjsApi/auth/password/update:
+  /SASjsApi/auth/password:
     patch:
       summary: Modify user password
       requestBody:
@@ -204,7 +237,7 @@ paths:
       responses:
         '200':
           description: JSON with 2 parts -
-  /SASjsApi/user/create:
+  /SASjsApi/user:
     post:
       summary: 'Create user with the following attributes: UserId, UserName, Password, isAdmin, isActive.'
       requestBody:
