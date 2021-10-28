@@ -1,54 +1,24 @@
 openapi: '3.0.2'
 info:
   title: SASjs Server API
-  description: Provides a basic API over a foundation SAS instance, for use cases
+  description:
+    Provides a basic API over a foundation SAS instance, for use cases
     such as SAS program execution, logical folder / file management, and creation
     of users & groups.
   version: '1.0'
 servers:
   - url: https://sas.analytium.co.uk:5003/v1
 paths:
-  /SASjsApi/executor:
-    post:
-      summary: Execute a Stored Program from SASjs Drive
-      description: Trigger a SAS program using it's location in the `_program` parameter.
-        Enable debugging using the `_debug` parameter.  Additional URL parameters are
-        turned into SAS macro variables.  Any files provided are placed into the session
-        and corresponding `_WEBIN_XXX` variables are created.
-      parameters:
-        - name: _program
-          in: query
-          example: "/Public/some/process"
-          schema:
-            type: string
-          required: true
-        - name: _debug
-          in: query
-          schema:
-            type: integer
-            enum: [0,131]
-          required: false
-      responses:
-        '200':
-          description: Contains whatever content is written to the `_webout` fileref
-            by the Stored Program.  If _debug is 131 or greater, then the log is also
-            written to the output.
-  /SASjsApi/files:
-    summary: Interface with the virtual file system
+  /SASjsApi:
+    summary: Welcome page with SASjs Server API documentation
     get:
-      summary: Fetch file content from SASjs Drive
-      parameters:
-        - name: filepath
-          in: query
-          example: "/Public/somefolder/some.file"
-          schema:
-            type: string
-          required: true
+      summary: Provide API documentation using swagger
       responses:
         '200':
-          description: Returns the raw file content
+          description: Returns OpenAPI specification
+  /SASjsApi/auth/authorize:
     post:
-      summary: Create (or modify) a file in SASjs Drive
+      summary: Accept a valid login, plus a CLIENT_ID, and return an AUTH_CODE
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -61,4 +31,252 @@ paths:
                   type: string
       responses:
         '200':
-           description:  JSON with 2 parts -
+          description: JSON with 2 parts -
+  /SASjsApi/auth/token:
+    post:
+      summary: Accept a client/secret/auth code and return access / refresh tokens
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                fileContent:
+                  type: string
+      responses:
+        '200':
+          description: JSON with 2 parts -
+  /SASjsApi/auth/token/terminate:
+    post:
+      summary: Terminate auth token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                fileContent:
+                  type: string
+      responses:
+        '200':
+          description: JSON with 2 parts -
+  /SASjsApi/auth/jwt/generate:
+    post:
+      summary:  Accept a CLIENT_ID and AUTH_CODE and returning a JWT
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                fileContent:
+                  type: string
+      responses:
+        '200':
+          description: JSON with 2 parts -
+  /SASjsApi/auth/jwt/refresh:
+    post:
+      summary: Refresh the JWT
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                fileContent:
+                  type: string
+      responses:
+        '200':
+          description: JSON with 2 parts -
+  /SASjsApi/auth/password:
+    patch:
+      summary: Modify user password
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                fileContent:
+                  type: string
+      responses:
+        '200':
+          description: JSON with 2 parts -
+  /SASjsApi/drive/deploy:
+    post:
+      summary: Deploy content to SASjs Drive
+      description:
+        Creates/updates files within SASjs Drive using provided payload.
+      parameters:
+        - name: fileTree
+          in: query
+          example: {"members": [{"name": "jobs", "type": "folder", "members": [{"name": "makedata1", "type": "service", "code": "%put Hello World!;"}]}]}
+          schema:
+            type: object
+          required: true
+      responses:
+        '200':
+          description:
+            description...
+        '400':
+          description:
+            Failure
+  /SASjsApi/drive/file:
+    summary: Interface with the virtual file system
+    get:
+      summary: Fetch file content from SASjs Drive
+      parameters:
+        - name: filepath
+          in: query
+          example: '/Public/somefolder/some.file'
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Returns the raw file content
+    post:
+      summary: Create a file in SASjs Drive
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                fileContent:
+                  type: string
+      responses:
+        '200':
+          description: success
+    patch:
+      summary: Modify a file in SASjs Drive
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                fileContent:
+                  type: string
+      responses:
+        '200':
+          description: success
+  /SASjsApi/drive/folder:
+    summary: Interface with the virtual file system
+    get:
+      summary: Fetch folder content from SASjs Drive
+      parameters:
+        - name: depth
+          in: query
+          description: Number of subfolders under which to return
+            content. Default is 0 (full depth).
+          example: 3
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: Returns the folder content
+    post:
+      summary: Create a folder in SASjs Drive
+      responses:
+        '200':
+          description: success
+    patch:
+      summary: Modify a folder in SASjs Drive
+      requestBody:
+      responses:
+        '200':
+          description: success
+  /SASjsApi/stp/execute:
+    get:
+      summary: Execute a Stored Program and return raw content
+      description:
+        Trigger a SAS program using it's location in the `_program` parameter.
+        Enable debugging using the `_debug` parameter.  Additional URL parameters are
+        turned into SAS macro variables.  Any files provided are placed into the session
+        and corresponding `_WEBIN_XXX` variables are created.
+      parameters:
+        - name: _program
+          in: query
+          example: '/Public/some/process'
+          schema:
+            type: string
+          required: true
+        - name: _debug
+          in: query
+          schema:
+            type: integer
+            enum: [0, 131]
+          required: false
+      responses:
+        '200':
+          description:
+            Contains whatever content is written to the `_webout` fileref
+            by the Stored Program.  If _debug is 131 or greater, then the log is also
+            written to the output.
+    post:
+      summary: Execute a Stored Program and return JSON
+      description:
+        Trigger a SAS program using it's location in the `_program` parameter.
+        Enable debugging using the `_debug` parameter.  Additional URL parameters are
+        turned into SAS macro variables.  Any files provided are placed into the session
+        and corresponding `_WEBIN_XXX` variables are created.
+      parameters:
+        - name: _program
+          in: query
+          example: '/Public/some/process'
+          schema:
+            type: string
+          required: true
+        - name: _debug
+          in: query
+          schema:
+            type: integer
+            enum: [0, 131]
+          required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  webout:
+                    type: string
+                  log:
+                    type: string
+          description:
+            Contains whatever content is written to the `_webout` fileref
+            by the Stored Program.  If _debug is 131 or greater, then the log is also
+            written to the output.
+  /SASjsApi/user:
+    post:
+      summary: 'Create user with the following attributes: UserId, UserName, Password, isAdmin, isActive.'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filePath:
+                  type: string
+                fileContent:
+                  type: string
+      responses:
+        '200':
+          description: JSON with 2 parts -

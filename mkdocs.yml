@@ -20,28 +20,28 @@ markdown_extensions:
   - toc:
       permalink: true
 
-extra_css: ["font-awesome.css"]
+extra_css: ['font-awesome.css']
 
 plugins:
   - search:
       prebuild_index: true
 
 # Repository
-repo_name: "server.sasjs.io"
-repo_url: "https://github.com/sasjs/server.sasjs.io"
-repo_branch: "main"
+repo_name: 'server.sasjs.io'
+repo_url: 'https://github.com/sasjs/server.sasjs.io'
+repo_branch: 'main'
 
 theme:
   name: material
-  logo: "img/logo/favicon/32.png"
+  logo: 'img/logo/favicon/32.png'
   palette:
-    primary: "White"
-    accent: "Amber"
+    primary: 'White'
+    accent: 'Amber'
   font:
-    text: "Open Sans"
-    code: "Ubuntu Mono"
+    text: 'Open Sans'
+    code: 'Ubuntu Mono'
   favicon: img/logo/favicon/32.ico
-  custom_dir: "theme"
+  custom_dir: 'theme'
   highlightjs: true
   hljs_languages:
     - SAS
@@ -54,4 +54,4 @@ theme:
         name: SASjs on LinkedIn
 copyright: All rights reserved &copy;2021 Macro People Ltd.
 
-google_analytics: ["UA-109713029-8", "sasjs.io"]
+google_analytics: ['UA-109713029-8', 'sasjs.io']
