@@ -276,6 +276,12 @@ paths:
             by the Stored Program.  If _debug is 131 or greater, then the log is also
             written to the output.
   /SASjsApi/user:
+    get:
+      summary: Get users
+      description: Get list of all users (username, displayname, avatar)
+      responses:
+        '200':
+          description: user content
     post:
       summary: Create User
       description: 'Create user with the following attributes: UserId, UserName, Password, isAdmin, isActive.'
@@ -291,4 +297,50 @@ paths:
                   type: string
       responses:
         '200':
-          description: JSON with 2 parts -
+          description: Success
+  /SASjsApi/user/{userName}:
+    get:
+      summary: Get user info
+      description: Get user properties - such as group memberships, userName, displayName.
+      responses:
+        '200':
+          description: JSON response
+    patch:
+      summary: Update user info
+      description: Update user properties - such as displayName.  Can be performed either by admins, or the user in question.
+      responses:
+        '200':
+          description: JSON response
+  /SASjsApi/group:
+    get:
+      summary: Get Groups
+      description: Get list of all groups
+      responses:
+        '200':
+          description: Success
+  /SASjsApi/group/{groupName}:
+    get:
+      summary: Get Group Members
+      description: Get list of members of a group.  All users can request this.
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create Group
+      description: Create a new group.  Admin task only.
+      responses:
+        '200':
+          description: Success
+  /SASjsApi/group/{groupName}/{userName}:
+    post:
+      summary: add user to group
+      description: Admin task only.
+      responses:
+        '200':
+          description: Success
+    delete:
+      summary: remove user from group
+      description: Admin task only.
+      responses:
+        '200':
+          description: Success
