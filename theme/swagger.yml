@@ -66,24 +66,7 @@ paths:
       responses:
         '200':
           description: JSON with 2 parts -
-  /SASjsApi/auth/jwt/generate:
-    post:
-      summary:  Get JWT
-      description: Accepts a CLIENT_ID and AUTH_CODE and returns a JWT
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                filePath:
-                  type: string
-                fileContent:
-                  type: string
-      responses:
-        '200':
-          description: JSON with 2 parts -
-  /SASjsApi/auth/jwt/refresh:
+  /SASjsApi/auth/refresh:
     post:
       summary: Refresh JWT
       requestBody:
