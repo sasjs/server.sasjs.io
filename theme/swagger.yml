@@ -261,13 +261,13 @@ paths:
   /SASjsApi/user:
     get:
       summary: Get users
-      description: Get list of all users (username, displayname, avatar)
+      description: Get list of all users (username, displayname, avatar).  All users can request this.
       responses:
         '200':
           description: user content
     post:
       summary: Create User
-      description: 'Create user with the following attributes: UserId, UserName, Password, isAdmin, isActive.'
+      description: 'Create user with the following attributes: UserId, UserName, Password, isAdmin, isActive.  Admin only task.'
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -297,20 +297,20 @@ paths:
   /SASjsApi/group:
     get:
       summary: Get Groups
-      description: Get list of all groups
+      description: Get list of all groups (groupName and groupDescription). All users can request this.
       responses:
         '200':
           description: Success
   /SASjsApi/group/{groupName}:
     get:
       summary: Get Group Members
-      description: Get list of members of a group.  All users can request this.
+      description: Get list of members of a group (userName).  All users can request this.
       responses:
         '200':
           description: Success
     post:
       summary: Create Group
-      description: Create a new group.  Admin task only.
+      description: Create a new group.  Admin only.
       responses:
         '200':
           description: Success
