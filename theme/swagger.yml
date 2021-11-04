@@ -82,22 +82,6 @@ paths:
       responses:
         '200':
           description: JSON with 2 parts -
-  /SASjsApi/auth/password:
-    patch:
-      summary: Modify Password
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                filePath:
-                  type: string
-                fileContent:
-                  type: string
-      responses:
-        '200':
-          description: JSON with 2 parts -
   /SASjsApi/drive/deploy:
     post:
       summary: Deploy ServicePack to SASjs Drive
@@ -281,16 +265,21 @@ paths:
       responses:
         '200':
           description: Success
-  /SASjsApi/user/{userName}:
+  /SASjsApi/user/{userId}:
     get:
-      summary: Get user info
-      description: Get user properties - such as group memberships, userName, displayName.
+      summary: Get User Info
+      description: Get user properties - such as group memberships, userName, displayName, emailAddress. Public.
       responses:
         '200':
           description: JSON response
     patch:
-      summary: Update user info
-      description: Update user properties - such as displayName.  Can be performed either by admins, or the user in question.
+      summary: Update User
+      description: Update user properties - such as displayName, userName, password.  Can be performed either by admins, or the user in question.
+      responses:
+        '200':
+          description: JSON response
+    delete:
+      summary: Delete User
       responses:
         '200':
           description: JSON response
@@ -301,7 +290,7 @@ paths:
       responses:
         '200':
           description: Success
-  /SASjsApi/group/{groupName}:
+  /SASjsApi/group/{groupId}:
     get:
       summary: Get Group Members
       description: Get list of members of a group (userName).  All users can request this.
@@ -314,7 +303,7 @@ paths:
       responses:
         '200':
           description: Success
-  /SASjsApi/group/{groupName}/{userName}:
+  /SASjsApi/group/{groupId}/{userId}:
     post:
       summary: add user to group
       description: Admin task only.
