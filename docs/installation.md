@@ -1,11 +1,12 @@
 # Installation
 
-SASjs server is build on Node. We recommend using [NVM](https://github.com/nvm-sh/nvm) instead of [Node](https://nodejs.org/en/) directly, as this does not require root permissions.
+The latest version can be downloaded from the Releases page:  https://github.com/sasjs/server/releases
 
-```Bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
-source ~/.bashrc
-nvm install node
+It can also be installed in just two lines of code (on linux):
+
+```bash
+curl -L https://github.com/sasjs/server/releases/latest/download/linux.zip > linux.zip
+unzip linux.zip
 ```
 
 
@@ -14,3 +15,19 @@ nvm install node
 After installation, the configuration is as follows:
 
 * sasPath -> the full path to the SAS executable in your environment
+
+
+
+## SSL Certificates
+
+If you would like to run your server on https, then you will need to provide certificates.  Sample instructions for obtaining certificates on a linux environment are provided below.
+
+```
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+# provide domain to prompt below WITHOUT https prefix, eg your.domain.com
+sudo certbot certonly --standalone
+# check for certificates
+sudo ls /etc/letsencrypt/live/your.domain.com
+```
