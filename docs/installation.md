@@ -32,4 +32,4 @@ sudo certbot certonly --standalone
 sudo ls /etc/letsencrypt/live/your.domain.com
 ```
 
-For debugging certificate issues, the following link is useful:  https://certbot.eff.org/instructions?ws=other&os=ubuntufocal
+For debugging certificate issues, the following link is useful:  [https://certbot.eff.org/instructions?ws=other&os=ubuntufocal](https://certbot.eff.org/instructions?ws=other&os=ubuntufocal)
