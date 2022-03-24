@@ -30,7 +30,7 @@ plugins:
 repo_name: 'server.sasjs.io'
 repo_url: 'https://github.com/sasjs/server.sasjs.io'
 repo_branch: 'main'
-edit_uri: blob/main/docs/
+edit_uri: 'blob/main/docs/'
 
 theme:
   name: material
