@@ -31,3 +31,5 @@ sudo certbot certonly --standalone
 # check for certificates
 sudo ls /etc/letsencrypt/live/your.domain.com
 ```
+
+For debugging certificate issues, the following link is useful:  https://certbot.eff.org/instructions?ws=other&os=ubuntufocal
