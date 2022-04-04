@@ -1,6 +1,6 @@
 # Installation
 
-The latest version can be downloaded from the Releases page:  https://github.com/sasjs/server/releases
+The latest version can be downloaded from the Releases page:  [https://github.com/sasjs/server/releases](https://github.com/sasjs/server/releases)
 
 It can also be installed in just two lines of code (on linux):
 
@@ -15,6 +15,7 @@ unzip linux.zip
 After installation, the configuration is as follows:
 
 * sasPath -> the full path to the SAS executable in your environment
+* drivePath -> an empty, working directory for use by the application.
 
 
 
