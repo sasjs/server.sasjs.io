@@ -12,11 +12,11 @@ unzip linux.zip
 
 ## Configuration
 
-After installation, the configuration is as follows:
+After installation, there is only one mandatory input:
 
-* sasPath -> the full path to the SAS executable in your environment
-* drivePath -> an empty, working directory for use by the application.
+* `SAS_PATH` -> the full path to the SAS executable in your environment
 
+Additional [settings](/settings) can be configured as environment variables.
 
 
 ## SSL Certificates
