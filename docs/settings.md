@@ -48,12 +48,12 @@ The port on which to serve.  Default: 5000
 
 ## SAS_OPTIONS
 
-Windows only. See: https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostwin/p0drw76qo0gig2n1kcoliekh605k.htm#p09y7hx0grw1gin1giuvrjyx61m6
+Windows only. See: [https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostwin/p0drw76qo0gig2n1kcoliekh605k.htm#p09y7hx0grw1gin1giuvrjyx61m6](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostwin/p0drw76qo0gig2n1kcoliekh605k.htm#p09y7hx0grw1gin1giuvrjyx61m6)
 
 Example:  `SAS_OPTIONS= -NOXCMD`
 
 ## SASV9_OPTIONS
-Unix only.  See: https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostunx/p0wrdmqp8k0oyyn1xbx3bp3qy2wl.htm
+Unix only.  See: [https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostunx/p0wrdmqp8k0oyyn1xbx3bp3qy2wl.htm](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostunx/p0wrdmqp8k0oyyn1xbx3bp3qy2wl.htm)
 
 Example: `SASV9_OPTIONS= -NOXCMD`
 
@@ -99,9 +99,12 @@ Space separated urls, eg: `WHITELIST=http://localhost:3000 https://abc.com`
 ## HELMET_COEP
 
 HELMET Cross Origin Embedder Policy.  Sets the Cross-Origin-Embedder-Policy header to require-corp when `true`
+
 Options: [true|false] 
+
 Default: true
-Docs: https://helmetjs.github.io/#reference (`crossOriginEmbedderPolicy`)
+
+Docs: [https://helmetjs.github.io/#reference](https://helmetjs.github.io/#reference) (`crossOriginEmbedderPolicy`)
 
 ##  HELMET_CSP_CONFIG_PATH
 
@@ -109,7 +112,7 @@ HELMET Content Security Policy
 
 Path to a json file containing HELMET `contentSecurityPolicy` directives
 
-Docs: https://helmetjs.github.io/#reference
+Docs: [https://helmetjs.github.io/#reference](https://helmetjs.github.io/#reference)
 
 Example config:
 ```
@@ -124,8 +127,10 @@ Example: `HELMET_CSP_CONFIG_PATH=./csp.config.json`
 
 ## LOG_FORMAT_MORGAN
 
-These setting determines the level of logging produced by SASjs server.  More details on this can be found in the Morgan documentation here: https://www.npmjs.com/package/morgan#predefined-formats
+These setting determines the level of logging produced by SASjs server.  
+More details on this can be found in the Morgan documentation here:[https://www.npmjs.com/package/morgan#predefined-formats](https://www.npmjs.com/package/morgan#predefined-formats)
 
-Options: [combined|common|dev|short|tiny] 
+Options: [`combined`|`common`|`dev`|`short`|`tiny`]
+
 Default: `common`
 
