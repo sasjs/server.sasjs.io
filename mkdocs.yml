@@ -11,6 +11,8 @@ nav:
       - API: /api/index.html
       - Sessions: sessions.md
       - Stored Programs: storedprograms.md
+  - Admin Guide: 
+      - Settings: settings.md
   - FAQ: faq.md
 
 markdown_extensions:
