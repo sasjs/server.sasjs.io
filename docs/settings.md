@@ -124,6 +124,8 @@ Example: `HELMET_CSP_CONFIG_PATH=./csp.config.json`
 
 ## LOG_FORMAT_MORGAN
 
+These setting determines the level of logging produced by SASjs server.  More details on this can be found in the Morgan documentation here: https://www.npmjs.com/package/morgan#predefined-formats
+
 Options: [combined|common|dev|short|tiny] 
 Default: `common`
-Docs: https://www.npmjs.com/package/morgan#predefined-formats
+
