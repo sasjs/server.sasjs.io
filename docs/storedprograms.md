@@ -103,8 +103,11 @@ A number of "fixed" variables are also added at the start of the program - you c
 
 The following variables are "special":
 
-* `_webout` - Any content added to this variable will be returned to the browser by SASjs Server.  This 
-* `headersPath` - This variable points to a text file where header records (such as `Content-type: application/zip`) can be written
+#### `_webout`
+Any content added to this variable will be stringified and returned to the browser by SASjs Server.   
+
+#### headersPath
+This variable points to a text file where header records (such as `Content-type: application/zip`) can be written
 
 
 ### Input Files
