@@ -1,12 +1,18 @@
 # Stored Programs
 
-A stored program is a file with a ".sas" extension that has been saved to the SASjs Drive.  When the `/SASjsApi/stp/execute` endpoint is called with a `_PROGRAM` URL parameter (pointing to the logical program location), a "Stored Program" is prepared and executed in a SASjs [session](/sessions).
+A stored program is a ".sas" program or ".js" script that has been saved to SASjs Drive.  When the `/SASjsApi/stp/execute` endpoint is called with a `_PROGRAM` URL parameter (pointing to the logical program location), a "Stored Program" is prepared and executed in a SAS or JS [session](/sessions) according to the file extension.
 
-"Preparation" involves adding some precode to provide the following:
+For the usual case where the _program variable does NOT contain an extension (eg `/some/stored/program`) then by default, SASjs Server will attempt to find "program.sas" in the `/some/stored` folder.  To change this default, see the [RUN_TIMES](/settings/#RUN_TIMES) settings.
+
+When Stored Programs are executed, some pre-code is injected to make available various inputs, such as:
 
 * Input Macro Variables
 * Input Files
-* Input Macros
+* Utility Macros / Functions
+
+The implementation varies depending on whether it is running as a SAS or JS session:
+
+## SAS Programs
 
 ## Input Variables
 
@@ -49,3 +55,5 @@ If there are no files uploaded, only the following code will be generated:
 %let _WEBIN_FILE_COUNT=0;
 ```
 
+
+## JS Programs

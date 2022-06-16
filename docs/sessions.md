@@ -1,5 +1,11 @@
 # Sessions
 
+A session occurs in a session folder, and may be executed using either a SAS or a JS runtime.  The session folder will contain any uploaded files, as well as the program / script being executed (prepended with code to enable relevant variables, such as URL parameters).
+
+The program itself will write the output to `_webout`, setting the header properties in a file, the location of which is in the `sasjs_stpsrv_header_loc` variable.
+
+## SAS Runtime
+
 In triggering the SAS executable, there are two factors that need to be overcome:
 
 1. The process is expensive to launch (startup cost)
@@ -94,3 +100,8 @@ digraph G {
 -->
 
 ![session diagram](/img/sessiondiagram.png)
+
+
+## JS Runtime
+
+JS sessions are not pre-spawned, as NodeJS is already running.  URL variables are injected into the beginning of the program as constants.

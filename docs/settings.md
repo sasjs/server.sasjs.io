@@ -23,6 +23,20 @@ Whether to launch the server in desktop (single user / workstation) or server mo
 
 Default: `desktop`
 
+## RUN_TIMES
+A comma separated string that defines the available runtimes.
+**Priority is given to the runtime that comes first in string**.
+
+So given a `RUNTIME=js,sas` if `_program=/some/program` then SASjs Server will look for `program.js` in the `/some` folder before `program.sas`.  If `_program=/some/program.sas` then a SAS runtime will always be used.
+
+In the future we plan to support Python and R runtimes in addition to SAS and JS.
+
+Default: `sas,js`
+
+Example:
+
+`RUN_TIMES=js,sas`
+
 ## SAS_PATH
 The path to the SAS executable (sas.exe / sas.sh)
 
@@ -32,7 +46,7 @@ Example:
 
 ## SASJS_ROOT
 
-The installation directory.  This location is for SAS WORK, staged files, DRIVE, configuration etc
+If omitted, this will be the SASjs Server installation directory.  The location is used for SAS WORK, staged files, DRIVE, configuration etc
 
 Example:
 
