@@ -14,17 +14,26 @@ The implementation varies depending on whether it is running as a SAS or JS sess
 
 ## SAS Programs
 
-## Input Variables
+### Input Variables
 
-Any URL parameters passed in the request will be converted into macro variables.  The following variables are "special":
+Any URL parameters (eg `&name1=value1&something=else`) are attached as macro variables eg as follows:
+
+```sas
+%let name1=value1;
+%let something=else;
+```
+
+A number of "fixed" variables are also added at the start of the program - you can see the code that generates these in the repo, [here](https://github.com/sasjs/server/blob/main/api/src/controllers/internal/Execution.ts#L93).
+
+The following variables are "special":
 
 * `_PROGRAM` - this is a required input, and will point to the Stored Program location in SASjs Drive.
 * `_DEBUG` - setting this to 131 or greater will result in the log being returned, and the following line added to the start of the program:  `options mprint;`
 
 
-## Input Files
+### Input Files
 
-Any files attached to a request will be saved in the [session folder](/sessions) and the following variables will be added to the SAS program:
+Any files attached to a request will be saved in the [session folder](/sessions) and the following variables will be dynamically added to the SAS program:
 
 * `_WEBIN_FILE_COUNT` - contains an integer, from 0 to the number of files to being provided. This variable is always created.
 * `_WEBIN_FILENAME1` - the value that was specified in the FILENAME attribute by the frontend
@@ -56,4 +65,60 @@ If there are no files uploaded, only the following code will be generated:
 ```
 
 
+
+
 ## JS Programs
+
+The use of JS "programs" as your backend is highly beneficial for the following use cases:
+
+* You would like to test your application in a non SAS environment (such as a CI/CD pipeline or developer machine)
+* You would like to make use of JS packages in your backend SAS applications
+* You would like to provide backup services in the case that SAS is down (eg licence expiry)
+
+Any `console.log()` statements written by your JavaScript will be returned in the response "log" (identically to SAS). 
+
+### Input Variables
+
+Any URL parameters (eg `&name1=value1&something=else`) are attached as macro variables eg as follows:
+
+```js
+const name1='value1'
+const something='else'
+```
+
+A number of "fixed" variables are also added at the start of the program - you can see the code that generates these in the repo, [here](https://github.com/sasjs/server/blob/main/api/src/controllers/internal/Execution.ts).
+
+The following variables are "special":
+
+* `_webout` - Any content added to this variable will be returned to the browser by SASjs Server.  This 
+* `headersPath` - This variable points to a text file where header records (such as `Content-type: application/zip`) can be written
+
+
+### Input Files
+
+Any files attached to a request will be saved in the [session folder](/sessions) and the following variables will be dynamically added to the JS program:
+
+* `_WEBIN_FILE_COUNT` - contains an integer, from 0 to the number of files to being provided. This variable is always created.
+* `_WEBIN_FILENAME1` - the value that was specified in the FILENAME attribute by the frontend
+* `_WEBIN_FILEREF1` - This will contain the actual file object
+* `_WEBIN_NAME1` - the value that was specified in the NAME attribute by the frontend
+
+To illustrate with an example - we are uploading two files, F1 and F2. The following SAS code will be generated, and inserted at the beginning of the executed program:
+
+```js
+const _WEBIN_FILEREF1 = fs.readFileSync('/path/to/file1')
+const _WEBIN_FILEREF2 = fs.readFileSync('/path/to/file2')
+const _WEBIN_FILENAME1 = 'F1'
+const _WEBIN_FILENAME2 = 'F2'
+const _WEBIN_NAME1 = 'FormRef1'
+const _WEBIN_NAME1 = 'FormRef2'
+
+const _WEBIN_FILE_COUNT = 2
+
+```
+
+If there are no files uploaded, only the following code will be generated:
+
+```js
+const _WEBIN_FILE_COUNT = 0
+```
