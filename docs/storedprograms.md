@@ -27,8 +27,14 @@ A number of "fixed" variables are also added at the start of the program - you c
 
 The following variables are "special":
 
-* `_PROGRAM` - this is a required input, and will point to the Stored Program location in SASjs Drive.
-* `_DEBUG` - setting this to 131 or greater will result in the log being returned, and the following line added to the start of the program:  `options mprint;`
+#### _PROGRAM
+This is a required input, and will point to the Stored Program location in SASjs Drive.  The extension may be omitted, subject to the behaviour in the [RUN_TIMES](/settings/#RUN_TIMES) setting.
+
+#### _DEBUG
+Setting this to 131 or greater will result in the log being returned, and the following line added to the start of the program:  `options mprint;`.  The resulting output behaviour of SASjs server will depend on the http method:
+
+* GET request:  Setting debug will result in a Content-Type header of 'text/plain', and the log will be streamed in the response body.
+* POST request: The log will be returned in the `log` attribute of the response JSON object.
 
 
 ### Input Files
@@ -64,7 +70,14 @@ If there are no files uploaded, only the following code will be generated:
 %let _WEBIN_FILE_COUNT=0;
 ```
 
+### Output
 
+Any response data should be written to the `_webout` fileref (which is pre-assigned in the session).  The corresponding header records (content type etc) can be written using the [mfs_httpheader](https://core.sasjs.io/mfs__httpheader_8sas.html) macro. Additional [SASjs Server specific macros](https://core.sasjs.io/dir_41e1742e44e2de38b3bc91f993fed282.html) are also available.
+
+Note that the response will be served differently depending on which http method is used:
+
+* GET request: The response will be streamed according to the headers, and the _debug setting
+* POST request: The response is always JSON, with _webout contents stringified into the `webout` attribute of the response.
 
 
 ## JS Programs
