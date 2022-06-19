@@ -72,12 +72,12 @@ Unix only.  See: [https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostunx
 Example: `SASV9_OPTIONS= -NOXCMD`
 
 ## PRIVATE_KEY
-Only relevant on https / server connections.  This value is passed as the `key:` option to NodeJS as described here:  https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
+Only relevant on https / server connections.  This value is passed as the `key:` option to NodeJS as described here:  [https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions](https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions)
 
 Example: `PRIVATE_KEY=privkey.pem`
 
 ## FULL_CHAIN
-Only relevant on https / server connections.  This value is pased as the `cert:` option to NodeJS as described here: https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
+Only relevant on https / server connections.  This value is pased as the `cert:` option to NodeJS as described here: [https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions](https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions)
 
 Example: `FULL_CHAIN=fullchain.pem`
 
