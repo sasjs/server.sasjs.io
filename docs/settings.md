@@ -38,7 +38,17 @@ Example:
 `RUN_TIMES=js,sas`
 
 ## SAS_PATH
-The path to the SAS executable (sas.exe / sas.sh)
+The full path to the SAS executable (sas.exe / sas.sh).  It is highly recommended to provide an instance with UTF-8 encoding, for the following reasons:
+
+* SASjs Adapter compatibility
+* Broad language support
+* Viya compatibility
+
+To force UTF-8 encoding, update the appropriate `sasv9.cfg` file with the following option:
+
+```
+-ENCODING UTF-8
+```
 
 Example:
 
