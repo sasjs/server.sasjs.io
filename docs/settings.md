@@ -84,12 +84,18 @@ Example: `SASV9_OPTIONS= -NOXCMD`
 ### PRIVATE_KEY
 Only relevant on https / server connections.  This value is passed as the `key:` option to NodeJS as described here:  [https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions](https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions)
 
-Example: `PRIVATE_KEY=privkey.pem`
+Example: `PRIVATE_KEY=localhost.key`
 
-### FULL_CHAIN
+### CERT_CHAIN
 Only relevant on https / server connections.  This value is pased as the `cert:` option to NodeJS as described here: [https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions](https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions)
 
-Example: `FULL_CHAIN=fullchain.pem`
+Example: `CERT_CHAIN=localhost.crt`
+
+### CA_ROOT
+
+Only relevant on https / server connections.  This value is pased as the `ca:` option to NodeJS as described here: [https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions](https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions)
+
+Example: `CA_ROOT=fullchain.pem`
 
 ### ACCESS_TOKEN_SECRET
 Only relevant in server mode.  Example: `ACCESS_TOKEN_SECRET=somesecret`.
