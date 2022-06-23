@@ -1,8 +1,8 @@
 ---
 layout: article
 title: Stored Programs
-description: A Stored Program is a ".sas" program or ".js" script that has been saved to SASjs Drive - and can be executed with a GET or POST request.
-og_image: /img/spts.png
+description: A Stored Program is a '.sas' program or '.js' script that has been saved to SASjs Drive - and can be executed with a GET or POST request.
+og_image: /img/stps.png
 ---
 
 # Stored Programs
