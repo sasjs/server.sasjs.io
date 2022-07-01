@@ -6,14 +6,19 @@ description: Configuring SASjs Server permissions
 
 # Permissions - COMING SOON
 
-## URI Access
+## API Access
 
-* By default, deny everything
+API rules are applied to the following groups of APIs:
+
+* Code
+* Drive
+* Permissions
+* STP
+
+Rules precedence as follows:
+
+* By default, deny all
 * Apply group grants
 * Apply group deny
 * Apply user grants
 * Apply user deny
-
-Permissions applied at top level (eg /SASjsApi) cascade to lower levels (eg /SASjsApi/group)
-
-Permissions at lower level (eg /SASjsApi/group) have higher priority than upper levels (eg /SASjsApi)
