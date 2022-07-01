@@ -12,6 +12,7 @@ nav:
       - Sessions: sessions.md
       - Stored Programs: storedprograms.md
   - Admin Guide: 
+      - Permissions: permissions.md
       - Settings: settings.md
   - FAQ: faq.md
 
