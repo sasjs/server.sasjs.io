@@ -1,7 +1,7 @@
 ---
 layout: article
 title: Permissions
-og_description: Permissions in SASjs are enabled when `MODE=server`.   Rules do not apply to admin users. Rules can be at GROUP or USER level.
+og_desc: Permissions in SASjs are enabled when `MODE=server`.   Rules do not apply to admin users. Rules can be at GROUP or USER level.
 og_image: /img/uri-access.png
 ---
 
