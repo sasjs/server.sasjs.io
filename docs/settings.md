@@ -69,6 +69,10 @@ Whether to use http or https protocol. Default: http
 ### PORT
 The port on which to serve.  Default: 5000
 
+Binding processes to ports in the lower ranges (eg 80, 443) requires elevated privileges.  To avoid running SASjs Server under a privileged account, you can bind the port to an executable - eg:  `setcap 'cap_net_bind_service=+ep' /home/sasjssrv/api-linux`
+
+If the executable is updated (eg downloading a new version) you will need to run this command again.
+
 
 ### SAS_OPTIONS
 
