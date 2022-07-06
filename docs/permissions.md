@@ -1,17 +1,15 @@
 ---
 layout: article
 title: Permissions
-description: Configuring SASjs Server permissions
+og_description: Permissions in SASjs are enabled when `MODE=server`.   Rules do not apply to admin users. Rules can be at GROUP or USER level.
 og_image: /img/uri-access.png
 ---
 
 # Permissions
 
-Permissions in SASjs are enabled when `MODE=server`.   Rules do not apply to admin users.  The menu is available under SETTINGS, and is divided into "URI Access" and "Folder Access".
+Permissions in SASjs are enabled when `MODE=server`.   Rules do not apply to admin users.  The menu is available under SETTINGS, and is divided into "URI Access" and "Folder Access".  Rules can be at GROUP or USER level.
 
-URI rules can be at GROUP or USER level.
-
-Rules take precedence as follows:
+The hierarchy of rules is as follows:
 
 * By default, deny all
 * Apply group grants
@@ -22,7 +20,7 @@ Rules take precedence as follows:
 ![](./img/uri-access.png)
 ## URI Access
 
-URI rules are applied to the following endpoints:
+URI rules can be applied to the following endpoints:
 
 * /AppStream
 * /SASjsApi/code/execute
