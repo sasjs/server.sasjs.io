@@ -162,3 +162,5 @@ Default: `common`
 Location in which to write server logs (one file per day).  If not provided, logs are written in a `/logs` subfolder of the `SASJS_ROOT` location.  Can be a full path, else relative to the directory in which the server instance was launched.
 
 Example: `LOG_LOCATION=./sasjs_root/logs`
+
+![](img/log_location.png)
