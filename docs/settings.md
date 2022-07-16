@@ -111,7 +111,7 @@ DB_CONNECT=mongodb+srv://<DB_USERNAME>:<DB_PASSWORD>@<CLUSTER>/<DB_NAME>?retryWr
 
 ### CORS
 
-Options: [disable|enable] 
+Options: [disable|enable]
 Default: `disable` for `server` & `enable` for `desktop`
 
 If enabled, be sure to also configure the WHITELIST of any third party servers.
@@ -123,7 +123,7 @@ Space separated urls, eg: `WHITELIST=http://localhost:3000 https://abc.com`
 
 HELMET Cross Origin Embedder Policy.  Sets the Cross-Origin-Embedder-Policy header to require-corp when `true`
 
-Options: [true|false] 
+Options: [true|false]
 
 Default: true
 
@@ -150,10 +150,15 @@ Example: `HELMET_CSP_CONFIG_PATH=./csp.config.json`
 
 ### LOG_FORMAT_MORGAN
 
-These setting determines the level of logging produced by SASjs server.  
+These setting determines the level of logging produced by SASjs server.
 More details on this can be found in the Morgan documentation here:[https://www.npmjs.com/package/morgan#predefined-formats](https://www.npmjs.com/package/morgan#predefined-formats)
 
 Options: [`combined`|`common`|`dev`|`short`|`tiny`]
 
 Default: `common`
 
+### LOG_LOCATION
+
+Location in which to write server logs (one file per day).  If not provided, logs are written in a `/logs` subfolder of the `SASJS_ROOT` location.  Can be a full path, else relative to the directory in which the server instance was launched.
+
+Example: `LOG_LOCATION=./sasjs_root/logs`
