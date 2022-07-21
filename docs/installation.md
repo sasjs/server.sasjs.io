@@ -24,12 +24,19 @@ A full guide to deploying SASjs Server on a VPS is also available [here](https:/
 
 ## SSL Certificates
 
-To run over https, SASjs server needs a copy of your certificates.  The path to these certificates should be provided in the [`PRIVATE_KEY`](/settings/#private_key) and [`CERT_CHAIN`](/settings/#cert_chain) settings.  If you are using self-signed certificates, then the [`CA_ROOT`](/settings/#ca_root) file should also be provided.
+To run over `https`, SASjs server needs a copy of your certificates.  The path to these certificates should be provided in the [`PRIVATE_KEY`](/settings/#private_key) and [`CERT_CHAIN`](/settings/#cert_chain) settings.  If you are using self-signed certificates, then the [`CA_ROOT`](/settings/#ca_root) file should also be provided.
 
+Example config:
+
+```
+PROTOCOL=https
+CERT_CHAIN=/opt/certificates/fullchain.pem
+PRIVATE_KEY=/opt/certificates/privkey.pem
+```
 
 Suggested instructions for obtaining certificates on a linux environment are provided below.
 
-```
+```bash
 sudo snap install core; sudo snap refresh core
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
