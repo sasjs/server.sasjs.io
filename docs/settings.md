@@ -13,7 +13,7 @@ All settings in SASjs server are made by means of environment variables.  These 
 - Prepended in the command
 - Enter in the `.env` file alongside the executable
 
-Some variables (such as secrets) are removed following initialisation to ensure they aren't available to any child sessions.
+The usual / preferred method is to provide the variables in the `.env` file (which works on both Windows & Linux) as follows:
 
 ![](img/env.png)
 ## Environment Variables
