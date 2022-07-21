@@ -15,6 +15,7 @@ All settings in SASjs server are made by means of environment variables.  These 
 
 Some variables (such as secrets) are removed following initialisation to ensure they aren't available to any child sessions.
 
+![](img/env.png)
 ## Environment Variables
 
 ### CERT_CHAIN
