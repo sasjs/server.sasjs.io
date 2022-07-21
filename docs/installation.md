@@ -9,6 +9,7 @@ curl -L https://github.com/sasjs/server/releases/latest/download/linux.zip > lin
 unzip linux.zip
 ```
 
+For windows, just download the zip file and launch.  You can ignore / cancel the popup, the app does NOT require administrative privileges.
 
 ## Configuration
 
@@ -16,12 +17,17 @@ After installation, there is only one mandatory input:
 
 * `SAS_PATH` -> the full path to the SAS executable in your environment
 
-Additional [settings](/settings) can be configured as environment variables.
+However there are many additional [settings](/settings) you can make - these can go in a file called `.env` in the same folder as the executable.
+
+A full guide to deploying SASjs Server on a VPS is also available [here](https://sasapps.io/sasjs-server-on-vps).
 
 
 ## SSL Certificates
 
-If you would like to run your server on https, then you will need to provide certificates.  Sample instructions for obtaining certificates on a linux environment are provided below.
+To run over https, SASjs server needs a copy of your certificates.  The path to these certificates should be provided in the [`PRIVATE_KEY`](/settings/#private_key) and [`CERT_CHAIN`](/settings/#cert_chain) settings.  If you are using self-signed certificates, then the [`CA_ROOT`](/settings/#ca_root) file should also be provided.
+
+
+Suggested instructions for obtaining certificates on a linux environment are provided below.
 
 ```
 sudo snap install core; sudo snap refresh core
