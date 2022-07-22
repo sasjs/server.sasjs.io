@@ -17,7 +17,19 @@ After installation, there is only one mandatory input:
 
 * `SAS_PATH` -> the full path to the SAS executable in your environment
 
-However there are many additional [settings](/settings) you can make - these can go in a file called `.env` in the same folder as the executable.
+However there are many additional [settings](/settings) you can make - these can go in a file called `.env` in the same folder as the executable.  Sample contents:
+
+```bash
+NODE_PATH=/home/sasjssrv/.nvm/versions/node/v16.15.1/bin/node
+RUN_TIMES=sas,js
+SAS_PATH=/opt/sas
+MODE=server
+PROTOCOL=https
+CERT_CHAIN=/opt/certificates/fullchain.pem
+PRIVATE_KEY=/opt/certificates/privkey.pem
+DB_CONNECT=mongodb+srv://admin:admin@cluster.mongodb.net/mydb?retryWrites=true&w=majority
+PORT=443
+```
 
 A full guide to deploying SASjs Server on a VPS is also available [here](https://sasapps.io/sasjs-server-on-vps).
 
