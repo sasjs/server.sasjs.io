@@ -15,9 +15,9 @@ For windows, just download the zip file and launch.  You can ignore / cancel the
 
 After installation, there is only one mandatory input:
 
-* `SAS_PATH` -> the full path to the SAS executable in your environment
+* `SAS_PATH` -> the full path to the SAS **executable** (sas.exe / sas.sh) in your environment
 
-However there are many additional [settings](/settings) you can make - these can go in a file called `.env` in the same folder as the executable.  Sample contents:
+However there are many additional [settings](/settings) you can make - these can go in a file called `.env` in the same folder as the executable.  Simply create the file with sample contents such as below:
 
 ```bash
 SAS_PATH=/path/to/your/sas.sh
@@ -30,6 +30,8 @@ CERT_CHAIN=/opt/certificates/fullchain.pem
 PRIVATE_KEY=/opt/certificates/privkey.pem
 PORT=443
 ```
+
+Then launch the executable (eg `./api-win.exe` or double click).  If launching from terminal there should be a link in the log to open the app (eg http://localhost:5000).  If double clicking, the browser should open automatically.
 
 A full guide to deploying SASjs Server on a VPS is also available [here](https://sasapps.io/sasjs-server-on-vps).
 
