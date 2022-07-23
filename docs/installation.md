@@ -15,9 +15,9 @@ For windows, just download the zip file and launch.  You can ignore / cancel the
 
 After installation, there is only one mandatory input:
 
-* `SAS_PATH` -> the full path to the SAS **executable** (eg `/path/to/sas.exe|sh`) in your environment.
+* `SAS_PATH` -> the full path to the **SAS executable** (eg `/path/to/sas.exe|sh`) in your environment.
 
-However there are many additional [settings](/settings) you can make - these can go in a file called `.env` in the same folder as the executable.  Simply create the file with sample contents such as below:
+However there are many additional [settings](/settings) you can make - these can go in a file called `.env` in the **same folder as the unzipped SASjs Server executable** (eg `api-linux`/`api-win.exe`).  Simply create the file with sample contents such as below:
 
 ```bash
 SAS_PATH=/path/to/your/sas.sh
