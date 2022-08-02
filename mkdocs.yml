@@ -5,7 +5,7 @@ nav:
   - Installation: installation.md
   - User Guide:
       - Authorisation: auth.md
-      - Apps: apps.md
+      - App Stream: apps.md
       - SASjs Studio: studio.md
   - Developer Guide:
       - API: /api/index.html

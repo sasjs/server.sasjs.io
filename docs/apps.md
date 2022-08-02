@@ -5,7 +5,7 @@ description: Deploy and launch SAS Apps on the SASjs App Stream Portal
 og_image: /img/apps.png
 ---
 
-# Apps
+# App Stream
 
 AppStream is the gateway to apps on SASjs Server.
 
