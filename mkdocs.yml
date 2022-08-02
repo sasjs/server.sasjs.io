@@ -5,13 +5,13 @@ nav:
   - Installation: installation.md
   - User Guide:
       - Authorisation: auth.md
-      - SASjs Drive: drive.md
+      - Apps: apps.md
       - SASjs Studio: studio.md
   - Developer Guide:
       - API: /api/index.html
       - Sessions: sessions.md
       - Stored Programs: storedprograms.md
-  - Admin Guide: 
+  - Admin Guide:
       - Permissions: permissions.md
       - Settings: settings.md
   - FAQ: faq.md

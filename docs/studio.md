@@ -23,3 +23,7 @@ Other than that, everything works as you would expect.  The log is sent to the l
 ## JS specific
 
 When running JS code, any `console.log()` statements are sent to the log window, and any content saved in the `_webout` variable is sent to the `webout` page.
+
+## Launch Mode
+
+When clicking the LAUNCH icon, a NEW window (or tab) is opened with the file location in the `_program` url param.  For instance, if opening `/Public/subfolder/someprog.sas` then the url will be: `/SASjsExecutor?_program=/Public/subfolder/someprog.sas`.
