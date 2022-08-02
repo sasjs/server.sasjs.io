@@ -25,9 +25,14 @@ Alternative deployment approaches include:
 * Use the `/SASjsApi/drive/deploy/upload` API
 * Use the `/SASjsApi/drive/deploy` API
 
+## Securing Apps
+
+If you are running in "Server" mode you can grant permissions at the level of User or Group to any uploaded application - just click on your username, then "Settings", then "Permissions", to create the necessary rule(s).
+
+
 ## Available Apps
 
-SASjs Server does NOT contain an in-built "app store", however you may download apps from the following locations and upload them to your SASjs Server instance.
+SASjs Server does not have an in-built "app store" (due to our security policy of having no external web requests), however you may download apps yourself from the following locations and upload them to your SASjs Server instance.
 
 ### Data Controller for SAS®
 
@@ -35,16 +40,17 @@ SASjs Server does NOT contain an in-built "app store", however you may download 
 
 The app can be downloaded from here: [https://git.4gl.io/dc/deploy/raw/branch/main/server.json.zip](https://git.4gl.io/dc/deploy/raw/branch/main/server.json.zip).
 
-And documentation is here: [https://docs.datacontroller.io](https://docs.datacontroller.io).
+Documentation is here: [https://docs.datacontroller.io](https://docs.datacontroller.io).
 
 ### Minimal Seed App
 
-This is simply a demo app built with Vanilla JS and SAS.  You can find the latest version on the github [releases [page](https://github.com/sasjs/minimal-seed-app/releases)
+This is a simple demo app built with Vanilla JS and SAS.  You can find the latest version on the github [releases page](https://github.com/sasjs/minimal-seed-app/releases)
+
+### Mario
+
+Needs no introduction. Release assets available here: [https://github.com/sasjs/mario/releases](https://github.com/sasjs/mario/releases)
 
 ### Pacman
 
-A video game classic! Release assets are available here: [https://github.com/sasjs/pacman/releases](https://github.com/sasjs/pacman/releases)
+Another video game classic! Release assets are available here: [https://github.com/sasjs/pacman/releases](https://github.com/sasjs/pacman/releases)
 
-## Access Permissions
-
-If you are running in "Server" mode you can grant permissions at the level of User or Group to any uploaded application - just click on your username, then "Settings", then "Permissions" to create the necessary rule(s).
