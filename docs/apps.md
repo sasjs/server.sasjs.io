@@ -7,7 +7,7 @@ og_image: /img/apps.png
 
 # Apps
 
-The apps portal is a gateway to any apps that you have deployed to SASjs Server.
+AppStream is the gateway to apps on SASjs Server.
 
 ![](img/apps.png)
 
