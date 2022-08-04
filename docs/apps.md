@@ -47,13 +47,17 @@ Documentation is here: [https://docs.datacontroller.io](https://docs.datacontrol
 
 The following apps are presented as "starter packs" with which you can build your own SASjs App:
 
+#### Angular Seed App
+
+A demo app built using Angular.  Builds are published to the [releases page](https://github.com/sasjs/angular-seed-app/releases).
+
 #### Minimal Seed App
 
 This is a simple demo app built with Vanilla JS and SAS.  You can find the latest version on the github [releases page](https://github.com/sasjs/minimal-seed-app/releases)
 
 #### React Seed App
 
-The primary template used by the [SAS Apps team](https://sasapps.io).  Artefacts available on the [releases]()
+The primary template used by the [SAS Apps team](https://sasapps.io).  Artefacts available on the [releases](https://github.com/sasjs/react-seed-app/releases) page.
 
 ### Games
 
