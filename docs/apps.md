@@ -67,3 +67,6 @@ Needs no introduction. Release assets available here: [https://github.com/sasjs/
 
 Another video game classic! Release assets are available here: [https://github.com/sasjs/pacman/releases](https://github.com/sasjs/pacman/releases)
 
+#### Rock Roller
+
+Dodge the trees and move down the slope! Release assets are available here: [https://github.com/sasjs/rockroller/releases](https://github.com/sasjs/rockroller/releases).
