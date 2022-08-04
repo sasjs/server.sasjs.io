@@ -34,7 +34,8 @@ If you are running in "Server" mode you can grant permissions at the level of Us
 
 SASjs Server does not have an in-built "app store" (due to our security policy of having no external web requests), however you may download apps yourself from the following locations and upload them to your SASjs Server instance.
 
-### Data Controller for SAS®
+### Productivity Apps
+#### Data Controller for SAS®
 
 [Data Controller](https://datacontroller.io) is a full-blown SAS application to provide business users with a carefully-controlled capability to make changes to data in SAS.
 
@@ -42,15 +43,27 @@ The app can be downloaded from here: [https://git.4gl.io/dc/deploy/raw/branch/ma
 
 Documentation is here: [https://docs.datacontroller.io](https://docs.datacontroller.io).
 
-### Minimal Seed App
+### Seed Apps
+
+The following apps are presented as "starter packs" with which you can build your own SASjs App:
+
+#### Minimal Seed App
 
 This is a simple demo app built with Vanilla JS and SAS.  You can find the latest version on the github [releases page](https://github.com/sasjs/minimal-seed-app/releases)
 
-### Mario
+#### React Seed App
+
+The primary template used by the [SAS Apps team](https://sasapps.io).  Artefacts available on the [releases]()
+
+### Games
+
+The serious part of the game series is that you can see how easy it is to deploy generic web apps to SASjs Server - or any SAS server for that matter!
+
+#### Mario
 
 Needs no introduction. Release assets available here: [https://github.com/sasjs/mario/releases](https://github.com/sasjs/mario/releases)
 
-### Pacman
+#### Pacman
 
 Another video game classic! Release assets are available here: [https://github.com/sasjs/pacman/releases](https://github.com/sasjs/pacman/releases)
 
