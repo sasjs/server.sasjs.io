@@ -182,7 +182,7 @@ Any content written to `sys.stdout` or `sys.stderr` will be returned in the resp
 
 ### Input Variables
 
-Any URL parameters (eg `&name1=value1&something=else`) are attached as python variables in uppercase, eg as follows:
+Any URL parameters (eg `&name1=value1&something=else`) are attached as Python variables in uppercase, eg as follows:
 
 ```python3
 NAME1='value1'
@@ -209,11 +209,11 @@ Any files attached to a request will be saved in the [session folder](/sessions)
 * `_WEBIN_FILENAME1` - the value that was specified in the FILENAME attribute by the frontend
 * `_WEBIN_NAME1` - the value that was specified in the NAME attribute by the frontend
 
-To illustrate with an example - we are uploading two files, F1 and F2. The following Python code will be generated, and inserted at the beginning of the executed program:
+To illustrate with an example - we are uploading two files, f1.txt and f2.txt. The following Python code will be generated, and inserted at the beginning of the executed program:
 
 ```python
-_WEBIN_FILENAME1 = 'F1'
-_WEBIN_FILENAME2 = 'F2'
+_WEBIN_FILENAME1 = 'f1.txt'
+_WEBIN_FILENAME2 = 'f2.txt'
 _WEBIN_NAME1 = 'FormRef1'
 _WEBIN_NAME1 = 'FormRef2'
 
@@ -226,7 +226,7 @@ If there are no files uploaded, only the following code will be generated:
 _WEBIN_FILE_COUNT = 0
 ```
 
-Note that there are no `_WEBIN_FILEREF` variables created - in python it is necessary to know the type of file (eg binary / text) before it can be ingested with the `open()` function, eg `open(file.name,"rt")` or `open(file.name,"rb")`.  Therefore it is left an exercise for the developer to ingest as appropriate.
+Note that there are no `_WEBIN_FILEREF` variables created - in python it is necessary to know the type of file (eg binary / text) before it can be ingested with the `open()` function, eg `open(_WEBIN_FILENAME1,"rt")` or `open(_WEBIN_FILENAME1,"rb")`.  Therefore it is left as an exercise for the developer to ingest as appropriate.
 
 The session folder (with the input files) will also be the current folder, eg `os.chdir("/path/to/session/folder")`.
 
@@ -235,10 +235,10 @@ The session folder (with the input files) will also be the current folder, eg `o
 The following variables are "special":
 
 #### `_WEBOUT`
-This variable points to a text file in the session folder (eg `_WEBOUT=/path/to/session/folder/webout.txt`).  All content written to `_WEBOUT` is streamed in the STP API call result.
+This variable points to a text file in the session folder (eg `_WEBOUT="/path/to/session/folder/webout.txt"`).  All content written to `_WEBOUT` is streamed in the STP API call result.
 
 #### `HEADERSPATH`
-This variable points to a text file where header records (such as `Content-type: application/zip`) can be written, eg `HEADERSPATH=/path/to/session/folder/headers.txt`).
+This variable points to a text file where header records (such as `Content-type: application/zip`) can be written, eg `HEADERSPATH="/path/to/session/folder/headers.txt"`).
 
 To return data to the client, just write it to the `_WEBOUT` file.  It will then be returned to the browser / client application.  Be sure to set the `Content-Type` in the `HEADERSPATH` file if it is anything other than JSON.
 
