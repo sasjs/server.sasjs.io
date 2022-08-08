@@ -106,15 +106,19 @@ const name1='value1'
 const something='else'
 ```
 
-A number of "fixed" variables are also added at the start of the program - you can see the code that generates these in the repo, [here](https://github.com/sasjs/server/blob/main/api/src/controllers/internal/Execution.ts).
+A number of "fixed" variables are also added at the start of the program, eg:
 
-The following variables are "special":
-
-#### `_webout`
-Any content added to this variable will be stringified and returned to the browser by SASjs Server.   
-
-#### `headersPath`
-This variable points to a text file where header records (such as `Content-type: application/zip`) can be written
+```js
+let _webout = '';
+weboutPath = '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/webout.txt'; 
+const _sasjs_tokenfile = '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/reqHeaders.txt';
+const _sasjs_username = 'allan';
+const _sasjs_userid = '6';
+const _sasjs_displayname = 'Allan Bowe';
+const _metaperson = _sasjs_displayname;
+const _metauser = _sasjs_username;
+const sasjsprocessmode = 'Stored Program';
+```
 
 
 ### Input Files
@@ -148,6 +152,14 @@ const _WEBIN_FILE_COUNT = 0
 
 ### Output
 
+The following variables are "special":
+
+#### `_webout`
+Any content added to this variable will be stringified and returned to the browser by SASjs Server.   
+
+#### `headersPath`
+This variable points to a text file where header records (such as `Content-type: application/zip`) can be written
+
 Any data inside the `_webout` variable is written to a file using the following code:
 
 ```js
@@ -177,16 +189,17 @@ NAME1='value1'
 SOMETHING='else'
 ```
 
-A number of "fixed" variables are also added at the start of the program - you can see the code that generates these in the repo, [here](https://github.com/sasjs/server/blob/main/api/src/controllers/internal/Execution.ts).
+A number of "fixed" variables are also added at the start of the program, eg as follows:
 
-The following variables are "special":
-
-#### `_WEBOUT`
-This variable points to a text file in the session folder (eg `_WEBOUT=/path/to/session/folder/webout.txt`).  All content written to `_WEBOUT` is streamed in the STP API call result.
-
-#### `HEADERSPATH`
-This variable points to a text file where header records (such as `Content-type: application/zip`) can be written, eg `HEADERSPATH=/path/to/session/folder/headers.txt`).
-
+```python
+_SASJS_TOKENFILE = '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/reqHeaders.txt';
+_SASJS_USERNAME = 'allan';
+_SASJS_USERID = '6';
+_SASJS_DISPLAYNAME = 'Allan Bowe';
+_METAPERSON = _SASJS_DISPLAYNAME;
+_METAUSER = _SASJS_USERNAME;
+SASJSPROCESSMODE = 'Stored Program';
+```
 
 ### Input Files
 
@@ -209,15 +222,23 @@ _WEBIN_FILE_COUNT = 2
 
 If there are no files uploaded, only the following code will be generated:
 
-```js
-const _WEBIN_FILE_COUNT = 0
+```python
+_WEBIN_FILE_COUNT = 0
 ```
 
-Note that there are no `_WEBIN_FILEREF` variables created - in python it is necessary to know the type of file (eg binary / text) before it can be ingested with the `read()` function.
+Note that there are no `_WEBIN_FILEREF` variables created - in python it is necessary to know the type of file (eg binary / text) before it can be ingested with the `open()` function, eg `open(file.name,"rt")` or `open(file.name,"rb")`.  Therefore it is left an exercise for the developer to ingest as appropriate.
 
-The session folder (with the input files) will also be the current folder, eg `os.chdir(/path/to/session/folder)`.
+The session folder (with the input files) will also be the current folder, eg `os.chdir("/path/to/session/folder")`.
 
 ### Output
+
+The following variables are "special":
+
+#### `_WEBOUT`
+This variable points to a text file in the session folder (eg `_WEBOUT=/path/to/session/folder/webout.txt`).  All content written to `_WEBOUT` is streamed in the STP API call result.
+
+#### `HEADERSPATH`
+This variable points to a text file where header records (such as `Content-type: application/zip`) can be written, eg `HEADERSPATH=/path/to/session/folder/headers.txt`).
 
 To return data to the client, just write it to the `_WEBOUT` file.  It will then be returned to the browser / client application.  Be sure to set the `Content-Type` in the `HEADERSPATH` file if it is anything other than JSON.
 
