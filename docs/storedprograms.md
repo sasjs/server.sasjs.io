@@ -213,7 +213,7 @@ To illustrate with an example - we are uploading two files, f1.txt and f2.txt. T
 
 ```python
 _WEBIN_FILENAME1 = 'f1.txt'
-_WEBIN_FILENAME2 = 'f2.txt'
+_WEBIN_FILENAME2 = 'f2.xls'
 _WEBIN_NAME1 = 'FormRef1'
 _WEBIN_NAME1 = 'FormRef2'
 
@@ -226,7 +226,7 @@ If there are no files uploaded, only the following code will be generated:
 _WEBIN_FILE_COUNT = 0
 ```
 
-Note that there are no `_WEBIN_FILEREF` variables created - in python it is necessary to know the type of file (eg binary / text) before it can be ingested with the `open()` function, eg `open(_WEBIN_FILENAME1,"rt")` or `open(_WEBIN_FILENAME1,"rb")`.  Therefore it is left as an exercise for the developer to ingest as appropriate.
+Note that there are no `_WEBIN_FILEREF` variables created - in Python it is necessary to know the type of file (eg binary / text) before it can be ingested with the `open()` function, eg `open(_WEBIN_FILENAME1,"rt")` or `open(_WEBIN_FILENAME2,"rb")`.  Therefore it is left as an exercise for the developer to ingest as appropriate.
 
 The session folder (with the input files) will also be the current folder, eg `os.chdir("/path/to/session/folder")`.
 
