@@ -203,13 +203,15 @@ SASJSPROCESSMODE = 'Stored Program';
 
 ### Input Files
 
-Any files attached to a request will be saved in the [session folder](/sessions) and the following variables will be dynamically added to the Python program:
+Any files attached to a request will be saved in the [session folder](/sessions).  The session folder (with the input files) will also be the current folder, eg `os.chdir("/path/to/session/folder")`. 
+
+When input files exist, the following variables will also be dynamically added to the Python program:
 
 * `_WEBIN_FILE_COUNT` - contains an integer, from 0 to the number of files to being provided. This variable is always created.
 * `_WEBIN_FILENAME1` - the value that was specified in the FILENAME attribute by the frontend
 * `_WEBIN_NAME1` - the value that was specified in the NAME attribute by the frontend
 
-To illustrate with an example - we are uploading two files, f1.txt and f2.txt. The following Python code will be generated, and inserted at the beginning of the executed program:
+To illustrate with an example - we are uploading two files to a Python Stored Program, namely f1.txt and f2.xls. The following Python code will be generated, and inserted at the beginning of the executed program:
 
 ```python
 _WEBIN_FILENAME1 = 'f1.txt'
@@ -228,7 +230,6 @@ _WEBIN_FILE_COUNT = 0
 
 Note that there are no `_WEBIN_FILEREF` variables created - in Python it is necessary to know the type of file (eg binary / text) before it can be ingested with the `open()` function, eg `open(_WEBIN_FILENAME1,"rt")` or `open(_WEBIN_FILENAME2,"rb")`.  Therefore it is left as an exercise for the developer to ingest as appropriate.
 
-The session folder (with the input files) will also be the current folder, eg `os.chdir("/path/to/session/folder")`.
 
 ### Output
 
