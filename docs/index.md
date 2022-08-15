@@ -4,9 +4,8 @@ SASjs Server provides a visual interface and REST API for executing programs dir
 
 SASjs Server is FAST - responsiveness (for SAS Stored Programs) is around 200 milliseconds.  The following features are provided out of the box:
 
-* SASjs Drive - for storing SAS programs and other content
 * SASjs Studio - for running SAS code and examining webout content
-* Swagger REST API - documentation which can also used to make actual API calls
+* REST API - documentation which can also used to make actual API calls
 * AppStream - a portal for home-grown or third-party SAS-Powered Web Applications
 
 If you are running older versions of SAS, or SAS on a desktop, then this product will enable you to:
