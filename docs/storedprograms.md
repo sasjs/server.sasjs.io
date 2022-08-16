@@ -238,6 +238,13 @@ The following variables are "special":
 #### `_WEBOUT`
 This variable points to a text file in the session folder (eg `_WEBOUT="/path/to/session/folder/webout.txt"`).  All content written to `_WEBOUT` is streamed in the STP API call result.
 
+Example code:
+
+```python
+f = open(_WEBOUT, 'w')
+f.write('{"hello":"world"}')
+```
+
 #### `HEADERSPATH`
 This variable points to a text file where header records (such as `Content-type: application/zip`) can be written, eg `HEADERSPATH="/path/to/session/folder/headers.txt"`).
 
