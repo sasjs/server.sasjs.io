@@ -115,6 +115,18 @@ Whether to launch the server in `desktop` (single user / workstation) or `server
 
 Default: `desktop`
 
+### NODE_PATH
+
+The path to the NodeJS executable (for running JavaScript programs).
+
+Example: `NODE_PATH=~/.nvm/versions/node/v16.14.0/bin/node`
+
+See also:
+
+* [`PYTHON_PATH`](/settings/#python_path)
+* [`RUN_TIMES`](/settings/#run_times)
+* [`SAS_PATH`](/settings/#sas_path)
+
 ### PORT
 The port on which to serve.  Default: 5000
 
@@ -148,20 +160,39 @@ See also:
 * [`CERT_CHAIN`](/settings/#cert_chain)
 * [`PRIVATE_KEY`](/settings/#private_key)
 
+### PYTHON_PATH
+
+The path to the Python executable (for running Python programs).
+
+Example: `PYTHON_PATH=/usr/bin/python`
+
+See also:
+
+* [`NODE_PATH`](/settings/#node_path)
+* [`RUN_TIMES`](/settings/#run_times)
+* [`SAS_PATH`](/settings/#sas_path)
+
+
 ### RUN_TIMES
 A comma separated string that defines the available runtimes.
 
-**Priority is given to the runtime that comes first in string**.
+**Priority is given to the runtime that comes first in the string**.
 
-So given a `RUNTIME=js,sas` if `_program=/some/program` then SASjs Server will look for `program.js` in the `/some` folder before `program.sas`.  If `_program=/some/program.sas` then a SAS runtime will always be used.
+Given a `RUNTIME=js,sas,py`:
+* If `_program=/some/program` then SASjs Server will first look for `program.js` in the `/some` folder, then `program.sas`, and finally `program.py`.
+* If `_program=/some/program.sas` then a SAS runtime will always be used.
 
-In the future we plan to support Python and R runtimes in addition to SAS and JS.
+Supported runtimes:
 
-Default: `sas,js`
+* `js` - JavaScript
+* `sas` - SAS
+* `py` - Python
+
+Default: `sas,js,py`
 
 Example:
 
-`RUN_TIMES=js,sas`
+`RUN_TIMES=js,sas,py`
 
 ### SAS_OPTIONS
 
@@ -185,6 +216,13 @@ To force UTF-8 encoding, update the appropriate `sasv9.cfg` file with the follow
 Example:
 
 `SAS_PATH=/path/to/sas/executable.exe`
+
+See also:
+
+* [`NODE_PATH`](/settings/#node_path)
+* [`PYTHON_PATH`](/settings/#python_path)
+* [`RUN_TIMES`](/settings/#run_times)
+
 
 ### SASJS_ROOT
 
