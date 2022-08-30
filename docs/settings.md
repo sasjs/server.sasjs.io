@@ -55,7 +55,7 @@ Developer notes: processed internally as [`ca:` option](https://nodejs.org/api/t
 Options: [disable|enable]
 Default: `disable` for `server` & `enable` for `desktop`
 
-If enabled, be sure to also configure the WHITELIST of any third party servers.
+If enabled, it is also necessary to configure the [`WHITELIST`](/settings/#whitelist) of additional server(s).
 
 ### DB_CONNECT
 Necessary for server mode.  Connection string for Mongo DB instance.  Example:
@@ -241,6 +241,10 @@ Example: `SASV9_OPTIONS= -NOXCMD`
 
 
 ### WHITELIST
-Space separated urls, eg: `WHITELIST=http://localhost:3000 https://abc.com`
+Space separated urls, eg: `WHITELIST=http://localhost:3000 https://abc.com`.  
+  
+See also:
+
+* [`CORS`](/settings/#cors)
 
 
