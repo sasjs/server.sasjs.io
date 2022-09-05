@@ -250,3 +250,77 @@ This variable points to a text file where header records (such as `Content-type:
 
 To return data to the client, just write it to the `_WEBOUT` file.  It will then be returned to the browser / client application.  Be sure to set the `Content-Type` in the `HEADERSPATH` file if it is anything other than JSON.
 
+## R Programs
+
+Stored Programs may also run using the language of R.  Any content written to `sys.stdout` or `sys.stderr` will be returned in the response "log" (identically to SAS). 
+
+### Input Variables
+
+Any URL parameters (eg `&name1=value1&something=else`) are attached as R variables in uppercase, eg as follows:
+
+```r
+NAME1 <- 'value1'
+SOMETHING <- 'else'
+```
+
+A number of "fixed" variables are also added at the start of the program, eg as follows:
+
+```r
+_SASJS_TOKENFILE <- '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/reqHeaders.txt';
+_SASJS_USERNAME <- 'allan';
+_SASJS_USERID <- '6';
+_SASJS_DISPLAYNAME <- 'Allan Bowe';
+_METAPERSON <- _SASJS_DISPLAYNAME;
+_METAUSER <- _SASJS_USERNAME;
+SASJSPROCESSMODE <- 'Stored Program';
+```
+
+### Input Files
+
+Any files attached to a request will be saved in the [session folder](/sessions).  The session folder (with the input files) will also be the current folder, eg `setwd("/path/to/session/folder")`. 
+
+When input files exist, the following variables will also be dynamically added to the Python program:
+
+* `_WEBIN_FILE_COUNT` - contains an integer, from 0 to the number of files to being provided. This variable is always created.
+* `_WEBIN_FILENAME1` - the value that was specified in the FILENAME attribute by the frontend
+* `_WEBIN_NAME1` - the value that was specified in the NAME attribute by the frontend
+
+To illustrate with an example - we are uploading two files to an R Stored Program, namely f1.txt and f2.xls. The following R code will be generated, and inserted at the beginning of the executed program:
+
+```r
+_WEBIN_FILENAME1 <- 'f1.txt'
+_WEBIN_FILENAME2 <- 'f2.xls'
+_WEBIN_NAME1 <- 'FormRef1'
+_WEBIN_NAME1 <- 'FormRef2'
+
+_WEBIN_FILE_COUNT = 2
+```
+
+If there are no files uploaded, only the following code will be generated:
+
+```r
+_WEBIN_FILE_COUNT <- 0
+```
+
+Note that there are no `_WEBIN_FILEREF` variables created - in R it is necessary to know the type of file (eg binary / text) before it can be ingested, eg `read.delim(_WEBIN_FILENAME1, header = FALSE)` or `read.delim2(_WEBIN_FILENAME2, header = FALSE)`.  Therefore it is left as an exercise for the developer to ingest as appropriate.
+
+
+### Output
+
+The following variables are "special":
+
+#### `_WEBOUT`
+This variable points to a text file in the session folder (eg `_WEBOUT <- "/path/to/session/folder/webout.txt"`).  All content written to `_WEBOUT` is streamed in the STP API call result.
+
+Example code:
+
+```r
+cat('{"hello":"world"}',file=_WEBOUT)
+```
+
+#### `HEADERSPATH`
+This variable points to a text file where header records (such as `Content-type: application/zip`) can be written, eg `HEADERSPATH <- "/path/to/session/folder/headers.txt"`).
+
+To return data to the client, just write it to the `_WEBOUT` file.  It will then be returned to the browser / client application.  Be sure to set the `Content-Type` in the `HEADERSPATH` file if it is anything other than JSON.
+
+
