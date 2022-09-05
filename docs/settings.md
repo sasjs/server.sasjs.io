@@ -109,6 +109,12 @@ Example: `LOG_LOCATION=./sasjs_root/logs`
 
 ![](img/log_location.png)
 
+### MOCK_SERVERTYPE
+
+Used internally for CLI / Adapter testing - set to `SAS9` or `SASVIYA` when launching to enable responses in the format of alternative platforms.  These mocks are not functional, and have no use outside of development / testing purposes.
+
+Default: `SASJS`
+
 ### MODE
 
 Whether to launch the server in `desktop` (single user / workstation) or `server` mode (multi-user).  For server mode, a Mongo DB connection string must be provided in the [DB_CONNECT](#db_connect) variable.
