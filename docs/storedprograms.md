@@ -293,7 +293,7 @@ _WEBIN_FILENAME2 <- 'f2.xls'
 _WEBIN_NAME1 <- 'FormRef1'
 _WEBIN_NAME1 <- 'FormRef2'
 
-_WEBIN_FILE_COUNT = 2
+_WEBIN_FILE_COUNT <- 2
 ```
 
 If there are no files uploaded, only the following code will be generated:
