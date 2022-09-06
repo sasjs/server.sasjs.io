@@ -67,7 +67,7 @@ filename _SJS0002 "/some/temp/location/file2";
 %let _WEBIN_FILEREF1=_SJS0001;
 %let _WEBIN_FILEREF2=_SJS0002;
 %let _WEBIN_NAME1=F1;
-%let _WEBIN_NAME1=F2;
+%let _WEBIN_NAME2=F2;
 ```
 
 If there are no files uploaded, only the following code will be generated:
@@ -138,7 +138,7 @@ const _WEBIN_FILEREF2 = fs.readFileSync('/path/to/file2')
 const _WEBIN_FILENAME1 = 'F1'
 const _WEBIN_FILENAME2 = 'F2'
 const _WEBIN_NAME1 = 'FormRef1'
-const _WEBIN_NAME1 = 'FormRef2'
+const _WEBIN_NAME2 = 'FormRef2'
 
 const _WEBIN_FILE_COUNT = 2
 
@@ -217,7 +217,7 @@ To illustrate with an example - we are uploading two files to a Python Stored Pr
 _WEBIN_FILENAME1 = 'f1.txt'
 _WEBIN_FILENAME2 = 'f2.xls'
 _WEBIN_NAME1 = 'FormRef1'
-_WEBIN_NAME1 = 'FormRef2'
+_WEBIN_NAME2 = 'FormRef2'
 
 _WEBIN_FILE_COUNT = 2
 ```
@@ -252,7 +252,7 @@ To return data to the client, just write it to the `_WEBOUT` file.  It will then
 
 ## R Programs
 
-Stored Programs may also run using the language of R.  Any content written to `sys.stdout` or `sys.stderr` will be returned in the response "log" (identically to SAS). 
+Stored Programs may also run using the language of R.  Any content written to `.ROut` will be returned in the response "log" (identically to SAS). 
 
 ### Input Variables
 
@@ -279,7 +279,7 @@ SASJSPROCESSMODE <- 'Stored Program';
 
 Any files attached to a request will be saved in the [session folder](/sessions).  The session folder (with the input files) will also be the current folder, eg `setwd("/path/to/session/folder")`. 
 
-When input files exist, the following variables will also be dynamically added to the Python program:
+When input files exist, the following variables will also be dynamically added to the R program:
 
 * `_WEBIN_FILE_COUNT` - contains an integer, from 0 to the number of files to being provided. This variable is always created.
 * `_WEBIN_FILENAME1` - the value that was specified in the FILENAME attribute by the frontend
