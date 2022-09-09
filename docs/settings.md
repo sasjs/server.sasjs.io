@@ -175,6 +175,18 @@ Example: `PYTHON_PATH=/usr/bin/python`
 See also:
 
 * [`NODE_PATH`](/settings/#node_path)
+* [`R_PATH`](/settings/#r_path)
+* [`RUN_TIMES`](/settings/#run_times)
+* [`SAS_PATH`](/settings/#sas_path)
+  
+# R_PATH
+
+The path to the R executable (for running R programs).  Installation guides for R are available for [Centos 7](https://linuxize.com/post/how-to-install-r-on-centos-7/), [ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-20-04) and [Debian](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-debian-10).
+  
+Example: `R_PATH=/usr/bin/Rscript`
+  
+* [`NODE_PATH`](/settings/#node_path)
+* [`PYTHON_PATH`](/settings/#python_path)
 * [`RUN_TIMES`](/settings/#run_times)
 * [`SAS_PATH`](/settings/#sas_path)
 
