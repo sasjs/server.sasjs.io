@@ -197,14 +197,17 @@ A comma separated string that defines the available runtimes.
 **Priority is given to the runtime that comes first in the string**.
 
 Given a `RUNTIME=js,sas,py`:
+  
 * If `_program=/some/program` then SASjs Server will first look for `program.js` in the `/some` folder, then `program.sas`, and finally `program.py`.
 * If `_program=/some/program.sas` then a SAS runtime will always be used.
+* If `_program=/some/program.r` then an R runtime will be used (and so-on)
 
 Supported runtimes:
 
 * `js` - JavaScript
 * `sas` - SAS
 * `py` - Python
+* `r` - R
 
 Default: `sas,js,py`
 
