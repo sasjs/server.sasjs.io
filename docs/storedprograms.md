@@ -9,7 +9,7 @@ og_image: /img/stps.png
 
 Stored Programs may be written in SAS, Python, R, or JavaScript and are saved to SASjs Drive.  When the `/SASjsApi/stp/execute` endpoint is called with a `_PROGRAM` URL parameter (pointing to the logical program location), a "Stored Program" is prepared and executed in a SAS or JS [session](/sessions) according to the file extension.
 
-For the usual case where the _program variable does NOT contain an extension (eg `/some/stored/program`) then by default, SASjs Server will attempt to find "program.sas" in the `/some/stored` folder.  To change this default, see the [RUN_TIMES](/settings/#RUN_TIMES) settings.
+For the usual case where the `_program` variable does NOT contain an extension (eg `/some/stored/program`) then by default, SASjs Server will attempt to find "program.sas" in the `/some/stored` folder.  To change this default, see the [RUN_TIMES](/settings/#RUN_TIMES) settings.
 
 When Stored Programs are executed, some pre-code is injected to make available various inputs, such as:
 
@@ -17,7 +17,7 @@ When Stored Programs are executed, some pre-code is injected to make available v
 * Input Files
 * Utility Macros / Functions
 
-The implementation varies depending on whether it is running as a SAS or JS session:
+The implementation varies depending on whether it is running as a SAS, JS, Python or R session.
 
 ## SAS Programs
 
@@ -34,14 +34,13 @@ A number of "fixed" variables are also added at the start of the program - you c
 
 The following variables are "special":
 
-#### _PROGRAM
+#### `_PROGRAM`
 This is a required input, and will point to the Stored Program location in SASjs Drive.  The extension may be omitted, subject to the behaviour in the [RUN_TIMES](/settings/#RUN_TIMES) setting.
 
-#### _DEBUG
-Setting this to 131 or greater will result in the log being returned, and the following line added to the start of the program:  `options mprint;`.  The resulting output behaviour of SASjs server will depend on the http method:
+#### `_DEBUG`
+Setting this to 131 or greater will result in the log being returned, and the following line added to the start of the program:  `options mprint;`.  The log will have the following UUID, which can be used as a seperator:  `SASJS_LOGS_SEPARATOR_163ee17b6ff24f028928972d80a26784`
 
-* GET request:  Setting debug will result in a Content-Type header of 'text/plain', and the log will be streamed in the response body.
-* POST request: The log will be returned in the `log` attribute of the response JSON object.
+Setting `_debug` also results in the creation of `Content-Type` header of `text/plain`.
 
 
 ### Input Files
@@ -81,11 +80,7 @@ If there are no files uploaded, only the following code will be generated:
 
 Any response data should be written to the `_webout` fileref (which is pre-assigned in the session).  The corresponding header records (content type etc) can be written using the [mfs_httpheader](https://core.sasjs.io/mfs__httpheader_8sas.html) macro. Additional [SASjs Server specific macros](https://core.sasjs.io/dir_41e1742e44e2de38b3bc91f993fed282.html) are also available.
 
-Note that the response will be served differently depending on which http method is used:
-
-* GET request: The response will be streamed according to the headers, and the _debug setting
-* POST request: The response is always JSON, with _webout contents stringified into the `webout` attribute of the response.
-
+The response (content and header) will vary depending on the [`_debug`](#_debug) setting.
 
 ## JS Programs
 
