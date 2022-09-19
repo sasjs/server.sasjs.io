@@ -33,7 +33,7 @@ PORT=443
 
 Then launch the executable (eg `./api-win.exe` or double click).  If launching from terminal there should be a link in the log to open the app (eg http://localhost:5000).  If double clicking, the browser should open automatically.
 
-A full guide to deploying SASjs Server on a VPS is also available [here](https://sasapps.io/sasjs-server-on-vps).
+A full guide to deploying SASjs Server on a Ubuntu VPS is available [here](https://sasapps.io/sasjs-server-on-vps).
 
 
 ## SSL Certificates
