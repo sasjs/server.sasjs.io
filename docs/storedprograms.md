@@ -92,6 +92,19 @@ The use of JS "programs" as your backend is highly beneficial for the following 
 
 Any `console.log()` statements written by your JavaScript will be returned in the response "log" (identically to SAS). 
 
+If your Job / Service / Test depends on any third party libraries / packages, then you need to bundle that service before deploying it to sasjs server. You can choose any bundler for this process. One possible option could be `webpack`. If you choose webpack then you can use it like this:
+
+`npx webpack --mode none --target node --entry <path-of-file-to-bundle/build> --output-path <path-of-output-folder> --output-filename <name-of-output-file>`
+
+For instance if you have a mock service at path `sasjs/services/common/appinit.js` and you want to build and make it ready for deployment, you can run the following in the terminal:
+
+`npx webpack --mode none --target node --entry ./sasjs/services/common/appinit.js --output-path sasjsbuild/services/common --output-filename appinit.js`
+
+Repeat this for any other JS Stored Programs as needed.
+
+Finally, run `sasjs build` to create the deployment pack, and `sasjs deploy` to deploy.
+
+
 ### Input Variables
 
 Any URL parameters (eg `&name1=value1&something=else`) are attached as JS variables eg as follows:
