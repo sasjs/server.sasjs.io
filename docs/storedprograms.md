@@ -19,6 +19,18 @@ When Stored Programs are executed, some pre-code is injected to make available v
 
 The implementation varies depending on whether it is running as a SAS, JS, Python or R session.
 
+## Special Variables
+
+The following variables are "special":
+
+### `_PROGRAM`
+This is a required input, and will point to the Stored Program location in SASjs Drive.  The extension may be omitted, subject to the behaviour in the [RUN_TIMES](/settings/#RUN_TIMES) setting.
+
+### `_DEBUG`
+Setting this to 131 or greater will result in the log being returned.  The log will have the following UUID, which can be used as a seperator:  `SASJS_LOGS_SEPARATOR_163ee17b6ff24f028928972d80a26784`
+
+Setting `_DEBUG` also results in the creation of a `Content-Type` header of `text/plain`.
+
 ## SAS Programs
 
 ### Input Variables
@@ -32,15 +44,7 @@ Any URL parameters (eg `&name1=value1&something=else`) are attached as macro var
 
 A number of "fixed" variables are also added at the start of the program - you can see the code that generates these in the repo, [here](https://github.com/sasjs/server/blob/main/api/src/controllers/internal/Execution.ts#L93).
 
-The following variables are "special":
-
-#### `_PROGRAM`
-This is a required input, and will point to the Stored Program location in SASjs Drive.  The extension may be omitted, subject to the behaviour in the [RUN_TIMES](/settings/#RUN_TIMES) setting.
-
-#### `_DEBUG`
-Setting this to 131 or greater will result in the log being returned, and the following line added to the start of the program:  `options mprint;`.  The log will have the following UUID, which can be used as a seperator:  `SASJS_LOGS_SEPARATOR_163ee17b6ff24f028928972d80a26784`
-
-Setting `_debug` also results in the creation of `Content-Type` header of `text/plain`.
+If `_DEBUG` is set then `options mprint;` will also be automatically added to the start of the Stored Program.
 
 
 ### Input Files
