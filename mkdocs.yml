@@ -4,7 +4,6 @@ nav:
   - Home: index.md
   - Installation: installation.md
   - User Guide:
-      - Authorisation: auth.md
       - App Stream: apps.md
       - SASjs Studio: studio.md
   - Developer Guide:
@@ -12,7 +11,8 @@ nav:
       - Sessions: sessions.md
       - Stored Programs: storedprograms.md
   - Admin Guide:
-      - Permissions: permissions.md
+      - Authentication: auth.md
+      - Authorisation: permissions.md
       - Settings: settings.md
   - FAQ: faq.md
 
