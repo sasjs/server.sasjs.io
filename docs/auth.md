@@ -5,7 +5,7 @@ description: Configuring Authentication Mechanisms in SASjs Server (LDAP and Int
 og_image: /img/ldapconfig.png
 ---
 
-# Auth
+# Authentication
 
 SASjs Server currently supports two authentication methods - LDAP, and Internal.  Would you like to see more?  [Sponsor](https://github.com/sponsors/sasjs) us!
 
