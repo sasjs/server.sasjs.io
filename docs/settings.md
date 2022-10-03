@@ -18,6 +18,15 @@ The usual / preferred method is to provide the variables in the `.env` file (whi
 ![](img/env.png)
 ## Environment Variables
 
+### AUTH_PROVIDERS
+
+Used to list the desired Authentication providers (space separated).  Currently only LDAP (`ldap`) is supported, but we plan to allow other providers such as Viya, Okta, OpenID, and LNURL-auth.
+
+Example:
+```
+AUTH_PROVIDERS=ldap
+```
+
 ### CERT_CHAIN
 
 Necessary when `PROTOCOL=https`
@@ -91,6 +100,43 @@ Example config:
 ```
 
 Example: `HELMET_CSP_CONFIG_PATH=./csp.config.json`
+
+### LDAP_URL
+
+The URL of the LDAP directory server.
+
+Example:
+```
+LDAP_URL= <LDAP_SERVER_URL>
+```
+
+### LDAP_BIND_DN
+
+Example:
+```
+LDAP_BIND_DN= <cn=admin,ou=system,dc=cloudron>
+```
+
+### LDAP_BIND_PASSWORD 
+
+All LDAP queries have to be authenticated with this secret and the LDAP_USERS_BASE_DN
+
+Example:
+```
+LDAP_BIND_PASSWORD = <password>
+```
+
+### LDAP_USERS_BASE_DN
+
+```
+LDAP_USERS_BASE_DN = <ou=users,dc=cloudron>
+```
+
+### LDAP_GROUPS_BASE_DN
+
+```
+LDAP_GROUPS_BASE_DN = <ou=groups,dc=cloudron>
+```
 
 ### LOG_FORMAT_MORGAN
 

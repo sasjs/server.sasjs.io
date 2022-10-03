@@ -1,40 +1,37 @@
-# Authorisation
+---
+layout: article
+title: Authentication
+description: Configuring Authentication Mechanisms in SASjs Server (LDAP and Internal)
+og_image: /img/ldapconfig.png
+---
 
-SASjs Server supports 3 authentication methods - Viya auth, Auth0, and username/password.  Regardless of the mechanism used, credentials and user attributes are encrypted and stored internally as a JWT token. The token is associated with a SASjs Session ID, which is passed in each API request inside an `Authorisation:` header attribute OR a cookie.
+# Auth
 
-## Viya Auth
-This approach is recommended whenever Viya authorisation is available. The configuration steps are as follows:
+SASjs Server currently supports two authentication methods - LDAP, and Internal.  Would you like to see more?  [Sponsor](https://github.com/sponsors/sasjs) us!
 
-1. Configure SASjs Server for Viya Auth
-2. Register a client and secret (administrator task) using the **authorization_code** grant type.  Here are some [helpful resources](https://cli.sasjs.io/faq/#how-can-i-obtain-a-viya-client-and-secret).
-3. Enter the client / secret into the SASjs database (tool to be provided)
+Note that authentication is only available in **server mode** (not desktop).
 
-The user flow is as follows:
+## Internal Authentication
 
-1. Navigate to {SASjsServerUrl}/SASjsLogon
-2. Click "LOGON"
+By default, users are created using the internal database with a password configured by an admin.  Groups can also be added, and permissions set against those groups.
 
-Behind the scenes, the following flow will occur:
+## LDAP Authentication
 
-1. `/SASjsLogon` page will request the CLIENT_ID from `/SASjsApi/auth/viyaclientid` (unsecured endpoint)
-2. The user is redirected to `/SASLogon/oauth/authorize?response_type=code&client_id=${CLIENT_ID}`
-3. Following authentication, the frontend will pass the AUTH_CODE to backend
-4. Backend will send CLIENT_ID, CLIENT_SECRET and AUTH_CODE to `/SASLogon/oauth/token`, receiving the ACCESS_TOKEN and REFRESH_TOKEN in response
-5. The ACCESS_TOKEN and REFRESH_TOKEN are stored (securely) in a JWT, and associated with a SASjs SESSION_ID
-6. The SESSION_ID is returned to `/SASjsLogon` and stored in a cookie
-7. Subsequent requests by the Frontend, or API clients, will make use of the SASjs Session ID (until expiry).
-8. If the ACCESS_TOKEN expires, the backend will refresh it automatically using the REFRESH_TOKEN.
+SASjs Server can connect to an LDAP server (internally, we use the [LDAPjs](http://ldapjs.org/client.html) library).  Any users / groups that are imported will be in _addition_ to any internal users / groups.  If there are conflicts, those particular users/groups will not be imported - to fix this, just delete the relevant (SASjs internal) users/groups and re-import.
 
-The following diagram illustrates:
+Note that at least one internal admin user is necessary, to be able to log in and do the import.  After this, the internal user may nominate other (LDAP) users as SASjs admins.
 
-![viya flow](draw.io/viyaflow.svg)
+Configuration is made in the following `.env` settings:
 
-## Auth0
+```
+AUTH_PROVIDERS=ldap
+LDAP_URL= <LDAP_SERVER_URL>
+LDAP_BIND_DN= <cn=admin,ou=system,dc=cloudron>
+LDAP_BIND_PASSWORD = <password>
+LDAP_USERS_BASE_DN = <ou=users,dc=cloudron>
+LDAP_GROUPS_BASE_DN = <ou=groups,dc=cloudron>
+```
 
-Auth0 is a third party authentication provider, which supports all major authentication methods - such as SAML, SSO, LDAP, Social Logins, etc etc.
+Next, restart the server and log in with the admin user. Navigate to the settings tab.  You should see a screen like the below.  Import the users & groups by clicking the 'synchronise' button.
 
-## Username / Password
-This authentication mode is recommended for Desktop Apps (running SAS locally), or - for server deploys - where there is no Viya, no internet acecss, or no appetite for Oauth0.  Once the user authenticates (using `/SASjsLogon`) a SESSION_ID is generated, which is stored in a cookie, and can also be passed in the `Authorisation:` header for API requests.
-
-
-
+![LDAP in SASjs](img/ldapconfig.png)
