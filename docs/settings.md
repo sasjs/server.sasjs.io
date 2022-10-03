@@ -107,14 +107,14 @@ The URL of the LDAP directory server.
 
 Example:
 ```
-LDAP_URL= <LDAP_SERVER_URL>
+LDAP_URL= ldaps://LDAP_SERVER_URL:PORT
 ```
 
 ### LDAP_BIND_DN
 
 Example:
 ```
-LDAP_BIND_DN= <cn=admin,ou=system,dc=cloudron>
+LDAP_BIND_DN=cn=admin,ou=system,dc=companyname
 ```
 
 ### LDAP_BIND_PASSWORD 
@@ -129,13 +129,13 @@ LDAP_BIND_PASSWORD = <password>
 ### LDAP_USERS_BASE_DN
 
 ```
-LDAP_USERS_BASE_DN = <ou=users,dc=cloudron>
+LDAP_USERS_BASE_DN = ou=users,dc=companyname
 ```
 
 ### LDAP_GROUPS_BASE_DN
 
 ```
-LDAP_GROUPS_BASE_DN = <ou=groups,dc=cloudron>
+LDAP_GROUPS_BASE_DN = ou=groups,dc=companyname
 ```
 
 ### LOG_FORMAT_MORGAN

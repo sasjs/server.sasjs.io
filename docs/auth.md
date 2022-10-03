@@ -25,11 +25,11 @@ Configuration is made in the following `.env` settings:
 
 ```
 AUTH_PROVIDERS=ldap
-LDAP_URL= <LDAP_SERVER_URL>
-LDAP_BIND_DN= <cn=admin,ou=system,dc=cloudron>
+LDAP_URL= ldaps://LDAP_SERVER_URL:PORT
+LDAP_BIND_DN= cn=admin,ou=system,dc=companyname
 LDAP_BIND_PASSWORD = <password>
-LDAP_USERS_BASE_DN = <ou=users,dc=cloudron>
-LDAP_GROUPS_BASE_DN = <ou=groups,dc=cloudron>
+LDAP_USERS_BASE_DN = ou=users,dc=companyname
+LDAP_GROUPS_BASE_DN = ou=groups,dc=companyname
 ```
 
 Next, restart the server and log in with the admin user. Navigate to the settings tab.  You should see a screen like the below.  Import the users & groups by clicking the 'synchronise' button.
