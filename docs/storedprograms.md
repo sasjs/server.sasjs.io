@@ -169,18 +169,18 @@ The following variables are "special":
 #### `_webout`
 Any content added to this variable will be stringified and returned to the browser by SASjs Server.   
 
-#### `headersPath`
+#### `_SASJS_WEBOUT_HEADERS`
 This variable points to a text file where header records (such as `Content-type: application/zip`) can be written
 
-Any data inside the `_webout` variable is written to a file using the following code:
+Example:
 
-```js
-if (_webout) {
-  fs.writeFile(weboutPath, _webout, function (err) {
-    if (err) throw err;
-  })
-}
 ```
+fs.writeFile(_SASJS_WEBOUT_HEADERS, 'Content-type: application/zip', function (err) {
+    if (err) throw err;
+})
+```
+
+So now the response that will be returned will contain `content type` appended in the file.
 
 ## Python Programs
 
