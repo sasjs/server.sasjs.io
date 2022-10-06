@@ -166,13 +166,8 @@ const _WEBIN_FILE_COUNT = 0
 
 The following variables are "special":
 
-#### `_webout`
-Any content added to this variable will be stringified and returned to the browser by SASjs Server.   
-
 #### `_SASJS_WEBOUT_HEADERS`
-This variable points to a text file where header records (such as `Content-type: application/zip`) can be written
-
-Example:
+This (string) variable points to the location of a text file where header records (such as `Content-type: application/zip`) can be written.  Sample code that could be used to perform such an operation might look like:
 
 ```
 fs.writeFile(_SASJS_WEBOUT_HEADERS, 'Content-type: application/zip', function (err) {
@@ -180,7 +175,13 @@ fs.writeFile(_SASJS_WEBOUT_HEADERS, 'Content-type: application/zip', function (e
 })
 ```
 
-So now the response that will be returned will contain `content type` appended in the file.
+So long as `Content-type: application/zip` is the _last_ entry in the file, it will be applied as the content-type in the Response Header.
+
+
+#### `_webout`
+Any content added to this variable will be stringified and automatically returned to the browser by SASjs Server.  The variable can be used to hold binary, or textual content.  Whatever is contained within this variable, is what will be returned in the Response Body.  If it is not HTML, then it may be necessary also to set the Request Headers using the temporary file in the `_SASJS_WEBOUT_HEADERS` variable above.
+
+
 
 ## Python Programs
 
