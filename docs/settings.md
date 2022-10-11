@@ -27,6 +27,17 @@ Example:
 AUTH_PROVIDERS=ldap
 ```
 
+### ALLOWED_DOMAIN
+
+Prevent authentication from other domains by listing the primary domain here.  This will reject cookies arriving from any other domain.  Used only when `MODE=server`, and only for the web apps / authentication.  
+
+Example:
+```
+ALLOWED_DOMAIN=sas.company.com
+```
+
+For API use by different servers / domains, see [CORS](/settings/#cors) and [WHITELIST](/settings/#whitelist) settings.
+
 ### CERT_CHAIN
 
 Necessary when `PROTOCOL=https`
