@@ -83,6 +83,20 @@ Necessary for server mode.  Connection string for Mongo DB instance.  Example:
 DB_CONNECT=mongodb+srv://<DB_USERNAME>:<DB_PASSWORD>@<CLUSTER>/<DB_NAME>?retryWrites=true&w=majority
 ```
 
+### DRIVE_LOCATION
+
+This setting is useful if you are running multiple instances of SASjs Server and would like to re-use the same Drive folder, Macros, Packages, and appStream config.
+
+The DRIVE_LOCATION can be shared across instances, but the SASJS_ROOT can't - as it will cause conflicts with sessions / uploads etc.
+
+If using this feature, be aware that the `appStreamConfig.json` is loaded on server startup - therefore if you are deploying a new app (or modifying app metadata attributes, such as the logo), the other instances will need to be restarted to view them in the portal.   If this is problematic for your project, please raise an [issue](https://github.com/sasjs/server/issues/new).
+
+See also:
+
+* [`LOG_LOCATION`](/settings/#log_location)
+* [`SASJS_ROOT`](/settings/#sasjs_root)
+
+
 ### HELMET_COEP
 
 HELMET Cross Origin Embedder Policy.  Sets the Cross-Origin-Embedder-Policy header to require-corp when `true`
