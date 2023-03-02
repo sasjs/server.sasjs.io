@@ -83,6 +83,13 @@ Necessary for server mode.  Connection string for Mongo DB instance.  Example:
 DB_CONNECT=mongodb+srv://<DB_USERNAME>:<DB_PASSWORD>@<CLUSTER>/<DB_NAME>?retryWrites=true&w=majority
 ```
 
+### DB_TYPE
+Specify the type of database.  When `DB_TYPE=cosmos_mongodb` the connection is made using [compatibility mode](https://www.npmjs.com/package/connect-mongo#set-the-compatibility-mode).
+
+Options: [mongodb|cosmos_mongodb]
+Default: mongodb
+
+
 ### DRIVE_LOCATION
 
 This setting is useful if you are running multiple instances of SASjs Server and would like to re-use the same Drive folder, Macros, Packages, and appStream config.
@@ -250,7 +257,7 @@ See also:
 * [`RUN_TIMES`](/settings/#run_times)
 * [`SAS_PATH`](/settings/#sas_path)
   
-# R_PATH
+### R_PATH
 
 The path to the R executable (for running R programs).  Installation guides for R are available for [Centos 7](https://linuxize.com/post/how-to-install-r-on-centos-7/), [ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-20-04) and [Debian](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-debian-10).
   
