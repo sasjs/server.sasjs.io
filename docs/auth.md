@@ -61,6 +61,6 @@ MAX_CONSECUTIVE_FAILS_BY_USERNAME_AND_IP = <number>
 
 ## Admin Account
 
-The default credentials for login are `secretuser` and `secretpassword`.  These can be adjusted using the ADMIN_USERNAME and ADMIN_PASSWORD_INITIAL options on server startup.  
+The default credentials for login are `secretuser` and `secretpassword`.  These can be adjusted using the [ADMIN_USERNAME](/settings/#admin_username) and [ADMIN_PASSWORD_INITIAL](/settings/#admin_password_initial) options on server startup.  
 
-If the admin password is misplaced, it can be reset by restarting the server with `ADMIN_PASSWORD_RESET=YES`.  Be sure to set it back to NO (or remove the option) to prevent the password being reset on any subsequent server restart.
+If the admin password is misplaced, it can be reset by restarting the server with [ADMIN_PASSWORD_RESET](/settings/#admin_password_reset) set to `YES`.  Be sure to set it back to `NO` (or remove the option) to prevent the password being reset on any subsequent server restart.
