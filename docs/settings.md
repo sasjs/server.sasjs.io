@@ -62,7 +62,7 @@ Example:
 AUTH_PROVIDERS=ldap
 ```
 
-### ALLOWED_DOMAIN
+### ALLOWED_DOMAIN
 
 Prevent authentication from other domains by listing the primary domain here.  This will reject cookies arriving from any other domain.  Used only when `MODE=server`, and only relevant for SASjs Studio / SASjs Logon.  
 
