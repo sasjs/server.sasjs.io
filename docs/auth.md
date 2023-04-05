@@ -58,3 +58,9 @@ MAX_WRONG_ATTEMPTS_BY_IP_PER_DAY = <number>
 # Default: 10
 MAX_CONSECUTIVE_FAILS_BY_USERNAME_AND_IP = <number>
 ```
+
+## Admin Account
+
+The default credentials for login are `secretuser` and `secretpassword`.  These can be adjusted using the ADMIN_USERNAME and ADMIN_PASSWORD_INITIAL options on server startup.  
+
+If the admin password is misplaced, it can be reset by restarting the server with `ADMIN_PASSWORD_RESET=YES`.  Be sure to set it back to NO (or remove the option) to prevent the password being reset on any subsequent server restart.
