@@ -23,7 +23,7 @@ In a server environment, it is highly recommended to protect this file with appr
 
 ### ADMIN_PASSWORD_INITIAL
 
-Defines the temporary password for the `ADMIN_USERNAME`, which is in place until the first login.  Default is `secretpassword`.
+Defines the initial (temporary) password for the `ADMIN_USERNAME`, which is in place until the first login.  Default is `secretpassword`.
 
 Example:
 
@@ -34,7 +34,7 @@ ADMIN_PASSWORD_INITIAL=secretpassword
 ### ADMIN_PASSWORD_RESET
 
 This option can be used to force a reset of the password of the `ADMIN_USERNAME`.  Default is NO.  Possible options are YES and NO.
-If `ADMIN_PASSWORD_RESET` is YES then the `ADMIN_USERNAME` will be prompted to change the password from `ADMIN_PASSWORD_INITIAL` on their next login. This will repeat on every server restart, unless the option is removed / set to NO.
+If `ADMIN_PASSWORD_RESET=YES` then the `ADMIN_USERNAME` will be prompted to change the password **from** `ADMIN_PASSWORD_INITIAL` (default is `secretpassword`) on next login. This will repeat on every server restart, unless the option is removed / set to NO.
 
 If the `ADMIN_USERNAME` is an existing, non-admin user then the password will NOT be reset (only works for admins).  If the ADMIN_USERNAME uses an auth provider (eg LDAP) then again, this approach will not work. In this case, you can create a new admin user by setting a new ADMIN_USERNAME.
 
