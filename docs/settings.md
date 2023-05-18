@@ -271,10 +271,9 @@ Developer notes: processed internally as [`key:` option](https://nodejs.org/api/
 
 ### PROTOCOL
 
-Whether to use `http` or `https` protocol. Default: `http`.
+Whether to use `http` or `https` protocol. Default: `http`.  If using https (strongly recommended), the following items should also be configured:
 
-See also:
-
+* [`ALLOWED_DOMAIN`](/settings/#allowed_domain)
 * [`CA_ROOT`](/settings/#ca_root)
 * [`CERT_CHAIN`](/settings/#cert_chain)
 * [`PRIVATE_KEY`](/settings/#private_key)
