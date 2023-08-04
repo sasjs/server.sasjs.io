@@ -7,7 +7,7 @@ og_image: /img/stps.png
 
 # Stored Programs
 
-Stored Programs may be written in SAS, Python, R, or JavaScript and are saved to SASjs Drive.  When the `/SASjsApi/stp/execute` endpoint is called with a `_PROGRAM` URL parameter (pointing to the logical program location), a "Stored Program" is prepared and executed in a SAS or JS [session](/sessions) according to the file extension.
+Stored Programs may be written in SAS, Python, R, or JavaScript and are saved to SASjs Drive.  When the `/SASjsApi/stp/execute` endpoint is called with a `_PROGRAM` URL parameter (pointing to the logical program location), a "Stored Program" is prepared and executed in a SAS/JS/PYTHON/R [session](/sessions) according to the file extension.
 
 For the usual case where the `_program` variable does NOT contain an extension (eg `/some/stored/program`) then by default, SASjs Server will attempt to find "program.sas" in the `/some/stored` folder.  To change this default, see the [RUN_TIMES](/settings/#RUN_TIMES) settings.
 
