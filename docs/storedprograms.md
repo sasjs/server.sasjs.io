@@ -19,6 +19,8 @@ When Stored Programs are executed, some pre-code is injected to make available v
 
 The implementation varies depending on whether it is running as a SAS, JS, Python or R session.
 
+If you are calling your Stored Programs from a web application, it is recommended to review the [sasjs/adapter](https://github.com/sasjs/adapter) (designed to work with Stored Programs) and associated [seed apps](https://github.com/search?q=topic%3Asasjs-seed-app+org%3Asasjs+fork%3Atrue&type=repositories).  You might also want to review the [Data Controller source](https://git.datacontroller.io) as an example of a relatively large, commercial application built on SASjs.
+
 ## Special Variables
 
 The following variables are "special":
