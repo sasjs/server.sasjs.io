@@ -1,0 +1,1371 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Configuring SASjs Server settings">
+      
+      
+        <link rel="canonical" href="https://server.sasjs.io/settings/">
+      
+      
+      <link rel="shortcut icon" href="../img/logo/favicon/32.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
+    
+    
+      
+        <title>Settings - SASjs Server</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bc7e593a.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab28b872.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700%7CUbuntu+Mono&display=fallback">
+        <style>body,input{font-family:"Open Sans",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../font-awesome.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-109713029-8","sasjs.io"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Allan Bowe">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:locale" content="en_UK" />
+<meta property="og:type" content="website">
+
+
+
+<meta name="image" property="og:image" content="/img/appin1min.jpg">
+<meta property='og:image:alt' content='SASjs Logo' />
+<meta property='og:image:title' content='SASjs Logo' />
+
+
+
+<meta name="description" property="og:description" content="Configuring SASjs Server settings">
+<meta property='name:description' content="Configuring SASjs Server settings" />
+<meta property="twitter:description" content="Configuring SASjs Server settings">
+
+
+
+
+<meta property="og:title" content="SASjs Server">
+
+<meta property="og:author" content="https://www.linkedin.com/company/19117949">
+
+
+<meta property="og:url" content="https://server.sasjs.io/settings/">
+<meta property="twitter:url" content="https://server.sasjs.io/settings/">
+
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:title" content="The SASjs Server">
+<meta property="twitter:image" content='/img/logo/favicon/32.png'>
+<meta property="twitter:image:alt" content="SASjs logo">
+<meta property='twitter:image:title' content='SASjs Logo' />
+<meta property="twitter:site" content='https://server.sasjs.io'>
+<!-- meta name="twitter:creator" content="@_sasensei_" -->
+
+
+<meta property="article:author" content="https://www.linkedin.com/company/19117949" />
+<meta property="article:publisher" content="https://www.linkedin.com/company/19117949" />
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="amber">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#settings" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://server.sasjs.io" title="SASjs Server" class="md-header-nav__button md-logo" aria-label="SASjs Server">
+      
+  <img src="../img/logo/favicon/32.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            SASjs Server
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Settings
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/sasjs/server.sasjs.io/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    server.sasjs.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://server.sasjs.io" title="SASjs Server" class="md-nav__button md-logo" aria-label="SASjs Server">
+      
+  <img src="../img/logo/favicon/32.png" alt="logo">
+
+    </a>
+    SASjs Server
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/sasjs/server.sasjs.io/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    server.sasjs.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      User Guide
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        User Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../apps/" class="md-nav__link">
+      App Stream
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../studio/" class="md-nav__link">
+      SASjs Studio
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Developer Guide
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Developer Guide" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Developer Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="/api/index.html" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sessions/" class="md-nav__link">
+      Sessions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../storedprograms/" class="md-nav__link">
+      Stored Programs
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Admin Guide
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Admin Guide" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Admin Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../auth/" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../permissions/" class="md-nav__link">
+      Authorisation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Settings
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Settings
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment Variables
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#admin_password_initial" class="md-nav__link">
+    ADMIN_PASSWORD_INITIAL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin_password_reset" class="md-nav__link">
+    ADMIN_PASSWORD_RESET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin_username" class="md-nav__link">
+    ADMIN_USERNAME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auth_providers" class="md-nav__link">
+    AUTH_PROVIDERS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowed_domain" class="md-nav__link">
+    ALLOWED_DOMAIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cert_chain" class="md-nav__link">
+    CERT_CHAIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ca_root" class="md-nav__link">
+    CA_ROOT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cors" class="md-nav__link">
+    CORS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db_connect" class="md-nav__link">
+    DB_CONNECT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db_type" class="md-nav__link">
+    DB_TYPE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drive_location" class="md-nav__link">
+    DRIVE_LOCATION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#helmet_coep" class="md-nav__link">
+    HELMET_COEP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#helmet_csp_config_path" class="md-nav__link">
+    HELMET_CSP_CONFIG_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_url" class="md-nav__link">
+    LDAP_URL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_bind_dn" class="md-nav__link">
+    LDAP_BIND_DN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_bind_password" class="md-nav__link">
+    LDAP_BIND_PASSWORD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_users_base_dn" class="md-nav__link">
+    LDAP_USERS_BASE_DN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_groups_base_dn" class="md-nav__link">
+    LDAP_GROUPS_BASE_DN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log_format_morgan" class="md-nav__link">
+    LOG_FORMAT_MORGAN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log_location" class="md-nav__link">
+    LOG_LOCATION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock_servertype" class="md-nav__link">
+    MOCK_SERVERTYPE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mode" class="md-nav__link">
+    MODE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node_path" class="md-nav__link">
+    NODE_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#port" class="md-nav__link">
+    PORT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#private_key" class="md-nav__link">
+    PRIVATE_KEY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocol" class="md-nav__link">
+    PROTOCOL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python_path" class="md-nav__link">
+    PYTHON_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r_path" class="md-nav__link">
+    R_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run_times" class="md-nav__link">
+    RUN_TIMES
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sas_options" class="md-nav__link">
+    SAS_OPTIONS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sas_path" class="md-nav__link">
+    SAS_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sasjs_root" class="md-nav__link">
+    SASJS_ROOT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sasv9_options" class="md-nav__link">
+    SASV9_OPTIONS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whitelist" class="md-nav__link">
+    WHITELIST
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../faq/" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment Variables
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#admin_password_initial" class="md-nav__link">
+    ADMIN_PASSWORD_INITIAL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin_password_reset" class="md-nav__link">
+    ADMIN_PASSWORD_RESET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin_username" class="md-nav__link">
+    ADMIN_USERNAME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auth_providers" class="md-nav__link">
+    AUTH_PROVIDERS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowed_domain" class="md-nav__link">
+    ALLOWED_DOMAIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cert_chain" class="md-nav__link">
+    CERT_CHAIN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ca_root" class="md-nav__link">
+    CA_ROOT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cors" class="md-nav__link">
+    CORS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db_connect" class="md-nav__link">
+    DB_CONNECT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db_type" class="md-nav__link">
+    DB_TYPE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drive_location" class="md-nav__link">
+    DRIVE_LOCATION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#helmet_coep" class="md-nav__link">
+    HELMET_COEP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#helmet_csp_config_path" class="md-nav__link">
+    HELMET_CSP_CONFIG_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_url" class="md-nav__link">
+    LDAP_URL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_bind_dn" class="md-nav__link">
+    LDAP_BIND_DN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_bind_password" class="md-nav__link">
+    LDAP_BIND_PASSWORD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_users_base_dn" class="md-nav__link">
+    LDAP_USERS_BASE_DN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap_groups_base_dn" class="md-nav__link">
+    LDAP_GROUPS_BASE_DN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log_format_morgan" class="md-nav__link">
+    LOG_FORMAT_MORGAN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log_location" class="md-nav__link">
+    LOG_LOCATION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock_servertype" class="md-nav__link">
+    MOCK_SERVERTYPE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mode" class="md-nav__link">
+    MODE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node_path" class="md-nav__link">
+    NODE_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#port" class="md-nav__link">
+    PORT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#private_key" class="md-nav__link">
+    PRIVATE_KEY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocol" class="md-nav__link">
+    PROTOCOL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python_path" class="md-nav__link">
+    PYTHON_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r_path" class="md-nav__link">
+    R_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run_times" class="md-nav__link">
+    RUN_TIMES
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sas_options" class="md-nav__link">
+    SAS_OPTIONS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sas_path" class="md-nav__link">
+    SAS_PATH
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sasjs_root" class="md-nav__link">
+    SASJS_ROOT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sasv9_options" class="md-nav__link">
+    SASV9_OPTIONS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whitelist" class="md-nav__link">
+    WHITELIST
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/sasjs/server.sasjs.io/edit/main/docs/settings.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">&para;</a></h1>
+<p>All settings in SASjs server are made by means of environment variables.  These can be set in the following places:</p>
+<ul>
+<li>Configured globally in <code>/etc/environment</code> file</li>
+<li>Export in terminal or shell script (export VAR=VALUE)</li>
+<li>Prepended in the command</li>
+<li>Enter in the <code>.env</code> file alongside the executable</li>
+</ul>
+<p>The usual / preferred method is to provide the variables in the <code>.env</code> file (which works on both Windows &amp; Linux) as follows:</p>
+<p><img alt="" src="../img/env.png" /></p>
+<p>In a server environment, it is highly recommended to protect this file with appropriate permissions (eg, to prevent changes being made by the shared identity under which the server is launched) </p>
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<h3 id="admin_password_initial">ADMIN_PASSWORD_INITIAL<a class="headerlink" href="#admin_password_initial" title="Permanent link">&para;</a></h3>
+<p>Defines the initial (temporary) password for the <code>ADMIN_USERNAME</code>, which is in place until the first login.  Default is <code>secretpassword</code>.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>ADMIN_PASSWORD_INITIAL=secretpassword
+</code></pre></div>
+<h3 id="admin_password_reset">ADMIN_PASSWORD_RESET<a class="headerlink" href="#admin_password_reset" title="Permanent link">&para;</a></h3>
+<p>This option can be used to force a reset of the password of the <code>ADMIN_USERNAME</code>.  Default is NO.  Possible options are YES and NO.
+If <code>ADMIN_PASSWORD_RESET=YES</code> then the <code>ADMIN_USERNAME</code> will be prompted to change the password <strong>from</strong> <code>ADMIN_PASSWORD_INITIAL</code> (default is <code>secretpassword</code>) on next login. This will repeat on every server restart, unless the option is removed / set to NO.</p>
+<p>If the <code>ADMIN_USERNAME</code> is an existing, non-admin user then the password will NOT be reset (only works for admins).  If the ADMIN_USERNAME uses an auth provider (eg LDAP) then again, this approach will not work. In this case, you can create a new admin user by setting a new ADMIN_USERNAME.</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code>ADMIN_PASSWORD_RESET=NO
+</code></pre></div></p>
+<h3 id="admin_username">ADMIN_USERNAME<a class="headerlink" href="#admin_username" title="Permanent link">&para;</a></h3>
+<p>Used to define the name of the admin user on server startup.  The default value is <code>secretuser</code>.  If the user does not exist, it is created (eg during restarts).</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>ADMIN_USERNAME=secretuser
+</code></pre></div>
+<h3 id="auth_providers">AUTH_PROVIDERS<a class="headerlink" href="#auth_providers" title="Permanent link">&para;</a></h3>
+<p>Used to list the desired Authentication providers (space separated).  Currently only LDAP (<code>ldap</code>) is supported, but we plan to allow other providers such as Viya, Okta, OpenID, and LNURL-auth.</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code>AUTH_PROVIDERS=ldap
+</code></pre></div></p>
+<h3 id="allowed_domain">ALLOWED_DOMAIN<a class="headerlink" href="#allowed_domain" title="Permanent link">&para;</a></h3>
+<p>Prevent authentication from other domains by listing the primary domain here.  This will reject cookies arriving from any other domain.  Used only when <code>MODE=server</code>, and only relevant for SASjs Studio / SASjs Logon.  </p>
+<p>Example:
+<div class="highlight"><pre><span></span><code>ALLOWED_DOMAIN=sas.company.com
+</code></pre></div></p>
+<p>For API use by different servers / domains, see <a href="/settings/#cors">CORS</a> and <a href="/settings/#whitelist">WHITELIST</a> settings.</p>
+<h3 id="cert_chain">CERT_CHAIN<a class="headerlink" href="#cert_chain" title="Permanent link">&para;</a></h3>
+<p>Necessary when <code>PROTOCOL=https</code></p>
+<p>Example: <code>CERT_CHAIN=localhost.crt</code></p>
+<p>See also:</p>
+<ul>
+<li><a href="/settings/#protocol"><code>PROTOCOL</code></a></li>
+<li><a href="/settings/#ca_root"><code>CA_ROOT</code></a></li>
+<li><a href="/settings/#private_key"><code>PRIVATE_KEY</code></a></li>
+</ul>
+<p>Developer notes: processed internally as <a href="https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions"><code>cert:</code> option</a> which has this description:</p>
+<blockquote>
+<p>Cert chains in PEM format. One cert chain should be provided per private key. Each cert chain should consist of the PEM formatted certificate for a provided private key, followed by the PEM formatted intermediate certificates (if any), in order, and not including the root CA (the root CA must be pre-known to the peer, see ca). When providing multiple cert chains, they do not have to be in the same order as their private keys in key. If the intermediate certificates are not provided, the peer will not be able to validate the certificate, and the handshake will fail.</p>
+</blockquote>
+<h3 id="ca_root">CA_ROOT<a class="headerlink" href="#ca_root" title="Permanent link">&para;</a></h3>
+<p>Necessary when <code>PROTOCOL=https</code> AND the server uses a self-signed certificate.</p>
+<p>Example: <code>CA_ROOT=fullchain.pem</code></p>
+<p>See also:</p>
+<ul>
+<li><a href="/settings/#protocol"><code>PROTOCOL</code></a></li>
+<li><a href="/settings/#ca_root"><code>CA_ROOT</code></a></li>
+<li><a href="/settings/#private_key"><code>PRIVATE_KEY</code></a></li>
+</ul>
+<p>Developer notes: processed internally as <a href="https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions"><code>ca:</code> option</a> which has this description:</p>
+<blockquote>
+<p>Optionally override the trusted CA certificates. Default is to trust the well-known CAs curated by Mozilla. Mozilla's CAs are completely replaced when CAs are explicitly specified using this option. The value can be a string or Buffer, or an Array of strings and/or Buffers. Any string or Buffer can contain multiple PEM CAs concatenated together. The peer's certificate must be chainable to a CA trusted by the server for the connection to be authenticated. When using certificates that are not chainable to a well-known CA, the certificate's CA must be explicitly specified as a trusted or the connection will fail to authenticate. If the peer uses a certificate that doesn't match or chain to one of the default CAs, use the ca option to provide a CA certificate that the peer's certificate can match or chain to. For self-signed certificates, the certificate is its own CA, and must be provided. For PEM encoded certificates, supported types are "TRUSTED CERTIFICATE", "X509 CERTIFICATE", and "CERTIFICATE". See also tls.rootCertificates.</p>
+</blockquote>
+<h3 id="cors">CORS<a class="headerlink" href="#cors" title="Permanent link">&para;</a></h3>
+<p>Options: [disable|enable]</p>
+<p>Default: <code>disable</code> for <code>server</code> &amp; <code>enable</code> for <code>desktop</code></p>
+<p>If enabled, it is also necessary to configure the <a href="/settings/#whitelist"><code>WHITELIST</code></a> of additional server(s).</p>
+<h3 id="db_connect">DB_CONNECT<a class="headerlink" href="#db_connect" title="Permanent link">&para;</a></h3>
+<p>In server mode it is necessary to use a database to store a number of attributes, such as:</p>
+<ul>
+<li>Users &amp; Groups (if not using LDAP or other authentication source)</li>
+<li>Clients / Secrets (to enable REST API connections)</li>
+<li>Private keys (to spawn client ids, session tokens etc)</li>
+<li>Permissions (which users / groups are authorised to access which resources)</li>
+</ul>
+<p>This value contains the Connection string for the DB instance.  Example:
+<div class="highlight"><pre><span></span><code>DB_CONNECT=mongodb+srv://&lt;DB_USERNAME&gt;:&lt;DB_PASSWORD&gt;@&lt;CLUSTER&gt;/&lt;DB_NAME&gt;?retryWrites=true&amp;w=majority
+</code></pre></div>
+See also:</p>
+<ul>
+<li><a href="/settings/#db_type"><code>DB_TYPE</code></a></li>
+</ul>
+<h3 id="db_type">DB_TYPE<a class="headerlink" href="#db_type" title="Permanent link">&para;</a></h3>
+<p>Specify the type of database.  When <code>DB_TYPE=cosmos_mongodb</code> the connection is made using <a href="https://www.npmjs.com/package/connect-mongo#set-the-compatibility-mode">compatibility mode</a>.</p>
+<p>Options: [mongodb|cosmos_mongodb] </p>
+<p>Default: mongodb</p>
+<h3 id="drive_location">DRIVE_LOCATION<a class="headerlink" href="#drive_location" title="Permanent link">&para;</a></h3>
+<p>This setting is useful if you are running multiple instances of SASjs Server and would like to re-use the same Drive folder, Macros, Packages, and appStream config.</p>
+<p>The DRIVE_LOCATION can be shared across instances, but the SASJS_ROOT can't - as it will cause conflicts with sessions / uploads etc.</p>
+<p>If using this feature, be aware that the <code>appStreamConfig.json</code> is loaded on server startup - therefore if you are deploying a new app (or modifying app metadata attributes, such as the logo), the other instances will need to be restarted to view them in the portal.   If this is problematic for your project, please raise an <a href="https://github.com/sasjs/server/issues/new">issue</a>.</p>
+<p>See also:</p>
+<ul>
+<li><a href="/settings/#log_location"><code>LOG_LOCATION</code></a></li>
+<li><a href="/settings/#sasjs_root"><code>SASJS_ROOT</code></a></li>
+</ul>
+<h3 id="helmet_coep">HELMET_COEP<a class="headerlink" href="#helmet_coep" title="Permanent link">&para;</a></h3>
+<p>HELMET Cross Origin Embedder Policy.  Sets the Cross-Origin-Embedder-Policy header to require-corp when <code>true</code></p>
+<p>Options: [true|false]</p>
+<p>Default: true</p>
+<p>Docs: <a href="https://helmetjs.github.io/#reference">https://helmetjs.github.io/#reference</a> (<code>crossOriginEmbedderPolicy</code>)</p>
+<h3 id="helmet_csp_config_path">HELMET_CSP_CONFIG_PATH<a class="headerlink" href="#helmet_csp_config_path" title="Permanent link">&para;</a></h3>
+<p>HELMET Content Security Policy</p>
+<p>Path to a json file containing HELMET <code>contentSecurityPolicy</code> directives</p>
+<p>Docs: <a href="https://helmetjs.github.io/#reference">https://helmetjs.github.io/#reference</a></p>
+<p>Example config:
+<div class="highlight"><pre><span></span><code>{
+  &quot;img-src&quot;: [&quot;&#39;self&#39;&quot;, &quot;data:&quot;],
+  &quot;script-src&quot;: [&quot;&#39;self&#39;&quot;, &quot;&#39;unsafe-inline&#39;&quot;],
+  &quot;script-src-attr&quot;: [&quot;&#39;self&#39;&quot;, &quot;&#39;unsafe-inline&#39;&quot;]
+}
+</code></pre></div></p>
+<p>Example: <code>HELMET_CSP_CONFIG_PATH=./csp.config.json</code></p>
+<h3 id="ldap_url">LDAP_URL<a class="headerlink" href="#ldap_url" title="Permanent link">&para;</a></h3>
+<p>The URL of the LDAP directory server.</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code>LDAP_URL= ldaps://LDAP_SERVER_URL:PORT
+</code></pre></div></p>
+<h3 id="ldap_bind_dn">LDAP_BIND_DN<a class="headerlink" href="#ldap_bind_dn" title="Permanent link">&para;</a></h3>
+<p>Example:
+<div class="highlight"><pre><span></span><code>LDAP_BIND_DN=cn=admin,ou=system,dc=companyname
+</code></pre></div></p>
+<h3 id="ldap_bind_password">LDAP_BIND_PASSWORD<a class="headerlink" href="#ldap_bind_password" title="Permanent link">&para;</a></h3>
+<p>All LDAP queries have to be authenticated with this secret and the LDAP_USERS_BASE_DN</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code>LDAP_BIND_PASSWORD = &lt;password&gt;
+</code></pre></div></p>
+<h3 id="ldap_users_base_dn">LDAP_USERS_BASE_DN<a class="headerlink" href="#ldap_users_base_dn" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>LDAP_USERS_BASE_DN = ou=users,dc=companyname
+</code></pre></div>
+<h3 id="ldap_groups_base_dn">LDAP_GROUPS_BASE_DN<a class="headerlink" href="#ldap_groups_base_dn" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>LDAP_GROUPS_BASE_DN = ou=groups,dc=companyname
+</code></pre></div>
+<h3 id="log_format_morgan">LOG_FORMAT_MORGAN<a class="headerlink" href="#log_format_morgan" title="Permanent link">&para;</a></h3>
+<p>These setting determines the level of logging produced by SASjs server.
+More details on this can be found in the Morgan documentation here:<a href="https://www.npmjs.com/package/morgan#predefined-formats">https://www.npmjs.com/package/morgan#predefined-formats</a></p>
+<p>Options: [<code>combined</code>|<code>common</code>|<code>dev</code>|<code>short</code>|<code>tiny</code>]</p>
+<p>Default: <code>common</code></p>
+<h3 id="log_location">LOG_LOCATION<a class="headerlink" href="#log_location" title="Permanent link">&para;</a></h3>
+<p>Location in which to write server logs (one file per day).  If not provided, logs are written in a <code>/logs</code> subfolder of the <code>SASJS_ROOT</code> location.  Can be a full path, else relative to the directory in which the server instance was launched.  More information on the behaviour (eg log rotation) is available in the underlying package (<a href="https://www.npmjs.com/package/rotating-file-stream">rotating-file-stream</a>).</p>
+<p>Example: <code>LOG_LOCATION=./sasjs_root/logs</code></p>
+<p><img alt="" src="../img/log_location.png" /></p>
+<h3 id="mock_servertype">MOCK_SERVERTYPE<a class="headerlink" href="#mock_servertype" title="Permanent link">&para;</a></h3>
+<p>Used internally for CLI / Adapter testing - set to <code>SAS9</code> or <code>SASVIYA</code> when launching to enable responses in the format of alternative platforms.  These mocks are not functional, and have no use outside of development / testing purposes.</p>
+<p>Default: <code>SASJS</code></p>
+<h3 id="mode">MODE<a class="headerlink" href="#mode" title="Permanent link">&para;</a></h3>
+<p>Whether to launch the server in <code>desktop</code> (single user / workstation) or <code>server</code> mode (multi-user).  For server mode, a Mongo DB connection string must be provided in the <a href="#db_connect">DB_CONNECT</a> variable.</p>
+<p>Default: <code>desktop</code></p>
+<h3 id="node_path">NODE_PATH<a class="headerlink" href="#node_path" title="Permanent link">&para;</a></h3>
+<p>The path to the NodeJS executable (for running JavaScript programs).</p>
+<p>Example: <code>NODE_PATH=~/.nvm/versions/node/v16.14.0/bin/node</code></p>
+<p>See also:</p>
+<ul>
+<li><a href="/settings/#python_path"><code>PYTHON_PATH</code></a></li>
+<li><a href="/settings/#run_times"><code>RUN_TIMES</code></a></li>
+<li><a href="/settings/#sas_path"><code>SAS_PATH</code></a></li>
+</ul>
+<h3 id="port">PORT<a class="headerlink" href="#port" title="Permanent link">&para;</a></h3>
+<p>The port on which to serve.  Default: 5000</p>
+<p>Binding processes to ports in the lower ranges (eg 80, 443) requires elevated privileges.  To avoid running SASjs Server under a privileged account, you can bind the port to an executable - eg:  <code>setcap 'cap_net_bind_service=+ep' /home/sasjssrv/api-linux</code></p>
+<p>If the executable is updated (eg downloading a new version) you will need to run this command again.</p>
+<h3 id="private_key">PRIVATE_KEY<a class="headerlink" href="#private_key" title="Permanent link">&para;</a></h3>
+<p>Necessary when <code>PROTOCOL=https</code></p>
+<p>Example: <code>PRIVATE_KEY=localhost.key</code></p>
+<p>See also:</p>
+<ul>
+<li><a href="/settings/#protocol"><code>PROTOCOL</code></a></li>
+<li><a href="/settings/#ca_root"><code>CA_ROOT</code></a></li>
+<li><a href="/settings/#cert_chain"><code>CERT_CHAIN</code></a></li>
+</ul>
+<p>Developer notes: processed internally as <a href="https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions"><code>key:</code> option</a> which has this description:</p>
+<blockquote>
+<p>Private keys in PEM format. PEM allows the option of private keys being encrypted. Encrypted keys will be decrypted with options.passphrase. Multiple keys using different algorithms can be provided either as an array of unencrypted key strings or buffers, or an array of objects in the form {pem: <string|buffer>[, passphrase: <string>]}. The object form can only occur in an array. object.passphrase is optional. Encrypted keys will be decrypted with object.passphrase if provided, or options.passphrase if it is not.</p>
+</blockquote>
+<h3 id="protocol">PROTOCOL<a class="headerlink" href="#protocol" title="Permanent link">&para;</a></h3>
+<p>Whether to use <code>http</code> or <code>https</code> protocol. Default: <code>http</code>.  If using https (strongly recommended), the following items should also be configured:</p>
+<ul>
+<li><a href="/settings/#allowed_domain"><code>ALLOWED_DOMAIN</code></a></li>
+<li><a href="/settings/#ca_root"><code>CA_ROOT</code></a></li>
+<li><a href="/settings/#cert_chain"><code>CERT_CHAIN</code></a></li>
+<li><a href="/settings/#private_key"><code>PRIVATE_KEY</code></a></li>
+</ul>
+<h3 id="python_path">PYTHON_PATH<a class="headerlink" href="#python_path" title="Permanent link">&para;</a></h3>
+<p>The path to the Python executable (for running Python programs).</p>
+<p>Example: <code>PYTHON_PATH=/usr/bin/python</code></p>
+<p>See also:</p>
+<ul>
+<li><a href="/settings/#node_path"><code>NODE_PATH</code></a></li>
+<li><a href="/settings/#r_path"><code>R_PATH</code></a></li>
+<li><a href="/settings/#run_times"><code>RUN_TIMES</code></a></li>
+<li><a href="/settings/#sas_path"><code>SAS_PATH</code></a></li>
+</ul>
+<h3 id="r_path">R_PATH<a class="headerlink" href="#r_path" title="Permanent link">&para;</a></h3>
+<p>The path to the R executable (for running R programs).  Installation guides for R are available for <a href="https://linuxize.com/post/how-to-install-r-on-centos-7/">Centos 7</a>, <a href="https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-20-04">ubuntu</a> and <a href="https://www.digitalocean.com/community/tutorials/how-to-install-r-on-debian-10">Debian</a>.</p>
+<p>Example: <code>R_PATH=/usr/bin/Rscript</code></p>
+<ul>
+<li><a href="/settings/#node_path"><code>NODE_PATH</code></a></li>
+<li><a href="/settings/#python_path"><code>PYTHON_PATH</code></a></li>
+<li><a href="/settings/#run_times"><code>RUN_TIMES</code></a></li>
+<li><a href="/settings/#sas_path"><code>SAS_PATH</code></a></li>
+</ul>
+<h3 id="run_times">RUN_TIMES<a class="headerlink" href="#run_times" title="Permanent link">&para;</a></h3>
+<p>A comma separated string that defines the available runtimes.</p>
+<p><strong>Priority is given to the runtime that comes first in the string</strong>.</p>
+<p>Given a <code>RUNTIME=js,sas,py</code>:</p>
+<ul>
+<li>If <code>_program=/some/program</code> then SASjs Server will first look for <code>program.js</code> in the <code>/some</code> folder, then <code>program.sas</code>, and finally <code>program.py</code>.</li>
+<li>If <code>_program=/some/program.sas</code> then a SAS runtime will always be used.</li>
+<li>If <code>_program=/some/program.r</code> then an R runtime will be used (and so-on)</li>
+</ul>
+<p>Supported runtimes:</p>
+<ul>
+<li><code>js</code> - JavaScript</li>
+<li><code>sas</code> - SAS</li>
+<li><code>py</code> - Python</li>
+<li><code>r</code> - R</li>
+</ul>
+<p>Default: <code>sas,js,py</code></p>
+<p>Example:</p>
+<p><code>RUN_TIMES=js,sas,py</code></p>
+<h3 id="sas_options">SAS_OPTIONS<a class="headerlink" href="#sas_options" title="Permanent link">&para;</a></h3>
+<p>Windows only. See: <a href="https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostwin/p0drw76qo0gig2n1kcoliekh605k.htm#p09y7hx0grw1gin1giuvrjyx61m6">https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostwin/p0drw76qo0gig2n1kcoliekh605k.htm#p09y7hx0grw1gin1giuvrjyx61m6</a></p>
+<p>Example:  <code>SAS_OPTIONS= -NOXCMD</code></p>
+<h3 id="sas_path">SAS_PATH<a class="headerlink" href="#sas_path" title="Permanent link">&para;</a></h3>
+<p>The full path to the SAS executable (sas.exe / sas.sh).  It is highly recommended to provide an instance with UTF-8 encoding, for the following reasons:</p>
+<ul>
+<li>SASjs Adapter compatibility</li>
+<li>Broad language support</li>
+<li>Viya compatibility</li>
+</ul>
+<p>To force UTF-8 encoding, update the appropriate <code>sasv9.cfg</code> file with the following option:</p>
+<div class="highlight"><pre><span></span><code>-ENCODING UTF-8
+</code></pre></div>
+<p>Example:</p>
+<p><code>SAS_PATH=/path/to/sas/executable.exe</code></p>
+<p>See also:</p>
+<ul>
+<li><a href="/settings/#node_path"><code>NODE_PATH</code></a></li>
+<li><a href="/settings/#python_path"><code>PYTHON_PATH</code></a></li>
+<li><a href="/settings/#run_times"><code>RUN_TIMES</code></a></li>
+</ul>
+<h3 id="sasjs_root">SASJS_ROOT<a class="headerlink" href="#sasjs_root" title="Permanent link">&para;</a></h3>
+<p>If omitted, this will be the SASjs Server installation directory.  The location is used for SAS WORK, staged files, DRIVE, configuration etc</p>
+<p>Example:</p>
+<p><code>SASJS_ROOT=./sasjs_root</code></p>
+<h3 id="sasv9_options">SASV9_OPTIONS<a class="headerlink" href="#sasv9_options" title="Permanent link">&para;</a></h3>
+<p>Unix only.  See: <a href="https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostunx/p0wrdmqp8k0oyyn1xbx3bp3qy2wl.htm">https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostunx/p0wrdmqp8k0oyyn1xbx3bp3qy2wl.htm</a></p>
+<p>Example: <code>SASV9_OPTIONS= -NOXCMD</code></p>
+<h3 id="whitelist">WHITELIST<a class="headerlink" href="#whitelist" title="Permanent link">&para;</a></h3>
+<p>Space separated urls, eg: <code>WHITELIST=http://localhost:3000 https://abc.com</code>.  </p>
+<p>See also:</p>
+<ul>
+<li><a href="/settings/#cors"><code>CORS</code></a></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../permissions/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Authorisation
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../faq/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                FAQ
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            All rights reserved &copy;2021 Macro People Ltd.
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function () {
+    var u = "https://analytics.4gl.io/";
+    _paq.push(['setTrackerUrl', u + 'matomo.php']);
+    _paq.push(['setSiteId', '7']);
+    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+    g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+  })();
+</script>
+<!-- End Matomo Code -->
+
+
+  </body>
+</html>
