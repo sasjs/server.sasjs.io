@@ -108,20 +108,33 @@ Developer notes: processed internally as [`ca:` option](https://nodejs.org/api/t
 ### CORS
 
 Options: [disable|enable]
+
 Default: `disable` for `server` & `enable` for `desktop`
 
 If enabled, it is also necessary to configure the [`WHITELIST`](/settings/#whitelist) of additional server(s).
 
 ### DB_CONNECT
-Necessary for server mode.  Connection string for Mongo DB instance.  Example:
+
+In server mode it is necessary to use a database to store a number of attributes, such as:
+
+* Users & Groups (if not using LDAP or other authentication source)
+* Clients / Secrets (to enable REST API connections)
+* Private keys (to spawn client ids, session tokens etc)
+* Permissions (which users / groups are authorised to access which resources)
+
+This value contains the Connection string for the DB instance.  Example:
 ```
 DB_CONNECT=mongodb+srv://<DB_USERNAME>:<DB_PASSWORD>@<CLUSTER>/<DB_NAME>?retryWrites=true&w=majority
 ```
+See also:
+
+* [`DB_TYPE`](/settings/#db_type)
 
 ### DB_TYPE
 Specify the type of database.  When `DB_TYPE=cosmos_mongodb` the connection is made using [compatibility mode](https://www.npmjs.com/package/connect-mongo#set-the-compatibility-mode).
 
-Options: [mongodb|cosmos_mongodb]
+Options: [mongodb|cosmos_mongodb] 
+
 Default: mongodb
 
 
