@@ -7,7 +7,7 @@ og_image: /img/ldapconfig.png
 
 # Authentication
 
-SASjs Server supports three authentication methods - Internal, LDAP, and OpenID Connect (OIDC).  Would you like to see more?  [Sponsor](https://github.com/sponsors/sasjs) us!
+SASjs Server supports three authentication methods - Internal, LDAP, and OpenID Connect (OIDC).
 
 These are selected with [AUTH_PROVIDERS](/settings/#auth_providers), which is a **list** - more than one may be enabled at once, for example LDAP for directory users together with OIDC for single sign-on.
 
