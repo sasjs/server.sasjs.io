@@ -41,6 +41,6 @@ They can also be applied to individual apps.  This part of the list is dynamical
 
 ## Folder Access
 
-Coming soon.  Need it sooner?  [Sponsor us](https://github.com/sponsors/sasjs)!
+Coming soon.
 
 

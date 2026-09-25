@@ -55,11 +55,16 @@ ADMIN_USERNAME=secretuser
 
 ### AUTH_PROVIDERS
 
-Used to list the desired Authentication providers (space separated).  Currently only LDAP (`ldap`) is supported, but we plan to allow other providers such as Viya, Okta, OpenID, and LNURL-auth.
+Used to list the desired Authentication providers (space or comma separated).  Supported values are `ldap` and `oidc`, and more than one may be enabled at once - for example LDAP for directory users together with OpenID Connect for single sign-on.  See [Authentication](/auth) for the detail of each.
 
 Example:
 ```
 AUTH_PROVIDERS=ldap
+```
+
+Combining providers:
+```
+AUTH_PROVIDERS=ldap oidc
 ```
 
 ### ALLOWED_DOMAIN
@@ -258,6 +263,107 @@ See also:
 * [`PYTHON_PATH`](/settings/#python_path)
 * [`RUN_TIMES`](/settings/#run_times)
 * [`SAS_PATH`](/settings/#sas_path)
+
+### OIDC_ISSUER_URL
+
+The issuer URL of your OpenID Connect provider.  SASjs Server reads the provider's endpoints from `<OIDC_ISSUER_URL>/.well-known/openid-configuration`.  Required when `oidc` is listed in [AUTH_PROVIDERS](/settings/#auth_providers), unless [OIDC_DISCOVERY_URL](/settings/#oidc_discovery_url) is given instead.
+
+Example:
+```
+OIDC_ISSUER_URL=https://id.example.com
+```
+
+### OIDC_DISCOVERY_URL
+
+Use this instead of `OIDC_ISSUER_URL` when your provider does not serve its discovery document at the conventional path.  Optional.
+
+Example:
+```
+OIDC_DISCOVERY_URL=https://id.example.com/.well-known/openid-configuration
+```
+
+### OIDC_CLIENT_ID
+
+The client ID issued by your provider for SASjs Server.  Required when `oidc` is listed in [AUTH_PROVIDERS](/settings/#auth_providers).
+
+Example:
+```
+OIDC_CLIENT_ID=sasjs-server
+```
+
+### OIDC_CLIENT_SECRET
+
+The client secret issued by your provider.  Required when `oidc` is listed in [AUTH_PROVIDERS](/settings/#auth_providers).
+
+This value is write-only: it is read from the environment and used, but it is never returned by the API or shown in the settings screen.
+
+Example:
+```
+OIDC_CLIENT_SECRET=<client secret>
+```
+
+### OIDC_REDIRECT_URI
+
+The callback URL, which must be registered with your provider and must match exactly.  Required when `oidc` is listed in [AUTH_PROVIDERS](/settings/#auth_providers).  It must be an absolute `http` or `https` URL, and the path is fixed by the server.
+
+Example:
+```
+OIDC_REDIRECT_URI=https://sas.example.com/SASLogon/openid/callback
+```
+
+### OIDC_PROVIDER_NAME
+
+The label shown on the sign-in button, as in "Sign in with <name>".  Defaults to `OpenID Connect`.
+
+Example:
+```
+OIDC_PROVIDER_NAME=Example Identity
+```
+
+### OIDC_SCOPE
+
+The scopes requested from the provider.  Defaults to `openid profile email`, and must always include `openid`.
+
+Example:
+```
+OIDC_SCOPE=openid profile email
+```
+
+### OIDC_USERNAME_CLAIM
+
+The claim used to derive the SASjs username when provisioning a new user.  Defaults to `preferred_username`, falling back to `sub` when the claim is absent.  The value is normalised to a SASjs username - lowercase, alphanumeric, up to 16 characters.
+
+Example:
+```
+OIDC_USERNAME_CLAIM=email
+```
+
+### OIDC_SIGNING_ALG
+
+The algorithm used to verify the provider's `id_token` signature.  Defaults to `RS256`.  Valid options are `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512` and `EdDSA`.  Set this to match what your provider signs with.
+
+Example:
+```
+OIDC_SIGNING_ALG=RS256
+```
+
+### OIDC_JIT_PROVISION
+
+Whether a user who signs in successfully but has no SASjs account should have one created automatically.  Defaults to `true`.  Set to `false` to require that an admin creates the account first.  The first user provisioned becomes an admin; later ones do not.
+
+Example:
+```
+OIDC_JIT_PROVISION=true
+```
+
+### OIDC_POST_LOGOUT_REDIRECT_URI
+
+Where the provider should send the browser after the single sign-on session is closed.  Optional - when omitted, logout returns to the SASjs Server home page.
+
+Example:
+```
+OIDC_POST_LOGOUT_REDIRECT_URI=https://sas.example.com/
+```
 
 ### PORT
 The port on which to serve.  Default: 5000
