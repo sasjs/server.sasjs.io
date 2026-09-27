@@ -223,6 +223,18 @@ LDAP_USERS_BASE_DN = ou=users,dc=companyname
 LDAP_GROUPS_BASE_DN = ou=groups,dc=companyname
 ```
 
+### LOCAL_LOGIN_ENABLED
+
+Whether a local (database) account can sign in with its stored password.  Set to `false` and the password is never compared, so a local account cannot sign in at all - useful where every account lives in an identity provider instead.
+
+Accounts that authenticate through LDAP are unaffected: their password is verified against the directory.  OIDC users sign in through the provider.
+
+It cannot be `false` while [AUTH_PROVIDERS](/settings/#auth_providers) is empty - with the local login gone and no provider to authenticate against, no account could sign in, so the server refuses to start rather than run unreachable.
+
+Options: [`true`|`false`]
+
+Default: `true`
+
 ### LOG_FORMAT_MORGAN
 
 These setting determines the level of logging produced by SASjs server.

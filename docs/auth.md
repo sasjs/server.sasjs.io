@@ -17,6 +17,12 @@ Note that authentication is only available in **server mode** (not desktop).
 
 By default, users are created using the internal database with a password configured by an admin.  Groups can also be added, and permissions set against those groups.
 
+### Disabling the local password login
+
+Where every account lives in an identity provider, the internal password path can be switched off entirely: set [LOCAL_LOGIN_ENABLED](/settings/#local_login_enabled) to `false` and a local account cannot sign in at all, because the stored password is never compared.  LDAP-verified sign-in and the provider's own sign-in keep working.
+
+This matters most behind a platform whose login wall is bypassed for programmatic clients.  On Cloudron, for example, the app manifest sets `supportsBearerAuth: true` so that Bearer-token clients reach the API directly - which also means the platform's login wall and MFA are skipped for any request carrying that header, leaving `/SASLogon/login` reachable from the internet.  With no local accounts able to sign in, there is no password there to guess.
+
 ## LDAP Authentication
 
 SASjs Server can connect to an LDAP server (internally, we use the [LDAPjs](http://ldapjs.org/client.html) library).  Any users / groups that are imported will be in _addition_ to any internal users / groups.  If there are conflicts, those particular users/groups will not be imported - to fix this, just delete the relevant (SASjs internal) users/groups and re-import.
