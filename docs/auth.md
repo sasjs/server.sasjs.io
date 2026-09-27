@@ -19,7 +19,7 @@ By default, users are created using the internal database with a password config
 
 ### Disabling the local password login
 
-Where every account lives in an identity provider, the internal password path can be switched off entirely: set [LOCAL_LOGIN_ENABLED](/settings/#local_login_enabled) to `false` and a local account cannot sign in at all, because the stored password is never compared.  LDAP-verified sign-in and the provider's own sign-in keep working.
+Where every account lives in an identity provider, the internal password path can be switched off entirely: set [LOCAL_LOGIN_ENABLED](/settings/#local_login_enabled) to `false` and a local account cannot sign in at all, because the stored password is never compared.  LDAP-verified sign-in and the provider's own sign-in keep working.  The login screen hides the password form while it is off, leaving the provider's button as the only way in.
 
 This matters most where the app is reachable without a browser sign-in.  On Cloudron the app package closes the local password path by default: with single sign-on configured and no break-glass admin seeded, no local account exists to use it, and `/SASLogon/login` is reachable from the internet - so an exposed password form would be the one credential an anonymous caller could guess.
 
