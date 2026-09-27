@@ -227,6 +227,8 @@ LDAP_GROUPS_BASE_DN = ou=groups,dc=companyname
 
 Whether a local (database) account can sign in with its stored password.  Set to `false` and the password is never compared, so a local account cannot sign in at all - useful where every account lives in an identity provider instead.  On the Cloudron app package this defaults to `false` when single sign-on is configured and no break-glass admin is seeded.
 
+The login screen follows it: with local sign-in off the password form is hidden, so a deployment that signs everyone in through a provider shows the provider's button alone.
+
 Accounts that authenticate through LDAP are unaffected: their password is verified against the directory.  OIDC users sign in through the provider.
 
 It cannot be `false` while [AUTH_PROVIDERS](/settings/#auth_providers) is empty - with the local login gone and no provider to authenticate against, no account could sign in, so the server refuses to start rather than run unreachable.
