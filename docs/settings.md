@@ -23,7 +23,7 @@ In a server environment, it is highly recommended to protect this file with appr
 
 ### ADMIN_PASSWORD_INITIAL
 
-Defines the initial (temporary) password for the `ADMIN_USERNAME`, which is in place until the first login.  There is no default: a default would ship a publicly-known credential.  In server mode it is required unless an external auth provider is enabled - with a provider, leaving it unset seeds no local admin at all, and the first user to sign in through the provider becomes the administrator.
+Defines the initial (temporary) password for the `ADMIN_USERNAME`, which is in place until the first login.  There is no default: a default would ship a publicly-known credential.  In server mode it is required unless an external auth provider is enabled - with a provider, leaving it unset seeds no local admin at all, and access is decided by the provider's groups - see [Access policy](/auth/#access-policy).
 
 Example:
 
@@ -225,7 +225,7 @@ LDAP_GROUPS_BASE_DN = ou=groups,dc=companyname
 
 ### LOCAL_LOGIN_ENABLED
 
-Whether a local (database) account can sign in with its stored password.  Set to `false` and the password is never compared, so a local account cannot sign in at all - useful where every account lives in an identity provider instead.
+Whether a local (database) account can sign in with its stored password.  Set to `false` and the password is never compared, so a local account cannot sign in at all - useful where every account lives in an identity provider instead.  On the Cloudron app package this defaults to `false` when single sign-on is configured and no break-glass admin is seeded.
 
 Accounts that authenticate through LDAP are unaffected: their password is verified against the directory.  OIDC users sign in through the provider.
 
@@ -373,7 +373,7 @@ OIDC_SIGNING_ALG=RS256
 
 ### OIDC_JIT_PROVISION
 
-Whether a user who signs in successfully but has no SASjs account should have one created automatically.  Defaults to `true`.  Set to `false` to require that an admin creates the account first.  The first user provisioned becomes an admin; later ones do not.
+Whether a user who signs in successfully but has no SASjs account should have one created automatically.  Defaults to `true`.  Set to `false` to require that an admin creates the account first.  The new account's administrator status comes from the provider's groups, as described under [Access policy](/auth/#access-policy).
 
 Example:
 ```
