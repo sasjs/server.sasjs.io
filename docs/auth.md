@@ -66,6 +66,12 @@ Register `OIDC_REDIRECT_URI` with your provider as the callback URL - the full U
 
 The remaining settings are optional and are listed under [Settings](/settings/#oidc_issuer_url).
 
+### PKCE
+
+Sign-in uses PKCE (RFC 7636) with the `S256` challenge method: a per-attempt verifier is kept server-side, only its SHA-256 digest travels in the authorization request, and the code exchange sends the verifier - so a code intercepted in the browser cannot be redeemed by anything except the client instance that started the flow.
+
+There is nothing to configure.  The challenge is always sent, and your provider needs no extra registration for it; providers that **require** PKCE (some do, for confidential clients as well as public ones) are satisfied by it.  It is also sent when the provider's discovery document does not advertise `code_challenge_methods_supported` - a provider that does not understand the parameter ignores it, whereas gating on that advertisement would be the downgrade the [OAuth 2.0 Security Best Current Practice](https://www.rfc-editor.org/rfc/rfc9700.html) warns about.
+
 ### How users are matched
 
 The provider's `sub` claim is the durable identity.  On each sign-in:
