@@ -104,26 +104,21 @@ Cloudron asserts the username as the `sub` claim and does not send group claims,
 
 ## Brute Force Protection
 
-SASjs Server now protects authentication endpoints from DDoS and brute force attacks at any scale. We adopted a simple and powerful technique to block authorization attempts using two metrics:
+Failed password attempts are throttled by username. After `MAX_LOGIN_FAILURES` wrong passwords against one username, further attempts are refused with `429 Too Many Failed Attempts` for `LOGIN_LOCKOUT_MINUTES`, whether or not the password is correct. A successful sign-in resets the counter.
 
-1. The first is number of consecutive failed attempts by the same user name and IP address.
-2. The second is number of failed attempts from an IP address over some long period of time. For example, block an IP address if it makes 100 failed attempts in one day.
-
-To achieve above metrics we used an npm package [rate-limiter-flexible](https://www.npmjs.com/package/rate-limiter-flexible).
-
-This technique has following configurable env variables:
+The lockout is keyed on the username rather than the IP address: behind a reverse proxy every client shares the proxy's address, so an IP-keyed limit locks out the whole deployment rather than an attacker.
 
 ```
-# After this, access is blocked for 1 day
-# default: 100
-MAX_WRONG_ATTEMPTS_BY_IP_PER_DAY = <number>
+# failed attempts against one username before the login is refused
+# default: 5
+MAX_LOGIN_FAILURES = <number>
 
-# After this, access is blocked for an hour
-# Store number for 90 days since first fail
-# Once a successful login is attempted, it resets
-# Default: 10
-MAX_CONSECUTIVE_FAILS_BY_USERNAME_AND_IP = <number>
+# how long the username stays locked out
+# default: 15
+LOGIN_LOCKOUT_MINUTES = <number>
 ```
+
+Counters are held in process memory, so a server restart clears them. In the small, internal user base SASjs Server targets, a lockout is resolved by waiting out the window or asking an admin to restart.
 
 ## Admin Account
 

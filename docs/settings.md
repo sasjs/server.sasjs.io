@@ -240,6 +240,18 @@ Example: `LOG_LOCATION=./sasjs_root/logs`
 
 ![](img/log_location.png)
 
+### LOGIN_LOCKOUT_MINUTES
+
+How long a username stays locked out after `MAX_LOGIN_FAILURES` failed password attempts. The lockout is keyed on the username, not the IP address: behind a reverse proxy every client shares one address, so an IP-keyed limit would lock out the whole deployment rather than an attacker.
+
+Default: `15`
+
+### MAX_LOGIN_FAILURES
+
+Failed password attempts against one username before the login is refused with `429 Too Many Failed Attempts`. Counters reset when the username signs in successfully.
+
+Default: `5`
+
 ### MOCK_SERVERTYPE
 
 Used internally for CLI / Adapter testing - set to `SAS9` or `SASVIYA` when launching to enable responses in the format of alternative platforms.  These mocks are not functional, and have no use outside of development / testing purposes.
