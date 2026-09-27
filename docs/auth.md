@@ -21,7 +21,7 @@ By default, users are created using the internal database with a password config
 
 Where every account lives in an identity provider, the internal password path can be switched off entirely: set [LOCAL_LOGIN_ENABLED](/settings/#local_login_enabled) to `false` and a local account cannot sign in at all, because the stored password is never compared.  LDAP-verified sign-in and the provider's own sign-in keep working.
 
-This matters most behind a platform whose login wall is bypassed for programmatic clients.  On Cloudron, for example, the app manifest sets `supportsBearerAuth: true` so that Bearer-token clients reach the API directly - which also means the platform's login wall and MFA are skipped for any request carrying that header, leaving `/SASLogon/login` reachable from the internet.  With no local accounts able to sign in, there is no password there to guess.
+This matters most where the app is reachable without a browser sign-in.  On Cloudron the app package closes the local password path by default: with single sign-on configured and no break-glass admin seeded, no local account exists to use it, and `/SASLogon/login` is reachable from the internet - so an exposed password form would be the one credential an anonymous caller could guess.
 
 ## LDAP Authentication
 
@@ -77,10 +77,26 @@ There is nothing to configure.  The challenge is always sent, and your provider 
 The provider's `sub` claim is the durable identity.  On each sign-in:
 
 1. The `sub` is looked up in the SASjs user table.  A match signs that user in, regardless of what the username claim says.
-2. Otherwise, the username claim (`preferred_username` by default) is normalised to a SASjs username - lowercase, alphanumeric, up to 16 characters - and a user with that name is created.  The **first** user to sign in becomes a SASjs admin; after that, new users are created as normal users.
+2. Otherwise, the username claim (`preferred_username` by default) is normalised to a SASjs username - lowercase, alphanumeric, up to 16 characters - and a user with that name is created, subject to the access policy below.
 3. If a user with that normalised name **already exists** and is not already linked to that provider account, the sign-in is refused rather than adopting the account.  This is deliberate: the existing account may hold a local password and be an administrator.  An admin must resolve the clash (rename one of the two) before that person can sign in.
 
-Note that OIDC provides authentication only.  Groups and permissions are managed inside SASjs Server - see [Authorisation](/permissions).  If you need directory groups, use LDAP alongside OIDC.
+### Access policy
+
+Access is decided by the provider's `groups` claim, by fixed name:
+
+| Membership | Result |
+|---|---|
+| `sasjs-admins` | signed in as a SASjs administrator |
+| `sasjs-users` | signed in as an ordinary user |
+| neither | refused, and no account is created |
+
+The names are not configurable.  Membership is the whole access decision, so a deployment that could rename the groups could silently change who gets in.  Membership is re-read on every sign-in, so removing someone from `sasjs-admins` demotes them the next time they sign in rather than leaving the elevation in place.
+
+The `groups` scope is requested automatically when the provider's discovery document advertises it, and the claim is read from the id_token with a fallback to the provider's userinfo endpoint, because providers differ on where they put it.
+
+Providers that cannot express groups (Google, for example) are exempt from the policy, and the first user to sign in becomes the administrator.  Refusing every user of such a provider would be worse than granting one account, and the exemption is keyed on the discovery document, so it cannot be switched on by accident.
+
+Beyond that, OIDC provides authentication only: SASjs-internal groups and permissions are separate, and are managed inside SASjs Server - see [Authorisation](/permissions).
 
 ### Logout
 
@@ -112,7 +128,7 @@ and declare the callback in the app manifest:
 }
 ```
 
-Cloudron asserts the username as the `sub` claim and does not send group claims, so groups are managed in SASjs Server.
+Cloudron asserts the username as the `sub` claim and sends group memberships in the `groups` claim, so a Cloudron user's group membership decides access as described above - create `sasjs-users` and `sasjs-admins` under **Users > Groups** and assign people to them.
 
 ## Brute Force Protection
 
@@ -136,6 +152,6 @@ Counters are held in process memory, so a server restart clears them. In the sma
 
 There is no default password, and no account exists until one is created.  To seed a local admin, set [ADMIN_PASSWORD_INITIAL](/settings/#admin_password_initial) to a strong password; the account is named by [ADMIN_USERNAME](/settings/#admin_username) (default `secretuser`) and the password is in place until the first login.
 
-In server mode the password is required unless an external auth provider is enabled: with a provider, leaving it unset seeds no local admin at all, and the first user to sign in through the provider becomes the administrator.
+In server mode the password is required unless an external auth provider is enabled: with a provider, leaving it unset seeds no local admin at all, and access is decided by the provider's groups - see [Access policy](/auth/#access-policy).
 
 If the admin password is misplaced, it can be reset by restarting the server with [ADMIN_PASSWORD_RESET](/settings/#admin_password_reset) set to `YES`.  Be sure to set it back to `NO` (or remove the option) to prevent the password being reset on any subsequent server restart.
