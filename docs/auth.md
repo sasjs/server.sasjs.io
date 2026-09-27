@@ -133,6 +133,8 @@ MAX_CONSECUTIVE_FAILS_BY_USERNAME_AND_IP = <number>
 
 ## Admin Account
 
-The default credentials for login are `secretuser` and `secretpassword`.  These can be adjusted using the [ADMIN_USERNAME](/settings/#admin_username) and [ADMIN_PASSWORD_INITIAL](/settings/#admin_password_initial) options on server startup.  
+There is no default password, and no account exists until one is created.  To seed a local admin, set [ADMIN_PASSWORD_INITIAL](/settings/#admin_password_initial) to a strong password; the account is named by [ADMIN_USERNAME](/settings/#admin_username) (default `secretuser`) and the password is in place until the first login.
+
+In server mode the password is required unless an external auth provider is enabled: with a provider, leaving it unset seeds no local admin at all, and the first user to sign in through the provider becomes the administrator.
 
 If the admin password is misplaced, it can be reset by restarting the server with [ADMIN_PASSWORD_RESET](/settings/#admin_password_reset) set to `YES`.  Be sure to set it back to `NO` (or remove the option) to prevent the password being reset on any subsequent server restart.
