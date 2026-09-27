@@ -96,7 +96,13 @@ The `groups` scope is requested automatically when the provider's discovery docu
 
 Providers that cannot express groups (Google, for example) are exempt from the policy, and the first user to sign in becomes the administrator.  Refusing every user of such a provider would be worse than granting one account, and the exemption is keyed on the discovery document, so it cannot be switched on by accident.
 
-Beyond that, OIDC provides authentication only: SASjs-internal groups and permissions are separate, and are managed inside SASjs Server - see [Authorisation](/permissions).
+### Groups and permissions
+
+Each sign-in mirrors the memberships the provider asserts onto SASjs groups of the same name, so a permission can be granted to a provider group rather than to each of its members in turn.  The mirror is authoritative: a membership the provider stops asserting is removed at the next sign-in, so a revocation takes effect then rather than leaving the access the group granted in place.
+
+Mirrored groups are marked as provider-managed, so their membership cannot be edited inside SASjs Server - it comes from the provider.  A group name an administrator has already used locally, or one another provider owns, is left alone and reported in the server log rather than adopted: its members and the permissions pointing at it belong to whoever created it.
+
+OpenID Connect reports the groups of the user who is signing in and offers no way to enumerate a directory, so this is a per-sign-in mirror rather than the bulk synchronisation LDAP allows.  Permissions themselves are managed inside SASjs Server - see [Authorisation](/permissions).
 
 ### Logout
 
@@ -128,7 +134,7 @@ and declare the callback in the app manifest:
 }
 ```
 
-Cloudron asserts the username as the `sub` claim and sends group memberships in the `groups` claim, so a Cloudron user's group membership decides access as described above - create `sasjs-users` and `sasjs-admins` under **Users > Groups** and assign people to them.
+Cloudron asserts the username as the `sub` claim and sends group memberships in the `groups` claim, so a Cloudron user's group membership decides access as described above - create `sasjs-users` and `sasjs-admins` under **Users > Groups** and assign people to them.  Those groups then appear inside the app as well, which is what lets you grant permissions to the group instead of user by user.
 
 ## Brute Force Protection
 
