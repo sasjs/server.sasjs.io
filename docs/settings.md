@@ -173,9 +173,22 @@ HELMET Content Security Policy
 
 Path to a json file containing HELMET `contentSecurityPolicy` directives
 
+The default policy allows no inline scripts and no inline event handlers, so a script injected into a page the server serves cannot run. The `style-src` directive is untouched by this default and keeps `'unsafe-inline'`, which the styling libraries used by the web interface require.
+
+An application deployed on the server that needs inline scripts or inline event handlers (many Angular and Data Controller builds do) loosens the policy with its own config file.
+
 Docs: [https://helmetjs.github.io/#reference](https://helmetjs.github.io/#reference)
 
-Example config:
+Default config:
+```
+{
+  "img-src": ["'self'", "data:"],
+  "script-src": ["'self'"],
+  "script-src-attr": ["'none'"]
+}
+```
+
+Loosened config for an app that requires inline scripts:
 ```
 {
   "img-src": ["'self'", "data:"],
