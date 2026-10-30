@@ -1,0 +1,6 @@
+# The docs toolchain, pinned: the site is built by
+# .github/workflows/publish.yml, and a floating MkDocs major would change how
+# the pages render with nothing in the repository to review or revert.
+mkdocs==1.6.1
+mkdocs-material==9.5.49
+pymdown-extensions==10.14

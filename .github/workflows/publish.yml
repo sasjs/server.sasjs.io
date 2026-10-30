@@ -1,48 +1,92 @@
 name: Publish docs via GitHub Pages
+
+# Builds the MkDocs site from the markdown in docs/ and force-pushes the result
+# to the gh-pages branch, which is what GitHub Pages serves for
+# server.sasjs.io.
+#
+# The toolchain is pinned in requirements-docs.txt and installed by this job, so
+# the versions that render the site are reviewable in the repository rather than
+# baked into a Docker image. The push authenticates with the workflow's own
+# token. A commit pushed that way does not trigger a Pages build, so the last
+# step asks for one.
+
 on:
   push:
     branches:
       - main
+  # a docs deploy can be re-run after a Pages outage without an empty commit
+  workflow_dispatch:
+
+# contents: write is the gh-pages push; pages: write is the build request below
+permissions:
+  contents: write
+  pages: write
+
+# one deploy at a time, and a newer commit supersedes an in-flight run
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-    name: Deploy docs
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout master
-        uses: actions/checkout@v2
+    name: Build and deploy
+    runs-on: ubuntu-22.04
 
-      - name: Setup Python
-        uses: actions/setup-python@v1
-
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
-
-      - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@1.16
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          CUSTOM_DOMAIN: server.sasjs.io
-
-  slides:
-    name: Generate and push slides
-    needs: build
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
-      - name: Copy over swagger docs
-        run: cp -R theme/api api
-        env:
-          GITHUB_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Commit and push
-        uses: EndBug/add-and-commit@v5
+      - name: Use Python
+        uses: actions/setup-python@v6
         with:
-          branch: gh-pages
-          message: 'Update branch'
+          python-version: '3.12'
+
+      - name: Install MkDocs
+        run: |
+          python -m pip install --disable-pip-version-check --upgrade pip
+          python -m pip install --disable-pip-version-check -r requirements-docs.txt
+
+      - name: Build the site
+        run: mkdocs build
+
+      - name: Assemble the deployed tree
+        # /api/index.html is linked from the nav as an absolute path, and Pages
+        # serves the custom domain from the branch, so both have to be in the
+        # built tree rather than in the repository root.
+        run: |
+          cp -R theme/api site/api
+          echo 'server.sasjs.io' > site/CNAME
+          touch site/.nojekyll
+
+      - name: Deploy to gh-pages
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          # the token stays in the environment: it is never interpolated into a
+          # URL or a command line
+          DEPLOY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd site
+          git init -q
+          git checkout -q -b gh-pages
+          git add -A
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -qm "Deployed ${GITHUB_SHA:0:7} with MkDocs $(mkdocs --version | awk '{print $3}')"
+          git remote add origin "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git"
+          git -c credential.helper='!f() { echo "username=x-access-token"; echo "password=$DEPLOY_TOKEN"; }; f' \
+              push -f origin gh-pages
+
+      - name: Rebuild the Pages site
+        # A commit pushed with GITHUB_TOKEN does not trigger a Pages build
+        # ("Commits pushed by a GitHub Actions workflow that uses the
+        # GITHUB_TOKEN do not trigger a GitHub Pages build" - GitHub docs), so
+        # ask for one explicitly. That is what keeps a personal access token out
+        # of this pipeline.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sS --fail-with-body -X POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "User-Agent: sasjs-docs-publish" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages/builds" \
+            -o /dev/null -w 'pages build requested: %{http_code}\n'
