@@ -1,5 +1,33 @@
 # Installation
 
+There are two channels: the npm package and the standalone executable. Both read
+the same [settings](/settings) and serve the same API.
+
+## npm
+
+```bash
+npx @sasjs/server@3.6.2
+```
+
+Or install it once and run `sasjs-server` from then on:
+
+```bash
+npm install -g @sasjs/server
+sasjs-server
+```
+
+Requires Node 22 or later, and is the only channel that runs on arm64 (Apple
+Silicon, Graviton, a Pi) - the standalone executables are built for x64 only.
+Installing the package runs no install script, so it makes no network call of its
+own.
+
+Run it from the directory the server should own: `.env` is read from the working
+directory, and that directory also gets `./sasjs_root`. Pin the version as above,
+because an unpinned `npx @sasjs/server` re-resolves `latest` on every run, so a
+restart becomes a silent upgrade.
+
+## Standalone executable
+
 The latest version can be downloaded from the Releases page:  [https://github.com/sasjs/server/releases](https://github.com/sasjs/server/releases)
 
 It can also be installed in just two lines of code (on linux):
