@@ -2,15 +2,15 @@ This should not be renamed README.md to avoid being part of the published docs.
 
 The site is built automatically on pushing to the main branch as part of a github action.  To contribute, just change the relevant markdown file in the docs folder and push.
 
-For manual / local builds:
+For manual / local builds, install the pinned toolchain:
 
-1. brew install mkdocs
-2. pip install mkdocs-material
-3. pip install fontawesome_markdown
-4. pip install mkdocs-redirects
+    python -m venv .venv
+    . .venv/bin/activate
+    pip install -r requirements-docs.txt
 
-To build, navigate to the root of this repo and run:
-    mkdocs build --clean
+Then, from the root of this repo:
+
+    mkdocs build
     mkdocs serve
 
-Deployment is automatic on being merged to master branch.
+Deployment is automatic on being merged to the main branch.
