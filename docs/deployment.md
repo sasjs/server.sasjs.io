@@ -57,7 +57,7 @@ journalctl -u sasjs-server -f
 ```
 
 - `Restart=on-failure` restarts a crashed process and leaves a deliberate `systemctl stop` alone, because the server exits 0 when it handles SIGTERM.
-- `StartLimitBurst` is what stops a configuration error becoming an infinite loop: a wrong `SAS_PATH` exits with code 1 straight away, and without a limit systemd retries it forever.
+- `StartLimitIntervalSec` and `StartLimitBurst` decide how many restarts systemd allows before it gives up. systemd's own default is five restarts in ten seconds; the values above allow five in a minute, so a transient failure still recovers while a wrong `SAS_PATH` - which exits with code 1 immediately - stops the unit instead of looping.
 - `Environment=` and `EnvironmentFile=` both win over an `.env` line with the same name, because `dotenv` does not overwrite variables that are already set.
 
 ## macOS: launchd
@@ -92,7 +92,7 @@ launchctl load -w ~/Library/LaunchAgents/io.sasjs.server.plist
 
 ## Windows: Task Scheduler
 
-Task Scheduler runs a task at logon and restarts it after a crash. Set the working directory explicitly, because a task's default working directory is `C:\Windows\System32`, which is where `sasjs_root` would otherwise be created:
+`schtasks` starts a task at logon, and that is all the command below configures: restart-on-failure is a task setting rather than a `schtasks` flag, so add it in the task's XML (`<RestartOnFailure>`) or in the Task Scheduler GUI under "If the task fails, restart every". Set the working directory explicitly, because a task's default working directory is `C:\Windows\System32`, which is where `sasjs_root` would otherwise be created:
 
 ```bat
 schtasks /create /tn "SASjs Server" /sc onlogon /tr "cmd /c cd /d C:\sasjs && api-win.exe"
@@ -132,7 +132,7 @@ This survives closing the terminal, and nothing else: no restart after a crash, 
 
 ## npx is a launcher, not a supervisor
 
-`npx @sasjs/server@X.Y.Z` fetches the package and runs it in the foreground. When the terminal closes the process goes with it. Two things to know before using it:
+`npx @sasjs/server@3.7.1` fetches the package and runs it in the foreground. When the terminal closes the process goes with it. Two things to know before using it:
 
 - An unpinned `npx @sasjs/server` re-resolves `latest` on every start, so a restart silently changes version. Pin it.
 - The working directory still owns `.env` and `sasjs_root`, but the package itself lives in an evictable `~/.npm/_npx/<hash>` cache, so an `.env` written next to the package would be lost.
