@@ -7,7 +7,7 @@ process running on its own: see [Deployment](/deployment/) for the ways to do th
 ## npm
 
 ```bash
-npx @sasjs/server@X.Y.Z
+npx @sasjs/server@3.7.1
 ```
 
 Or install it once and run `sasjs-server` from then on:
@@ -23,7 +23,7 @@ Installing the package runs no install script, so it makes no network call of it
 own.
 
 Run it from the directory the server should own: `.env` is read from the working
-directory, and that directory also gets `./sasjs_root`. Pin the version, replacing `X.Y.Z` with a release from [the npm page](https://www.npmjs.com/package/@sasjs/server), because an unpinned `npx @sasjs/server` re-resolves `latest` on every run, so a restart becomes a silent upgrade.
+directory, and that directory also gets `./sasjs_root`. Pin the version: 3.7.1 is the current release at the time of writing, so check [the npm page](https://www.npmjs.com/package/@sasjs/server) and keep the pin at a release you have tested. An unpinned `npx @sasjs/server` re-resolves `latest` on every run, so a restart becomes a silent upgrade.
 
 ## Standalone executable
 
@@ -65,6 +65,8 @@ PRIVATE_KEY=/opt/certificates/privkey.pem
 ```
 
 Plain HTTP binds the loopback interface unless `HTTP_BIND_ADDRESS` names another one, and a non-loopback address is refused unless `HTTP_ALLOW_REMOTE=true` is set, because plain HTTP sends credentials in clear text.
+
+Upgrading from a release configured with `PROTOCOL`: an install that ran with `PROTOCOL=http` and no `HTTP_BIND_ADDRESS` accepted connections on every interface. It now listens on `127.0.0.1` only, so a remote client gets connection refused until `HTTP_BIND_ADDRESS` names the interface you serve on and `HTTP_ALLOW_REMOTE=true` is set.
 
 Then launch the executable (eg `./api-linux`, or double click `api-win.exe`). The startup log states each listener as it binds - for example `http on 127.0.0.1:5000` - and that address is the one to open.
 
