@@ -1,12 +1,13 @@
 # Installation
 
 There are two channels: the npm package and the standalone executable. Both read
-the same [settings](/settings) and serve the same API.
+the same [settings](/settings) and serve the same API. Neither channel keeps the
+process running on its own: see [Deployment](/deployment/) for the ways to do that.
 
 ## npm
 
 ```bash
-npx @sasjs/server@3.6.2
+npx @sasjs/server@3.7.0
 ```
 
 Or install it once and run `sasjs-server` from then on:
@@ -30,14 +31,18 @@ restart becomes a silent upgrade.
 
 The latest version can be downloaded from the Releases page:  [https://github.com/sasjs/server/releases](https://github.com/sasjs/server/releases)
 
-It can also be installed in just two lines of code (on linux):
+On Linux it takes two lines:
 
 ```bash
 curl -L https://github.com/sasjs/server/releases/latest/download/linux.zip > linux.zip
 unzip linux.zip
 ```
 
-For windows, just download the zip file and launch.  You can ignore / cancel the popup, the app does NOT require administrative privileges.
+macOS is the same package name changed: download `macos.zip`, and the executable inside is `api-macos`.
+
+On Windows, download `windows.zip` and launch `api-win.exe`. You can ignore or cancel the popup; the app does not require administrative privileges.
+
+The executables are built for x64 only. On arm64 - Apple Silicon, Graviton, a Raspberry Pi - use the [npm package](#npm).
 
 ## Configuration
 
@@ -45,23 +50,29 @@ After installation, there is only one mandatory input:
 
 * `SAS_PATH` -> the full path to the **SAS executable** (eg `/path/to/sas.exe|sh`) in your environment.
 
-However there are many additional [settings](/settings) you can make - these can go in a file called `.env` in the **same folder as the unzipped SASjs Server executable** (eg `api-linux`/`api-win.exe`).  Simply create the file with sample contents such as below:
+At least one listener must also be enabled, with `HTTP_PORT`, `HTTPS_PORT` or both. An environment that enables neither is refused at startup, with a message naming both variables.
+
+There are many additional [settings](/settings). They go in a file called `.env` in the directory the server runs from - for the executable, the folder holding `api-linux` / `api-macos` / `api-win.exe`:
 
 ```bash
 SAS_PATH=/path/to/your/sas.sh
 # This part enables multi-user SAS (optional)
 MODE=server
-DB_CONNECT=mongodb+srv://admin:admin@cluster.mongodb.net/mydb?retryWrites=true&w=majority
-# This part enables TLS (also optional)
-PROTOCOL=https
+DB_CONNECT=mongodb+srv://admin:***@cluster.mongodb.net/mydb?retryWrites=true&w=majority
+# A plain HTTP listener, and a TLS listener beside it
+HTTP_PORT=5000
+HTTPS_PORT=443
 CERT_CHAIN=/opt/certificates/fullchain.pem
 PRIVATE_KEY=/opt/certificates/privkey.pem
-PORT=443
 ```
 
-Then launch the executable (eg `./api-win.exe` or double click).  If launching from terminal there should be a link in the log to open the app (eg http://localhost:5000).  If double clicking, the browser should open automatically.
+Plain HTTP binds the loopback interface unless `HTTP_BIND_ADDRESS` names another one, and a non-loopback address is refused unless `HTTP_ALLOW_REMOTE=true` is set, because plain HTTP sends credentials in clear text.
+
+Then launch the executable (eg `./api-linux`, or double click `api-win.exe`). The startup log states each listener as it binds - for example `http on 127.0.0.1:5000` - and that address is the one to open.
 
 A full guide to deploying SASjs Server on a Ubuntu VPS is available [here](https://sasapps.io/sasjs-server-on-vps).
+
+The server runs in the foreground. [Deployment](/deployment/) covers keeping it up with systemd, launchd, Task Scheduler or pm2.
 
 
 ## SSL Certificates
@@ -71,7 +82,7 @@ To run over `https`, SASjs server needs a copy of your certificates.  The path t
 Example config:
 
 ```
-PROTOCOL=https
+HTTPS_PORT=443
 CERT_CHAIN=/opt/certificates/fullchain.pem
 PRIVATE_KEY=/opt/certificates/privkey.pem
 ```
