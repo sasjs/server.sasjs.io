@@ -31,6 +31,8 @@ Write `/etc/systemd/system/sasjs-server.service`:
 Description=SASjs Server
 After=network-online.target
 Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
 
 [Service]
 Type=simple
@@ -41,8 +43,6 @@ EnvironmentFile=-/srv/sasjs/sasjs.env
 ExecStart=/usr/local/bin/sasjs-server
 Restart=on-failure
 RestartSec=5
-StartLimitIntervalSec=60
-StartLimitBurst=5
 
 [Install]
 WantedBy=multi-user.target
@@ -132,7 +132,7 @@ This survives closing the terminal, and nothing else: no restart after a crash, 
 
 ## npx is a launcher, not a supervisor
 
-`npx @sasjs/server@3.7.0` fetches the package and runs it in the foreground. When the terminal closes the process goes with it. Two things to know before using it:
+`npx @sasjs/server@X.Y.Z` fetches the package and runs it in the foreground. When the terminal closes the process goes with it. Two things to know before using it:
 
 - An unpinned `npx @sasjs/server` re-resolves `latest` on every start, so a restart silently changes version. Pin it.
 - The working directory still owns `.env` and `sasjs_root`, but the package itself lives in an evictable `~/.npm/_npx/<hash>` cache, so an `.env` written next to the package would be lost.
