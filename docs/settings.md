@@ -505,6 +505,18 @@ Example: `R_PATH=/usr/bin/Rscript`
 * [`SAS_PATH`](/settings/#sas_path)
 
 
+### RUN_AS
+
+The account the server must run as.
+
+Unset, the server refuses to start as root. Set to a username, the server refuses to start as any other account, so the value asserts where it runs rather than suggesting it. `RUN_AS=root` is the deliberate override.
+
+The server executes uploaded code by design, so the identity it runs under is the privilege every connected user gets - and in desktop mode there is no authentication at all. Start it under the account that should own the SAS sessions, rather than with `sudo`.
+
+Default: unset (root refused)
+
+See also: [Deployment](/deployment/)
+
 ### RUN_TIMES
 A comma separated string that defines the available runtimes.
 

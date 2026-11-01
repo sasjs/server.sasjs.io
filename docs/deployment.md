@@ -16,7 +16,7 @@ SASjs Server runs in the foreground: it starts, binds its listeners and stays up
 
 The recipes below assume the npm install (`npm install -g @sasjs/server`), so the command is `sasjs-server`. With the [standalone executable](/installation/#standalone-executable), use its path instead: `api-linux`, `api-macos` or `api-win.exe`.
 
-Do not run it as root. The server refuses to start as root unless `RUN_AS=root` is set deliberately.
+Do not run it as root. The server refuses to start as root unless [`RUN_AS`](/settings/#run_as) is set to `root` deliberately.
 
 ## The working directory matters
 
