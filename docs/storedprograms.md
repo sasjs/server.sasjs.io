@@ -124,15 +124,30 @@ A number of "fixed" variables are also added at the start of the program, eg:
 
 ```js
 let _webout = '';
-weboutPath = '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/webout.txt'; 
-const _sasjs_tokenfile = '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/reqHeaders.txt';
-const _sasjs_username = 'allan';
-const _sasjs_userid = '6';
-const _sasjs_displayname = 'Allan Bowe';
-const _metaperson = _sasjs_displayname;
-const _metauser = _sasjs_username;
-const sasjsprocessmode = 'Stored Program';
+const weboutPath = '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/webout.txt';
+const _SASJS_TOKENFILE = '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/reqHeaders.txt';
+const _SASJS_WEBOUT_HEADERS = '/home/sasjssrv/sasjs_root/sessions/20220808081136-29012-1659946296436/stpsrv_header.txt';
+const _SASJS_APISERVERURL = 'http://127.0.0.1:5000';
+const _SASJS_USERNAME = 'allan';
+const _SASJS_USERID = '6';
+const _SASJS_DISPLAYNAME = 'Allan Bowe';
+const _METAPERSON = _SASJS_DISPLAYNAME;
+const _METAUSER = _SASJS_USERNAME;
+const SASJSPROCESSMODE = 'Stored Program';
+
+const _sasjs_webout = require('./sasjs-webout.js')({
+  weboutPath: weboutPath,
+  headersPath: _SASJS_WEBOUT_HEADERS,
+  program: '/Public/app/myprogram',
+  debug: '',
+  username: _SASJS_USERNAME,
+  userId: _SASJS_USERID,
+  apiServerUrl: _SASJS_APISERVERURL
+});
+globalThis.webout = _sasjs_webout;
 ```
+
+`fs` and `webout` are published as globals, so a program that declares its own `fs` or `webout` shadows it without clashing with the runtime's. The runtime keeps its own reference under the reserved `_sasjs_webout` name, which is also what writes `_webout` when the program assigns that variable instead of calling `webout()`.
 
 
 ### Input Files
@@ -166,22 +181,78 @@ const _WEBIN_FILE_COUNT = 0
 
 ### Output
 
-The following variables are "special":
+The recommended way to send data back is `webout()`, which mirrors the [`%ms_webout()`](https://core.sasjs.io/ms__webout_8sas.html) macro so that a JS program is laid out the way a SAS one is:
+
+```sas
+data work.users;
+  set work.source;
+run;
+
+%ms_webout(OPEN)
+%ms_webout(OBJ,users)
+%ms_webout(CLOSE)
+```
+
+```js
+const users = [{ name: 'ann' }, { name: 'bob' }]
+
+webout('OPEN')
+webout('OBJ', 'users', users)
+webout('CLOSE')
+```
+
+| Action | What it does |
+|---|---|
+| `OPEN` | Truncates the response body, starts one JSON object, and appends `content-type: application/json` to the response headers. |
+| `ARR` | Appends one member to that object: an array of rows, each row a positional array of values. |
+| `OBJ` | Appends one member to that object: an array of rows, each row an object keyed by column name. |
+| `CLOSE` | Appends the system block below, and closes the JSON object. |
+
+The actions are case-insensitive, the member name is the key the frontend reads (`res.users`), and a table must come between `OPEN` and `CLOSE`.
+
+`OPEN` writes `SYSDATE` and `SYSTIME` as the first two members, in the SAS `DATE9` and `TIME8` forms (`02NOV2026`, `11:45:32`). `CLOSE` adds the same system fields that `%ms_webout(CLOSE)` does, carrying the values a JavaScript runtime can answer:
+
+| Field | Value in a JS program |
+|---|---|
+| `_DEBUG` | the `_debug` query parameter |
+| `_PROGRAM` | the `_program` value |
+| `AUTOEXEC` | empty - JS has no autoexec |
+| `MF_GETUSER` | `_SASJS_USERNAME` |
+| `SYSCC` | `0` - a program that reaches `CLOSE` has not failed |
+| `SYSENCODING` | `utf-8` |
+| `SYSERRORTEXT` | empty |
+| `SYSHOSTINFOLONG` | kernel type, release and architecture of the host |
+| `SYSHOSTNAME` | host name |
+| `SYSPROCESSID`, `SYSJOBID` | the interpreter's process id |
+| `SYSPROCESSMODE` | `Stored Program` |
+| `SYSPROCESSNAME` | `NodeJS` |
+| `SYSSCPL` | the platform, eg `linux` |
+| `SYSSITE` | empty |
+| `SYSTCPIPHOSTNAME` | `_SASJS_APISERVERURL` - the address the program is running on |
+| `SYSUSERID` | `_SASJS_USERID` |
+| `SYSVLONG` | the Node version |
+| `SYSWARNINGTEXT` | empty |
+| `END_DTTM` | ISO 8601 timestamp of the `CLOSE` |
+| `MEMSIZE` | total memory of the host, in the `SIZEKMG` form (eg `15.6G`) |
+
+Three behaviours worth knowing:
+
+- **`CLOSE` is the program's job.** The server does not close the object for you, exactly as it does not for a SAS program that omits `%ms_webout(CLOSE)`. A program that stops after `OPEN` returns the truncated body it wrote, which is not valid JSON; the log carries a NOTE naming the missing call. A program that throws after `OPEN` behaves the way any runtime does on a failed run: the response carries the partial body, then the log separator and the program's log.
+- **Do not mix `webout()` with `_webout`.** When `webout()` has streamed the body, an assignment to `_webout` is ignored and the log says so.
+- **A table before `OPEN`, a second `OPEN`, a table after `CLOSE`, an unknown action, or rows of the wrong shape throws**, so the failure lands in the session log rather than in a malformed response.
 
 #### `_SASJS_WEBOUT_HEADERS`
-This (string) variable points to the location of a text file where header records (such as `Content-type: application/zip`) can be written.  Sample code that could be used to perform such an operation might look like:
+
+This (string) variable points to the location of a text file where header records (such as `Content-type: application/zip`) can be written. `webout('OPEN')` appends a `content-type: application/json` record to it; a program that wants another content type writes its own record afterwards, and the last record wins. Sample code:
 
 ```
-fs.writeFile(_SASJS_WEBOUT_HEADERS, 'Content-type: application/zip', function (err) {
-    if (err) throw err;
-})
+fs.writeFileSync(_SASJS_WEBOUT_HEADERS, 'content-type: application/zip')
 ```
-
-So long as `Content-type: application/zip` is the _last_ entry in the file, it will be applied as the content-type in the Response Header.
 
 
 #### `_webout`
-Any content added to this variable will be stringified and automatically returned to the browser by SASjs Server.  The variable can be used to hold binary, or textual content.  Whatever is contained within this variable, is what will be returned in the Response Body.  If it is not HTML, then it may be necessary also to set the Request Headers using the temporary file in the `_SASJS_WEBOUT_HEADERS` variable above.
+
+Any content added to this variable is returned to the browser by SASjs Server, and a program that assigns it owns its own content type - the default is `text/html`. The variable can hold binary or textual content, so this is the route for a response that is not JSON. To send JSON, or to get the system block for free, use `webout()` above.
 
 
 
