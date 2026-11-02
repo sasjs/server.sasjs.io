@@ -135,7 +135,7 @@ const _METAPERSON = _SASJS_DISPLAYNAME;
 const _METAUSER = _SASJS_USERNAME;
 const SASJSPROCESSMODE = 'Stored Program';
 
-const webout = require('./sasjs-webout.js')({
+const _sasjs_webout = require('./sasjs-webout.js')({
   weboutPath: weboutPath,
   headersPath: _SASJS_WEBOUT_HEADERS,
   program: '/Public/app/myprogram',
@@ -144,9 +144,10 @@ const webout = require('./sasjs-webout.js')({
   userId: _SASJS_USERID,
   apiServerUrl: _SASJS_APISERVERURL
 });
+globalThis.webout = _sasjs_webout;
 ```
 
-`fs` is available as a global, so a program can use it directly, and one that requires it (`const fs = require('fs')`) declares its own copy without clashing with the runtime's.
+`fs` and `webout` are published as globals, so a program that declares its own `fs` or `webout` shadows it without clashing with the runtime's. The runtime keeps its own reference under the reserved `_sasjs_webout` name, which is also what writes `_webout` when the program assigns that variable instead of calling `webout()`.
 
 
 ### Input Files
