@@ -42,7 +42,7 @@ LDAP_GROUPS_BASE_DN = ou=groups,dc=companyname
 
 Next, restart the server and log in with the admin user. Navigate to the settings tab.  You should see a screen like the below.  Import the users & groups by clicking the 'synchronise' button.
 
-![LDAP in SASjs](img/ldapconfig.png)
+![The settings that point SASjs Server at an LDAP directory](/img/ldapconfig.png){ width="1802" height="986" loading="lazy" decoding="async" }
 
 ## OpenID Connect Authentication
 

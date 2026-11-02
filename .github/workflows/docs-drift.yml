@@ -1,0 +1,31 @@
+name: Docs drift
+
+# Weekly heartbeat: runs the documentation check against the NEWEST commit on
+# the server's main branch, not the release pinned in build.yml. A route that
+# is renamed or removed, a setting that stops being read, or a specification
+# that moves on turns this red, which is the signal to update the pages, refresh
+# docs/swagger.yaml and move the pin.
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    name: Docs vs server main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Check against the latest server
+        run: node scripts/check-server-docs.mjs --server-ref main

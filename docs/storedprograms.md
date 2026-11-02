@@ -9,7 +9,7 @@ og_image: /img/stps.png
 
 Stored Programs may be written in SAS, Python, R, or JavaScript and are saved to SASjs Drive.  When the `/SASjsApi/stp/execute` endpoint is called with a `_PROGRAM` URL parameter (pointing to the logical program location), a "Stored Program" is prepared and executed in a SAS/JS/PYTHON/R [session](/sessions) according to the file extension.
 
-For the usual case where the `_program` variable does NOT contain an extension (eg `/some/stored/program`) then by default, SASjs Server will attempt to find "program.sas" in the `/some/stored` folder.  To change this default, see the [RUN_TIMES](/settings/#RUN_TIMES) settings.
+For the usual case where the `_program` variable does NOT contain an extension (eg `/some/stored/program`) then by default, SASjs Server will attempt to find "program.sas" in the `/some/stored` folder.  To change this default, see the [RUN_TIMES](/settings/#run_times) settings.
 
 When Stored Programs are executed, some pre-code is injected to make available various inputs, such as:
 
@@ -26,7 +26,7 @@ If you are calling your Stored Programs from a web application, it is recommende
 The following variables are "special":
 
 ### `_PROGRAM`
-This is a required input, and will point to the Stored Program location in SASjs Drive.  The extension may be omitted, subject to the behaviour in the [RUN_TIMES](/settings/#RUN_TIMES) setting.
+This is a required input, and will point to the Stored Program location in SASjs Drive.  The extension may be omitted, subject to the behaviour in the [RUN_TIMES](/settings/#run_times) setting.
 
 ### `_DEBUG`
 Setting this to 131 or greater will result in the log being returned.  The log will have the following UUID, which can be used as a seperator:  `SASJS_LOGS_SEPARATOR_163ee17b6ff24f028928972d80a26784`
@@ -44,7 +44,7 @@ Any URL parameters (eg `&name1=value1&something=else`) are attached as macro var
 %let something=else;
 ```
 
-A number of "fixed" variables are also added at the start of the program - you can see the code that generates these in the repo, [here](https://github.com/sasjs/server/blob/main/api/src/controllers/internal/Execution.ts#L93).
+A number of "fixed" variables are also added at the start of the program - the code that generates them is in the repo, in [the program template in Execution.ts](https://github.com/sasjs/server/blob/main/api/src/controllers/internal/Execution.ts#L93).
 
 If `_DEBUG` is set then `options mprint;` will also be automatically added to the start of the Stored Program.
 

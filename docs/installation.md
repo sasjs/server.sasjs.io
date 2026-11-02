@@ -77,7 +77,7 @@ A `PORT` that is still in the file is translated into the matching listener for 
 
 Then launch the executable (eg `./api-linux`, or double click `api-win.exe`). The startup log states each listener as it binds - for example `http on 127.0.0.1:5000` - and that address is the one to open.
 
-A full guide to deploying SASjs Server on a Ubuntu VPS is available [here](https://sasapps.io/sasjs-server-on-vps).
+There is also a [guide to deploying SASjs Server on an Ubuntu VPS](https://sasapps.io/sasjs-server-on-vps).
 
 The server runs in the foreground. [Deployment](/deployment/) covers keeping it up with systemd, launchd, Task Scheduler or pm2.
 

@@ -9,7 +9,7 @@ og_image: /img/apps.png
 
 AppStream is the gateway to apps on SASjs Server.
 
-![](img/apps.png)
+![The SASjs App Stream portal, listing the apps a user can launch](/img/apps.png){ width="1608" height="1490" loading="lazy" decoding="async" }
 
 ## Creating Apps
 

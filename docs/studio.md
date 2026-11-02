@@ -8,7 +8,11 @@ description: SASjs Studio is an executor and log/results manager for SAS and JS 
 
 Run SAS or JS code in a single interface!  Just select your preferred runtime from the dropdown next to the running man.
 
-![Untitled_ Jun 19, 2022 8_31 PM](https://user-images.githubusercontent.com/4420615/174497164-fbe87231-a4e9-4de2-b5cc-d5328deff093.gif)
+<video controls autoplay loop muted playsinline width="1000" height="646">
+  <source src="/img/studio-demo.webm" type="video/webm">
+  <source src="/img/studio-demo.mp4" type="video/mp4">
+  Running code in SASjs Studio, and switching runtime.
+</video>
 
 It is [possible to ctrl-click](https://github.com/sasjs/server/issues/119#issuecomment-1100668248) to run code, or to highlight and select the running man icon.
 
