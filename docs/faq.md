@@ -21,10 +21,6 @@ The following resources may be helpful:
 
 No!  You can run SASjs Server on your laptop or computer - so long as you have a local instance of SAS.
 
-## Will this work on SAS Viya?
-
-Yes - you can point to the sas.sh in the SPRE folder
-
 ## Will this work on SAS EBI?
 
 Yes - just point to the sas executable in the SASHOME folder
