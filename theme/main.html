@@ -50,25 +50,3 @@
 <meta name="twitter:image" content="{{ og_image }}">
 <meta name="twitter:image:alt" content="{{ site }} - a REST API, a studio and an app portal for SAS">
 {% endblock %}
-
-{% block scripts %}
-<!-- Material's own bundle, search and instant-loading scripts live in this
-     block: without super() the theme renders every page with no JavaScript at
-     all. -->
-{{ super() }}
-<!-- Matomo -->
-<script>
-  var _paq = window._paq = window._paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function () {
-    var u = "https://analytics.4gl.io/";
-    _paq.push(['setTrackerUrl', u + 'matomo.php']);
-    _paq.push(['setSiteId', '7']);
-    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-    g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
-  })();
-</script>
-<!-- End Matomo Code -->
-{% endblock %}

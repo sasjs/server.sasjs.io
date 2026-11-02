@@ -29,6 +29,14 @@ the server's main branch. When the weekly run fails, update the pages, refresh
 the spec (`cp <server>/api/public/swagger.yaml docs/swagger.yaml`) and move the
 `--server-ref` in `.github/workflows/build.yml`.
 
+`scripts/check-external-calls.mjs` checks the built site the other way: no page
+may fetch a resource from another origin. Fonts are self-hosted, the Swagger UI
+assets ship in the plugin, and there is no analytics tag, so the docs render on
+an air-gapped host exactly as they do here. CI runs it after the build; run it
+locally with `node scripts/check-external-calls.mjs` after `./build.sh`.
+
+    node scripts/check-external-calls.mjs
+
 ## API reference
 
 The API page renders `docs/swagger.yaml`, a copy of the specification the server

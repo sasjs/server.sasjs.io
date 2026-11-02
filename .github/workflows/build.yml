@@ -48,6 +48,15 @@ jobs:
         # check against main.
         run: node scripts/check-server-docs.mjs --server-ref v3.9.0
 
+      - name: Check the site is self-contained
+        # No page fetches anything from another origin - no fonts, no CDN, no
+        # tracker. The docs are read offline and on air-gapped SAS hosts, and a
+        # third-party request breaks that quietly: it stalls the page until it
+        # times out and tells the third party who is reading. Fails on an
+        # external subresource, a stylesheet url() or @import, or an inline
+        # script that creates an element to load something.
+        run: node scripts/check-external-calls.mjs
+
       - name: Serve the built site
         # Lighthouse needs HTTP, and the scores depend on the response headers a
         # real host sends, so serve with compression rather than reading files.
@@ -62,14 +71,20 @@ jobs:
       - name: Lighthouse
         # Scores the pages a reader lands on, and fails the pull request if any
         # of them drops: performance 85, accessibility 100, best practices and
-        # SEO 95. Performance sits below the 90 the CLI docs use because
-        # /storedprograms/ is the longest page on the site and spends ~260ms of
-        # main-thread time on Material's bundle; the other pages score 0.94 to
-        # 0.99, so 85% is a floor that still catches a real regression (a 3.3MB
-        # diagram scored /sessions/ 0.80 before it was resized). The
-        # per-audit assertions beside those catch the specific regressions this
-        # site has had (an unlabelled dialog, unsized images, "here" links) with
-        # a message that says what to fix.
+        # SEO 95, plus a 950KB ceiling on the page weight.
+        #
+        # Every page is scored three times and the median is asserted. Total
+        # blocking time on a shared runner swings widely - the home page has
+        # measured 0.77 and 0.99 for identical content, because the first run
+        # pays for a cold browser and a busy vCPU - so a single run makes this
+        # gate a coin toss. The byte weight is asserted separately because it is
+        # a property of the content rather than of the machine, and it is what
+        # catches an unoptimised image (a 3.3MB diagram scored /sessions/ 0.80
+        # before it was resized) even when the timing does not.
+        #
+        # The per-audit assertions beside those catch the specific regressions
+        # this site has had (an unlabelled dialog, unsized images, "here" links)
+        # with a message that says what to fix.
         run: npx --yes @lhci/cli@0.14.0 autorun --config=lighthouserc.json
 
       - name: Upload the Lighthouse reports

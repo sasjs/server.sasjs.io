@@ -45,7 +45,6 @@ hooks:
   - hooks/html_fixes.py
 
 extra_css:
-  - font-awesome.css
   - stylesheets/extra.css
 
 extra_javascript:
