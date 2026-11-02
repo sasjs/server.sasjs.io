@@ -234,7 +234,7 @@ The actions are case-insensitive, the member name is the key the frontend reads 
 | `SYSERRORTEXT` | the last message the program sent to `console.error` |
 | `SYSHOSTINFOLONG` | kernel type, release and architecture of the host (browser user agent in a mock build) |
 | `SYSHOSTNAME` | host name (`location.hostname` in a mock build) |
-| `SYSPROCESSID`, `SYSJOBID` | the interpreter's process id |
+| `SYSPROCESSID`, `SYSJOBID` | the interpreter's process id, which in a mock build is the constant `4242` the sandbox supplies - every mock run reports it, including two running at once |
 | `SYSPROCESSMODE` | `Stored Program` |
 | `SYSPROCESSNAME` | `NodeJS`, or `Browser` in a mock build |
 | `SYSSCPL` | the platform, eg `linux`, or `browser` in a mock build |
@@ -244,7 +244,7 @@ The actions are case-insensitive, the member name is the key the frontend reads 
 | `SYSVLONG` | the Node version, or `browser` in a mock build |
 | `SYSWARNINGTEXT` | the last message the program sent to `console.warn` |
 | `END_DTTM` | ISO 8601 timestamp of the `CLOSE` |
-| `MEMSIZE` | total memory of the host, in the `SIZEKMG` form (eg `15.6G`) |
+| `MEMSIZE` | total memory of the host, in the `SIZEKMG` form (eg `15.6G`); `navigator.deviceMemory` in a mock build, and empty when the browser does not expose it |
 
 Three behaviours worth knowing:
 
@@ -255,11 +255,13 @@ Three behaviours worth knowing:
 
 #### `_SASJS_WEBOUT_HEADERS`
 
-This (string) variable points to the location of a text file where header records (such as `Content-type: application/zip`) can be written. `webout('OPEN')` appends a `content-type: application/json` record to it; a program that wants another content type writes its own record afterwards, and the last record wins. Sample code:
+This (string) variable points to the location of a text file where header records (such as `Content-type: application/zip`) can be written. The file starts with a `text/html` line, and `webout('OPEN')` appends a `content-type: application/json` record to it; a program that wants another content type appends its own record afterwards, and the server takes the last record in the file. Sample code:
 
 ```
-fs.writeFileSync(_SASJS_WEBOUT_HEADERS, 'content-type: application/zip')
+fs.appendFileSync(_SASJS_WEBOUT_HEADERS, '\ncontent-type: application/zip\n')
 ```
+
+Append, never overwrite. `fs.writeFileSync` truncates the file, so the seeded `text/html` line and the record `webout('OPEN')` wrote are both discarded - the content type becomes the one you wrote, and any header the server had already recorded is gone. The leading newline is there because the seeded line carries no trailing one: without it the two records run together on a single line and are read as one.
 
 
 #### `_webout`
