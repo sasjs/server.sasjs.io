@@ -25,6 +25,10 @@
  *                  byte the specification the release ships at
  *                  api/public/swagger.yaml. The published reference cannot
  *                  describe a different set of endpoints from the release.
+ *   E  runtimes  - every runtime in the server's RunTimeType enum is named in
+ *                  the RUN_TIMES section. The only reverse check: a runtime the
+ *                  pages never mention is a feature nobody can discover, and
+ *                  `sasviya` was missing for exactly that reason.
  *
  * A page may name a path or a variable it does not own - a planned endpoint on
  * the roadmap, another tool's URL quoted in an example. Those are declared in
@@ -359,6 +363,53 @@ const checkSpec = () => {
 }
 
 checkSpec()
+
+// E - every runtime the server can run is named in the RUN_TIMES section.
+// Check C only goes one way (documented -> read); this is the one reverse check
+// that is worth having, because the set of runtimes is a closed enum and a
+// runtime missing from the page is a feature nobody can discover - `sasviya`
+// was absent for exactly that reason.
+const settingsText = readFileSync(settingsFile, 'utf8')
+
+const sectionOf = (heading) => {
+  const marker = `### ${heading}`
+  const at = settingsText.search(new RegExp(`^${marker}\\s*$`, 'm'))
+  if (at === -1) return ''
+
+  // Start after the heading itself, or the heading matches `^#{2,3} ` again
+  // and the section comes back empty.
+  const rest = settingsText.slice(at + marker.length)
+  const end = rest.search(/^#{2,3} /m)
+  return end === -1 ? rest : rest.slice(0, end)
+}
+
+const runTimeEnum = (
+  readFileSync(path.join(apiSrc, 'utils', 'verifyEnvVariables.ts'), 'utf8').match(
+    /export enum RunTimeType \{([\s\S]*?)\n\}/
+  ) || []
+)[1]
+
+if (!runTimeEnum) {
+  fail(
+    'settings.md: RunTimeType is not found in verifyEnvVariables.ts - the enum ' +
+      'moved, update check E in scripts/check-server-docs.mjs'
+  )
+} else {
+  // The bullet list under "Supported runtimes", not the prose: a runtime
+  // mentioned in a paragraph somewhere is not a runtime a reader can find.
+  const listed = new Set(
+    [...sectionOf('RUN_TIMES').matchAll(/^\* `([^`]+)`/gm)].map((match) => match[1])
+  )
+
+  for (const [, name] of runTimeEnum.matchAll(/=\s*'([^']+)'/g)) {
+    if (!listed.has(name)) {
+      fail(
+        `settings.md: the RUN_TIMES list does not name the \`${name}\` runtime the ` +
+          `server at ${serverLabel} supports. Add it as a bullet under "Supported runtimes".`
+      )
+    }
+  }
+}
 
 // ------------------------------------------------------------------- the result
 

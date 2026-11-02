@@ -535,9 +535,12 @@ Given a `RUNTIME=js,sas,py`:
 Supported runtimes:
 
 * `js` - JavaScript
-* `sas` - SAS
+* `sas` - SAS, using a local SAS binary (or SAS 9)
+* `sasviya` - SAS, submitted to a compute session on a Viya server
 * `py` - Python
 * `r` - R
+
+`sasviya` runs a program stored with the `.sasviya` extension; a `.sas` file always uses the local `sas` runtime. It needs [`VIYA_URL`](/settings/#viya_url), [`VIYA_USER`](/settings/#viya_user) and [`VIYA_PASSWORD`](/settings/#viya_password), and the server refuses to start without them when the runtime is listed. See [the FAQ](/faq/#will-this-work-on-sas-viya) for what differs on Viya.
 
 Default: `sas,js,py`
 
@@ -551,7 +554,6 @@ The full path to the SAS executable (sas.exe / sas.sh).  It is highly recommende
 
 * SASjs Adapter compatibility
 * Broad language support
-* Viya compatibility
 
 To force UTF-8 encoding, update the appropriate `sasv9.cfg` file with the following option:
 
@@ -578,6 +580,44 @@ Example:
 
 `SASJS_ROOT=./sasjs_root`
 
+
+### VIYA_CONTEXT
+
+The compute context a [`sasviya`](/settings/#run_times) program runs in. Optional.
+
+Default: `Compute Reusable`
+
+Example:
+
+`VIYA_CONTEXT=Compute Reusable`
+
+### VIYA_PASSWORD
+
+The password for [`VIYA_USER`](/settings/#viya_user). Required when `sasviya` is listed in [`RUN_TIMES`](/settings/#run_times), and checked at startup: the server refuses to start without it rather than failing every request.
+
+It is exchanged for an access token with an OAuth2 password grant, so the account must be able to authenticate that way - a Viya deployment where the password grant is disabled for `sas.cli` will fail at the first run.
+
+Example:
+
+`VIYA_PASSWORD=...`
+
+### VIYA_URL
+
+The base URL of the Viya environment, for example `https://sas.example.com`. Required when `sasviya` is listed in [`RUN_TIMES`](/settings/#run_times). It must be an absolute http(s) URL - the server refuses to start otherwise.
+
+Example:
+
+`VIYA_URL=https://sas.example.com`
+
+### VIYA_USER
+
+The service account every [`sasviya`](/settings/#run_times) run executes as. Required when the runtime is listed in `RUN_TIMES`, and checked at startup.
+
+There is one account for the whole server in this release, so write access to SASjs Drive is the Viya privilege boundary: whoever can upload a program to Drive can run it with this account's authority on Viya.
+
+Example:
+
+`VIYA_USER=sasjs-service`
 
 
 ### WHITELIST
