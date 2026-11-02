@@ -1,3 +1,6 @@
 site
 .DS_Store
 node_modules/
+.venv
+.lighthouseci
+lighthouse-reports

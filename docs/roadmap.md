@@ -1,3 +1,9 @@
+<!-- server-docs-unlisted: planning notes from 2022, kept for reference.
+     Not in the nav: the authentication options it speculates about now exist,
+     and docs/auth.md documents what the server does. -->
+
+<!-- server-docs-ignore: /SASjsApi/auth/viyaclientid -->
+
 # Roadmap
 
 
@@ -33,7 +39,7 @@ Behind the scenes, the following flow will occur:
 
 The following diagram illustrates:
 
-![viya flow](draw.io/viyaflow.svg)
+![The proposed Viya authentication flow](draw.io/viyaflow.svg){ width="482" height="294" loading="lazy" decoding="async" }
 
 ## Auth0
 

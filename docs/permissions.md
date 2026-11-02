@@ -17,7 +17,8 @@ The hierarchy of rules is as follows:
 * Apply user grants
 * Apply user deny
 
-![](./img/uri-access.png)
+![Granting a user access to a URI on the permissions screen](/img/uri-access.png){ width="1928" height="1424" loading="lazy" decoding="async" }
+
 ## URI Access
 
 URI rules can be applied to the following endpoints:

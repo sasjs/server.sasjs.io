@@ -15,7 +15,7 @@ All settings in SASjs server are made by means of environment variables.  These 
 
 The usual / preferred method is to provide the variables in the `.env` file (which works on both Windows & Linux) as follows:
 
-![](img/env.png)
+![The .env file, beside the server executable, holding the settings](/img/env.png){ width="880" height="290" loading="lazy" decoding="async" }
 
 In a server environment, it is highly recommended to protect this file with appropriate permissions (eg, to prevent changes being made by the shared identity under which the server is launched) 
 
@@ -312,7 +312,7 @@ Location in which to write server logs (one file per day).  If not provided, log
 
 Example: `LOG_LOCATION=./sasjs_root/logs`
 
-![](img/log_location.png)
+![The Studio log tab, showing where a session log is written](/img/log_location.png){ width="1594" height="378" loading="lazy" decoding="async" }
 
 ### LOGIN_LOCKOUT_MINUTES
 
@@ -545,11 +545,6 @@ Example:
 
 `RUN_TIMES=js,sas,py`
 
-### SAS_OPTIONS
-
-Windows only. See: [https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostwin/p0drw76qo0gig2n1kcoliekh605k.htm#p09y7hx0grw1gin1giuvrjyx61m6](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostwin/p0drw76qo0gig2n1kcoliekh605k.htm#p09y7hx0grw1gin1giuvrjyx61m6)
-
-Example:  `SAS_OPTIONS= -NOXCMD`
 
 ### SAS_PATH
 The full path to the SAS executable (sas.exe / sas.sh).  It is highly recommended to provide an instance with UTF-8 encoding, for the following reasons:
@@ -582,12 +577,6 @@ If omitted, this will be the SASjs Server installation directory.  The location 
 Example:
 
 `SASJS_ROOT=./sasjs_root`
-
-
-### SASV9_OPTIONS
-Unix only.  See: [https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostunx/p0wrdmqp8k0oyyn1xbx3bp3qy2wl.htm](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/hostunx/p0wrdmqp8k0oyyn1xbx3bp3qy2wl.htm)
-
-Example: `SASV9_OPTIONS= -NOXCMD`
 
 
 

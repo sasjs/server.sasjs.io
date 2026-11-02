@@ -99,7 +99,7 @@ digraph G {
 
 -->
 
-![session diagram](/img/sessiondiagram.png)
+![The session lifecycle: a session is created, becomes ready, runs the program, and is deleted once its output has been returned](/img/sessiondiagram.webp){ width="1000" height="1237" loading="lazy" decoding="async" }
 
 
 ## JS Runtime

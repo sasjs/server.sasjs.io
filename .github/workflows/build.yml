@@ -1,0 +1,81 @@
+name: Build docs
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build the site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install the docs toolchain
+        run: pip install -r requirements.txt
+
+      - name: Build the site
+        # Same command as the deploy, so a pull request cannot be green and the
+        # push to main fail. --strict fails on a broken page link or anchor.
+        run: mkdocs build --strict
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Check the docs against the server
+        # Every page is in the nav, every endpoint a page names is registered,
+        # every documented setting is read, and the rendered API specification
+        # is the one the release ships. The server ref is pinned so this job is
+        # about the pull request; the weekly docs-drift workflow runs the same
+        # check against main.
+        run: node scripts/check-server-docs.mjs --server-ref v3.9.0
+
+      - name: Serve the built site
+        # Lighthouse needs HTTP, and the scores depend on the response headers a
+        # real host sends, so serve with compression rather than reading files.
+        run: |
+          nohup npx --yes serve@14.2.4 -l 8787 --no-clipboard site > /tmp/serve.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -sf -o /dev/null http://localhost:8787/; then echo "site is up"; exit 0; fi
+            sleep 1
+          done
+          echo "the static server did not start"; cat /tmp/serve.log; exit 1
+
+      - name: Lighthouse
+        # Scores the pages a reader lands on, and fails the pull request if any
+        # of them drops: performance 85, accessibility 100, best practices and
+        # SEO 95. Performance sits below the 90 the CLI docs use because
+        # /storedprograms/ is the longest page on the site and spends ~260ms of
+        # main-thread time on Material's bundle; the other pages score 0.94 to
+        # 0.99, so 85% is a floor that still catches a real regression (a 3.3MB
+        # diagram scored /sessions/ 0.80 before it was resized). The
+        # per-audit assertions beside those catch the specific regressions this
+        # site has had (an unlabelled dialog, unsized images, "here" links) with
+        # a message that says what to fix.
+        run: npx --yes @lhci/cli@0.14.0 autorun --config=lighthouserc.json
+
+      - name: Upload the Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: lighthouse-reports
+          retention-days: 14
