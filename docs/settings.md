@@ -80,13 +80,13 @@ For API use by different servers / domains, see [CORS](/settings/#cors) and [WHI
 
 ### CERT_CHAIN
 
-Necessary when `PROTOCOL=https`
+Necessary when `HTTPS_PORT` is set.
 
 Example: `CERT_CHAIN=localhost.crt`
 
 See also:
 
-* [`PROTOCOL`](/settings/#protocol)
+* [`HTTPS_PORT`](/settings/#https_port)
 * [`CA_ROOT`](/settings/#ca_root)
 * [`PRIVATE_KEY`](/settings/#private_key)
 
@@ -96,15 +96,15 @@ Developer notes: processed internally as [`cert:` option](https://nodejs.org/api
 
 ### CA_ROOT
 
-Necessary when `PROTOCOL=https` AND the server uses a self-signed certificate.
+Necessary when `HTTPS_PORT` is set AND the server uses a self-signed certificate.
 
 Example: `CA_ROOT=fullchain.pem`
 
 See also:
 
-* [`PROTOCOL`](/settings/#protocol)
-* [`CA_ROOT`](/settings/#ca_root)
+* [`HTTPS_PORT`](/settings/#https_port)
 * [`PRIVATE_KEY`](/settings/#private_key)
+* [`CERT_CHAIN`](/settings/#cert_chain)
 
 Developer notes: processed internally as [`ca:` option](https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions) which has this description:
 
@@ -198,6 +198,53 @@ Loosened config for an app that requires inline scripts:
 ```
 
 Example: `HELMET_CSP_CONFIG_PATH=./csp.config.json`
+
+### HTTP_ALLOW_REMOTE
+
+Required to bind the plain HTTP listener to an address that is not loopback. Plain HTTP sends credentials in clear text, so a non-loopback [`HTTP_BIND_ADDRESS`](/settings/#http_bind_address) is refused unless this is `true`.
+
+Options: [true|false]
+
+Default: unset (refused)
+
+```
+HTTP_BIND_ADDRESS=0.0.0.0
+HTTP_ALLOW_REMOTE=true
+```
+
+### HTTP_BIND_ADDRESS
+
+The interface the plain HTTP listener binds to.
+
+Default: `127.0.0.1`
+
+See also: [`HTTP_ALLOW_REMOTE`](/settings/#http_allow_remote)
+
+### HTTP_PORT
+
+Port for the plain HTTP listener. Setting it enables the listener; unset, empty and `0` all leave it disabled. `HTTP_PORT` and `HTTPS_PORT` may be used alone or together, and at least one must be set or the server refuses to start. The two must also differ - two listeners cannot share a port.
+
+Default: unset (listener disabled)
+
+Binding to a port below 1024 needs privileges, so grant the capability to the executable rather than running SASjs Server under a privileged account: `setcap 'cap_net_bind_service=+ep' /home/sasjssrv/api-linux`. Run it again after replacing the executable.
+
+See also: [`HTTPS_PORT`](/settings/#https_port), [`HTTP_BIND_ADDRESS`](/settings/#http_bind_address)
+
+### HTTPS_BIND_ADDRESS
+
+The interface the TLS listener binds to. Unset, the listener binds every interface.
+
+See also: [`HTTPS_PORT`](/settings/#https_port)
+
+### HTTPS_PORT
+
+Port for the TLS listener. Setting it enables the listener; unset, empty and `0` all leave it disabled, the same rule as `HTTP_PORT`. It requires [`CERT_CHAIN`](/settings/#cert_chain) and [`PRIVATE_KEY`](/settings/#private_key).
+
+Binding this listener to a port below 1024 needs the same capability the [`HTTP_PORT`](/settings/#http_port) note describes, and TLS on 443 is the common case for it - grant the capability to the executable rather than running the server as root.
+
+Default: unset (listener disabled)
+
+See also: [`HTTP_PORT`](/settings/#http_port), [`HTTPS_BIND_ADDRESS`](/settings/#https_bind_address)
 
 ### LDAP_URL
 
@@ -405,21 +452,18 @@ OIDC_POST_LOGOUT_REDIRECT_URI=https://sas.example.com/
 ```
 
 ### PORT
-The port on which to serve.  Default: 5000
 
-Binding processes to ports in the lower ranges (eg 80, 443) requires elevated privileges.  To avoid running SASjs Server under a privileged account, you can bind the port to an executable - eg:  `setcap 'cap_net_bind_service=+ep' /home/sasjssrv/api-linux`
-
-If the executable is updated (eg downloading a new version) you will need to run this command again.
+Deprecated - use [`HTTP_PORT`](/settings/#http_port) or [`HTTPS_PORT`](/settings/#https_port). For one release `PORT` and `PROTOCOL` are translated into the matching port variable, with a warning, and are removed after that. An environment that sets `HTTP_PORT` or `HTTPS_PORT` ignores both, and the warning says so.
 
 ### PRIVATE_KEY
 
-Necessary when `PROTOCOL=https`
+Necessary when `HTTPS_PORT` is set.
 
 Example: `PRIVATE_KEY=localhost.key`
 
 See also:
 
-* [`PROTOCOL`](/settings/#protocol)
+* [`HTTPS_PORT`](/settings/#https_port)
 * [`CA_ROOT`](/settings/#ca_root)
 * [`CERT_CHAIN`](/settings/#cert_chain)
 
@@ -429,7 +473,9 @@ Developer notes: processed internally as [`key:` option](https://nodejs.org/api/
 
 ### PROTOCOL
 
-Whether to use `http` or `https` protocol. Default: `http`.  If using https (strongly recommended), the following items should also be configured:
+Deprecated - the listeners a deployment serves are stated by [`HTTP_PORT`](/settings/#http_port) and [`HTTPS_PORT`](/settings/#https_port), each of which enables its own listener. For one release `PROTOCOL` and `PORT` are translated into the matching port variable, with a warning, and are removed after that.
+
+If using https (strongly recommended), the following items should also be configured:
 
 * [`ALLOWED_DOMAIN`](/settings/#allowed_domain)
 * [`CA_ROOT`](/settings/#ca_root)
@@ -460,6 +506,20 @@ Example: `R_PATH=/usr/bin/Rscript`
 * [`RUN_TIMES`](/settings/#run_times)
 * [`SAS_PATH`](/settings/#sas_path)
 
+
+### RUN_AS
+
+The account the server must run as.
+
+Unset, the server refuses to start as root. Set to a username, the server refuses to start as any other account, so the value asserts where it runs rather than suggesting it. `RUN_AS=root` is the deliberate override.
+
+The server executes uploaded code by design, so the identity it runs under is the privilege every connected user gets - and in desktop mode there is no authentication at all. Start it under the account that should own the SAS sessions, rather than with `sudo`.
+
+The check runs at startup, before any listener binds and before the working directory and `sasjs_root` are set up, so a refused start leaves nothing behind.
+
+Default: unset (root refused)
+
+See also: [Deployment](/deployment/)
 
 ### RUN_TIMES
 A comma separated string that defines the available runtimes.

@@ -11,6 +11,7 @@ nav:
       - Sessions: sessions.md
       - Stored Programs: storedprograms.md
   - Admin Guide:
+      - Deployment: deployment.md
       - Authentication: auth.md
       - Authorisation: permissions.md
       - Settings: settings.md
