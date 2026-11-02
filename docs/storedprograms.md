@@ -135,19 +135,28 @@ const _METAPERSON = _SASJS_DISPLAYNAME;
 const _METAUSER = _SASJS_USERNAME;
 const SASJSPROCESSMODE = 'Stored Program';
 
-const _sasjs_webout = require('./sasjs-webout.js')({
-  weboutPath: weboutPath,
-  headersPath: _SASJS_WEBOUT_HEADERS,
+const _sasjs_webout_config = {
+  weboutPath: '/home/sasjssrv/sasjs_root/sessions/.../webout.txt',
+  headersPath: '/home/sasjssrv/sasjs_root/sessions/.../stpsrv_header.txt',
   program: '/Public/app/myprogram',
   debug: '',
-  username: _SASJS_USERNAME,
-  userId: _SASJS_USERID,
-  apiServerUrl: _SASJS_APISERVERURL
-});
+  username: 'allan',
+  userId: '6',
+  apiServerUrl: 'http://127.0.0.1:5000'
+};
+
+/* about 200 lines defining webout() - see "Output" below */
+...
 globalThis.webout = _sasjs_webout;
 ```
 
 `fs` and `webout` are published as globals, so a program that declares its own `fs` or `webout` shadows it without clashing with the runtime's. The runtime keeps its own reference under the reserved `_sasjs_webout` name, which is also what writes `_webout` when the program assigns that variable instead of calling `webout()`.
+
+`webout()` itself is generated into that preamble rather than imported, from the single copy of the block in [`@sasjs/utils`](https://github.com/sasjs/utils): a server and a `sasjs mock` build emit the same text, so a program behaves the same in both, and the session log shows exactly what ran. The block resolves its own `fs` (and `os`, when the host has one), and the program ends by handing `_webout` to it:
+
+```js
+_sasjs_webout.finalise(_webout)
+```
 
 
 ### Input Files
@@ -218,28 +227,29 @@ The actions are case-insensitive, the member name is the key the frontend reads 
 | `_PROGRAM` | the `_program` value |
 | `AUTOEXEC` | empty - JS has no autoexec |
 | `MF_GETUSER` | `_SASJS_USERNAME` |
-| `SYSCC` | `0` - a program that reaches `CLOSE` has not failed |
+| `SYSCC` | `0`, or `8` when the program logged an error - see the console mapping below |
 | `SYSENCODING` | `utf-8` |
-| `SYSERRORTEXT` | empty |
-| `SYSHOSTINFOLONG` | kernel type, release and architecture of the host |
-| `SYSHOSTNAME` | host name |
+| `SYSERRORTEXT` | the last message the program sent to `console.error` |
+| `SYSHOSTINFOLONG` | kernel type, release and architecture of the host (browser user agent in a mock build) |
+| `SYSHOSTNAME` | host name (`location.hostname` in a mock build) |
 | `SYSPROCESSID`, `SYSJOBID` | the interpreter's process id |
 | `SYSPROCESSMODE` | `Stored Program` |
-| `SYSPROCESSNAME` | `NodeJS` |
-| `SYSSCPL` | the platform, eg `linux` |
+| `SYSPROCESSNAME` | `NodeJS`, or `Browser` in a mock build |
+| `SYSSCPL` | the platform, eg `linux`, or `browser` in a mock build |
 | `SYSSITE` | empty |
 | `SYSTCPIPHOSTNAME` | `_SASJS_APISERVERURL` - the address the program is running on |
 | `SYSUSERID` | `_SASJS_USERID` |
-| `SYSVLONG` | the Node version |
-| `SYSWARNINGTEXT` | empty |
+| `SYSVLONG` | the Node version, or `browser` in a mock build |
+| `SYSWARNINGTEXT` | the last message the program sent to `console.warn` |
 | `END_DTTM` | ISO 8601 timestamp of the `CLOSE` |
 | `MEMSIZE` | total memory of the host, in the `SIZEKMG` form (eg `15.6G`) |
 
 Three behaviours worth knowing:
 
 - **`CLOSE` is the program's job.** The server does not close the object for you, exactly as it does not for a SAS program that omits `%ms_webout(CLOSE)`. A program that stops after `OPEN` returns the truncated body it wrote, which is not valid JSON; the log carries a NOTE naming the missing call. A program that throws after `OPEN` behaves the way any runtime does on a failed run: the response carries the partial body, then the log separator and the program's log.
+- **`SYSERRORTEXT` and `SYSWARNINGTEXT` come from the console.** SAS fills them from the last error and warning the engine recorded; a JS program has no engine, so the equivalent is the last message it sent to `console.error` / `console.warn`. Both calls are still forwarded to the console unchanged, so the session log looks exactly as it did, and `SYSCC` becomes `8` when an error was logged. Only the last message of each is kept, and only its final 2000 characters.
 - **Do not mix `webout()` with `_webout`.** When `webout()` has streamed the body, an assignment to `_webout` is ignored and the log says so.
-- **A table before `OPEN`, a second `OPEN`, a table after `CLOSE`, an unknown action, or rows of the wrong shape throws**, so the failure lands in the session log rather than in a malformed response.
+- **A table before `OPEN`, a second `OPEN`, a table after `CLOSE`, an unknown action, or rows of the wrong shape throws**, so the failure lands in the session log rather than in a malformed response. In a mock build the host facts come from the browser and there is no `os` module; the block asks for one and falls back when it is refused.
 
 #### `_SASJS_WEBOUT_HEADERS`
 
