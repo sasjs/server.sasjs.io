@@ -238,7 +238,7 @@ Three behaviours worth knowing:
 
 - **`CLOSE` is the program's job.** The server does not close the object for you, exactly as it does not for a SAS program that omits `%ms_webout(CLOSE)`. A program that stops after `OPEN` returns the truncated body it wrote, which is not valid JSON; the log carries a NOTE naming the missing call.
 - **Do not mix `webout()` with `_webout`.** When `webout()` has streamed the body, an assignment to `_webout` is ignored and the log says so.
-- **A table before `OPEN`, an unknown action, or rows of the wrong shape throws**, so the failure lands in the session log rather than in a malformed response.
+- **A table before `OPEN`, a second `OPEN`, a table after `CLOSE`, an unknown action, or rows of the wrong shape throws**, so the failure lands in the session log rather than in a malformed response.
 
 #### `_SASJS_WEBOUT_HEADERS`
 
