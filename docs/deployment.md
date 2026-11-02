@@ -8,7 +8,7 @@ SASjs Server runs in the foreground: it starts, binds its listeners and stays up
 |---|---|---|---|---|
 | systemd | yes | yes | yes | Linux |
 | launchd | yes | yes | yes | macOS |
-| Task Scheduler | yes | yes | yes | Windows |
+| Task Scheduler | yes | yes, once configured | at logon | Windows |
 | WinSW, NSSM | yes | yes | yes | Windows |
 | pm2 | yes | yes | yes | Linux, macOS; Windows via pm2-installer |
 | `nohup` | yes | no | no | Linux, macOS |
@@ -170,9 +170,16 @@ The first three are configuration, and the log names the setting. The last one i
 - SIGTERM and SIGINT drain in-flight HTTP requests for up to five seconds before the sockets are closed. A SAS process that is already running is a child of the server and is killed with it, so its log stops mid-program and the client sees the connection reset.
 - `.env` and the rest of the configuration are read at boot, so an edit takes effect on the next restart.
 
-For work that runs longer than a request, submit a triggered program and poll it, so that the client is not holding a request open when the server restarts:
+For work that runs longer than a request, submit a triggered program and poll it, so that the client is not holding a request open when the server restarts. Both routes require a bearer token outside desktop mode, which has no authentication at all:
 
 ```bash
-curl -X POST "http://localhost:5000/SASjsApi/stp/trigger?_program=/Public/app/run.sas"
-curl "http://localhost:5000/SASjsApi/session/$SESSION_ID/state"
+# 1. Submit the program - the response carries the session id
+SESSION_ID=$(curl -fsS -X POST \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  "http://localhost:5000/SASjsApi/stp/trigger?_program=/Public/app/run.sas" \
+  | python3 -c "import json,sys; print(json.load(sys.stdin)['sessionId'])")
+
+# 2. Poll that id until the program finishes
+curl -fsS -H "Authorization: Bearer $ACCESS_TOKEN" \
+  "http://localhost:5000/SASjsApi/session/$SESSION_ID/state"
 ```

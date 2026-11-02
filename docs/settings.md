@@ -222,7 +222,7 @@ See also: [`HTTP_ALLOW_REMOTE`](/settings/#http_allow_remote)
 
 ### HTTP_PORT
 
-Port for the plain HTTP listener. Setting it enables the listener; unset, empty and `0` all leave it disabled. `HTTP_PORT` and `HTTPS_PORT` may be used alone or together, and at least one must be set or the server refuses to start.
+Port for the plain HTTP listener. Setting it enables the listener; unset, empty and `0` all leave it disabled. `HTTP_PORT` and `HTTPS_PORT` may be used alone or together, and at least one must be set or the server refuses to start. The two must also differ - two listeners cannot share a port.
 
 Default: unset (listener disabled)
 
