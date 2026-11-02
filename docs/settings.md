@@ -103,8 +103,8 @@ Example: `CA_ROOT=fullchain.pem`
 See also:
 
 * [`HTTPS_PORT`](/settings/#https_port)
-* [`CA_ROOT`](/settings/#ca_root)
 * [`PRIVATE_KEY`](/settings/#private_key)
+* [`CERT_CHAIN`](/settings/#cert_chain)
 
 Developer notes: processed internally as [`ca:` option](https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions) which has this description:
 
@@ -239,6 +239,8 @@ See also: [`HTTPS_PORT`](/settings/#https_port)
 ### HTTPS_PORT
 
 Port for the TLS listener. Setting it enables the listener; unset, empty and `0` all leave it disabled, the same rule as `HTTP_PORT`. It requires [`CERT_CHAIN`](/settings/#cert_chain) and [`PRIVATE_KEY`](/settings/#private_key).
+
+Binding this listener to a port below 1024 needs the same capability the [`HTTP_PORT`](/settings/#http_port) note describes, and TLS on 443 is the common case for it - grant the capability to the executable rather than running the server as root.
 
 Default: unset (listener disabled)
 
@@ -512,6 +514,8 @@ The account the server must run as.
 Unset, the server refuses to start as root. Set to a username, the server refuses to start as any other account, so the value asserts where it runs rather than suggesting it. `RUN_AS=root` is the deliberate override.
 
 The server executes uploaded code by design, so the identity it runs under is the privilege every connected user gets - and in desktop mode there is no authentication at all. Start it under the account that should own the SAS sessions, rather than with `sudo`.
+
+The check runs at startup, before any listener binds and before the working directory and `sasjs_root` are set up, so a refused start leaves nothing behind.
 
 Default: unset (root refused)
 

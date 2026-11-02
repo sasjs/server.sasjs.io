@@ -59,10 +59,12 @@ MODE=server
 DB_CONNECT=mongodb+srv://admin:***@cluster.mongodb.net/mydb?retryWrites=true&w=majority
 # A plain HTTP listener, and a TLS listener beside it
 HTTP_PORT=5000
-HTTPS_PORT=443
+HTTPS_PORT=8443
 CERT_CHAIN=/opt/certificates/fullchain.pem
 PRIVATE_KEY=/opt/certificates/privkey.pem
 ```
+
+Ports below 1024 need the capability described under [`HTTP_PORT`](/settings/#http_port), which is why the sample uses 8443 for TLS; a deployment on 443 grants that capability to the executable instead.
 
 Plain HTTP binds the loopback interface unless `HTTP_BIND_ADDRESS` names another one, and a non-loopback address is refused unless `HTTP_ALLOW_REMOTE=true` is set, because plain HTTP sends credentials in clear text.
 
