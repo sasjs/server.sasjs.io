@@ -188,4 +188,11 @@ SESSION_ID=$(curl -fsS -X POST \
 # 2. Poll that id until the program finishes
 curl -fsS -H "Authorization: Bearer $ACCESS_TOKEN" \
   "http://localhost:5000/SASjsApi/session/$SESSION_ID/state"
+# -> {"state":"completed"}
+
+# 3. Read what it produced, while the session is still alive
+curl -fsS -H "Authorization: Bearer ***" \
+  "http://localhost:5000/SASjsApi/session/$SESSION_ID/log"
 ```
+
+The state is an object, and the log and the output exist only for as long as the session does: see [Sessions](/sessions) for the endpoints, the ownership rule and the retention window.
