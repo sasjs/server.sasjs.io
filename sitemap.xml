@@ -5,6 +5,10 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://server.sasjs.io/api/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://server.sasjs.io/apps/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
@@ -26,10 +30,6 @@
     </url>
     <url>
          <loc>https://server.sasjs.io/permissions/</loc>
-         <lastmod>2026-11-02</lastmod>
-    </url>
-    <url>
-         <loc>https://server.sasjs.io/roadmap/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
