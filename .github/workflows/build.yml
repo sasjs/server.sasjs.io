@@ -48,6 +48,15 @@ jobs:
         # check against main.
         run: node scripts/check-server-docs.mjs --server-ref v3.9.0
 
+      - name: Check the site is self-contained
+        # No page fetches anything from another origin - no fonts, no CDN, no
+        # tracker. The docs are read offline and on air-gapped SAS hosts, and a
+        # third-party request breaks that quietly: it stalls the page until it
+        # times out and tells the third party who is reading. Fails on an
+        # external subresource, a stylesheet url() or @import, or an inline
+        # script that creates an element to load something.
+        run: node scripts/check-external-calls.mjs
+
       - name: Serve the built site
         # Lighthouse needs HTTP, and the scores depend on the response headers a
         # real host sends, so serve with compression rather than reading files.
