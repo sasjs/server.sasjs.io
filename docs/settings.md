@@ -238,7 +238,7 @@ See also: [`HTTPS_PORT`](/settings/#https_port)
 
 ### HTTPS_PORT
 
-Port for the TLS listener. Setting it enables the listener, and requires [`CERT_CHAIN`](/settings/#cert_chain) and [`PRIVATE_KEY`](/settings/#private_key).
+Port for the TLS listener. Setting it enables the listener; unset, empty and `0` all leave it disabled, the same rule as `HTTP_PORT`. It requires [`CERT_CHAIN`](/settings/#cert_chain) and [`PRIVATE_KEY`](/settings/#private_key).
 
 Default: unset (listener disabled)
 

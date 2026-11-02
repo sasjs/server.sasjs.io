@@ -7,7 +7,7 @@ SASjs Server runs in the foreground: it starts, binds its listeners and stays up
 | Method | Survives closing the terminal | Restarts after a crash | Starts at boot | Platforms |
 |---|---|---|---|---|
 | systemd | yes | yes | yes | Linux |
-| launchd | yes | yes | yes | macOS |
+| launchd | yes | yes | at login | macOS |
 | Task Scheduler | yes | yes, once configured | at logon | Windows |
 | WinSW, NSSM | yes | yes | yes | Windows |
 | pm2 | yes | yes | yes | Linux, macOS; Windows via pm2-installer |
@@ -48,9 +48,11 @@ RestartSec=5
 WantedBy=multi-user.target
 ```
 
-Then enable it and follow its log:
+Then enable it and follow its log. The account and the directory must exist first, or the unit fails on start:
 
 ```bash
+sudo useradd --system --home /srv/sasjs --shell /usr/sbin/nologin sasjs
+sudo install -d -o sasjs -g sasjs /srv/sasjs
 sudo systemctl daemon-reload
 sudo systemctl enable --now sasjs-server
 journalctl -u sasjs-server -f
@@ -87,8 +89,12 @@ Then load it:
 
 ```bash
 mkdir -p /Users/sasjs/server/logs
-launchctl load -w ~/Library/LaunchAgents/io.sasjs.server.plist
+launchctl bootstrap gui/$UID ~/Library/LaunchAgents/io.sasjs.server.plist
 ```
+
+`launchctl bootout gui/$UID/io.sasjs.server` removes it again; `launchctl load -w` works but is deprecated.
+
+A LaunchAgent starts when that user logs in, and runs as that user. For a start before anyone logs in, install the same plist as a LaunchDaemon in `/Library/LaunchDaemons` (root-owned, and it needs a `UserName` key), which also means the server keeps running with nobody logged in.
 
 ## Windows: Task Scheduler
 
