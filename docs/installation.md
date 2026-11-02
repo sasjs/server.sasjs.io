@@ -66,7 +66,12 @@ PRIVATE_KEY=/opt/certificates/privkey.pem
 
 Plain HTTP binds the loopback interface unless `HTTP_BIND_ADDRESS` names another one, and a non-loopback address is refused unless `HTTP_ALLOW_REMOTE=true` is set, because plain HTTP sends credentials in clear text.
 
-Upgrading from a release configured with `PROTOCOL`: an install that ran with `PROTOCOL=http` and no `HTTP_BIND_ADDRESS` accepted connections on every interface. It now listens on `127.0.0.1` only, so a remote client gets connection refused until `HTTP_BIND_ADDRESS` names the interface you serve on and `HTTP_ALLOW_REMOTE=true` is set.
+Upgrading from a release that used the old listener settings takes one of two forms:
+
+- An install that set neither `PROTOCOL` nor `PORT` relied on the old default of plain HTTP on port 5000. It now enables no listener, so the server refuses to start and names both variables. Set `HTTP_PORT=5000` before upgrading, or `HTTPS_PORT` with the certificate settings.
+- An install that ran with `PROTOCOL=http` and no `HTTP_BIND_ADDRESS` accepted connections on every interface. It now listens on `127.0.0.1` only, so a remote client gets connection refused until `HTTP_BIND_ADDRESS` names the interface you serve on and `HTTP_ALLOW_REMOTE=true` is set.
+
+A `PORT` that is still in the file is translated into the matching listener for one release, with a warning, so an install that sets `PORT` alone keeps serving.
 
 Then launch the executable (eg `./api-linux`, or double click `api-win.exe`). The startup log states each listener as it binds - for example `http on 127.0.0.1:5000` - and that address is the one to open.
 

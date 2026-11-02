@@ -10,7 +10,7 @@ SASjs Server runs in the foreground: it starts, binds its listeners and stays up
 | launchd | yes | yes | yes | macOS |
 | Task Scheduler | yes | yes | yes | Windows |
 | WinSW, NSSM | yes | yes | yes | Windows |
-| pm2 | yes | yes | Linux and macOS; Windows needs pm2-installer | all |
+| pm2 | yes | yes | yes | Linux, macOS; Windows via pm2-installer |
 | `nohup` | yes | no | no | Linux, macOS |
 | foreground, `npx` | no | no | no | all |
 
