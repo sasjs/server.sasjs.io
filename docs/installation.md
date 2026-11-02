@@ -7,7 +7,7 @@ process running on its own: see [Deployment](/deployment/) for the ways to do th
 ## npm
 
 ```bash
-npx @sasjs/server@3.7.1
+npx @sasjs/server
 ```
 
 Or install it once and run `sasjs-server` from then on:
@@ -23,7 +23,7 @@ Installing the package runs no install script, so it makes no network call of it
 own.
 
 Run it from the directory the server should own: `.env` is read from the working
-directory, and that directory also gets `./sasjs_root`. Pin the version: 3.7.1 is the current release at the time of writing, so check [the npm page](https://www.npmjs.com/package/@sasjs/server) and keep the pin at a release you have tested. An unpinned `npx @sasjs/server` re-resolves `latest` on every run, so a restart becomes a silent upgrade.
+directory, and that directory also gets `./sasjs_root`. Without a tag, `npx` takes the latest release; for a deployment, pin the version in the install command to a release you have tested - they are listed on [the npm page](https://www.npmjs.com/package/@sasjs/server) - because an untagged `npx @sasjs/server` re-resolves `latest` on every run, so a restart becomes a silent upgrade.
 
 ## Standalone executable
 

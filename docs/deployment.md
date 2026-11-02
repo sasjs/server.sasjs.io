@@ -138,9 +138,9 @@ This survives closing the terminal, and nothing else: no restart after a crash, 
 
 ## npx is a launcher, not a supervisor
 
-`npx @sasjs/server@3.7.1` fetches the package and runs it in the foreground. When the terminal closes the process goes with it. Two things to know before using it:
+`npx @sasjs/server` fetches the package and runs it in the foreground. When the terminal closes the process goes with it. Two things to know before using it:
 
-- An unpinned `npx @sasjs/server` re-resolves `latest` on every start, so a restart silently changes version. Pin it.
+- A tag decides the version. Untagged, `npx` re-resolves `latest` on every start, so a restart silently changes version; pin the release you have tested in the install command.
 - The working directory still owns `.env` and `sasjs_root`, but the package itself lives in an evictable `~/.npm/_npx/<hash>` cache, so an `.env` written next to the package would be lost.
 
 For anything that has to stay up, install globally and give `sasjs-server` to the supervisor.
