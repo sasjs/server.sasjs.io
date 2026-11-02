@@ -236,7 +236,7 @@ The actions are case-insensitive, the member name is the key the frontend reads 
 
 Three behaviours worth knowing:
 
-- **`CLOSE` is the program's job.** The server does not close the object for you, exactly as it does not for a SAS program that omits `%ms_webout(CLOSE)`. A program that stops after `OPEN` returns the truncated body it wrote, which is not valid JSON; the log carries a NOTE naming the missing call.
+- **`CLOSE` is the program's job.** The server does not close the object for you, exactly as it does not for a SAS program that omits `%ms_webout(CLOSE)`. A program that stops after `OPEN` returns the truncated body it wrote, which is not valid JSON; the log carries a NOTE naming the missing call. A program that throws after `OPEN` behaves the way any runtime does on a failed run: the response carries the partial body, then the log separator and the program's log.
 - **Do not mix `webout()` with `_webout`.** When `webout()` has streamed the body, an assignment to `_webout` is ignored and the log says so.
 - **A table before `OPEN`, a second `OPEN`, a table after `CLOSE`, an unknown action, or rows of the wrong shape throws**, so the failure lands in the session log rather than in a malformed response.
 
