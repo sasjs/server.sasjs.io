@@ -105,3 +105,27 @@ digraph G {
 ## JS Runtime
 
 JS sessions are not pre-spawned, as NodeJS is already running.  URL variables are injected into the beginning of the program as constants.
+
+## Reading a session's results
+
+A triggered program keeps running after the trigger call returns, so the results are fetched from the session rather than from a response body. Three endpoints serve them while the session is alive:
+
+| Endpoint | Returns |
+|---|---|
+| `GET /SASjsApi/session/{sessionId}/log` | the program's log, as `text/plain` |
+| `GET /SASjsApi/session/{sessionId}/output` | its `_webout`, with the content type the program set in `stpsrv_header.txt` |
+| `GET /SASjsApi/session/{sessionId}` | the session itself: state, `pid` while it runs, timestamps, `failureReason`, and the retention window |
+
+`GET /SASjsApi/session/{sessionId}/state` answers an object rather than a bare string:
+
+```json
+{ "state": "running" }
+```
+
+That is the shape a Viya caller already polls from the compute API, so a client can be written once for both. The states are `initialising`, `pending`, `running`, `completed` and `failed`.
+
+An empty log body is not the same as a missing one. Empty means the program has not written anything yet, while a `404` means the session no longer exists - which is what an expired session answers, because there is nothing left to read.
+
+Each session belongs to the user that created it, recorded when the session is made. The log, the output and the details are served to that user, or to an administrator; anyone else receives a `404`, because a session id is guessable and confirming it would confirm the guess. In desktop mode the single fixed local user owns every session.
+
+Results outlive the session for a limited time. `expiresAfterMins` on the trigger call asks to keep them that many minutes past completion; without it the folder is removed about 15 minutes after creation. A session id is therefore not a durable handle - fetch the log before the window closes, or copy it somewhere the server does not manage.
