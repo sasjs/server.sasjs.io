@@ -333,6 +333,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../testing-va-embed/">
+<span class="md-ellipsis">
+    
+  
+    Testing VA embedding
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -520,6 +532,15 @@
 <span class="md-ellipsis">
       
         DB_TYPE
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ddc_host_enabled">
+<span class="md-ellipsis">
+      
+        DDC_HOST_ENABLED
       
     </span>
 </a>
@@ -1038,6 +1059,15 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#ddc_host_enabled">
+<span class="md-ellipsis">
+      
+        DDC_HOST_ENABLED
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#drive_location">
 <span class="md-ellipsis">
       
@@ -1517,6 +1547,16 @@ See also:</p>
 <p>Specify the type of database.  When <code>DB_TYPE=cosmos_mongodb</code> the connection is made using <a href="https://www.npmjs.com/package/connect-mongo#set-the-compatibility-mode">compatibility mode</a>.</p>
 <p>Options: [mongodb|cosmos_mongodb] </p>
 <p>Default: mongodb</p>
+<h3 id="ddc_host_enabled">DDC_HOST_ENABLED<a class="headerlink" href="#ddc_host_enabled" title="Permanent link">¶</a></h3>
+<p>Serves a development page at <code>/ddc-host</code> that embeds an application the way SAS Visual Analytics embeds data-driven content: an iframe carrying VA's sandbox attribute set, and a message posted into it on a chosen timing.  Use it to check that an embedded application works inside that sandbox, which opening it as a top-level page does not exercise.  The page and its script are both served behind this setting.</p>
+<p>Options: [YES|NO]</p>
+<p>Default: NO.  The page frames whatever URL it is given, so it belongs on a development server rather than on one a browser user can reach.</p>
+<p>Example:</p>
+<p><code>DDC_HOST_ENABLED=YES</code></p>
+<p>See also:</p>
+<ul>
+<li><a href="/testing-va-embed">Testing VA embedding</a></li>
+</ul>
 <h3 id="drive_location">DRIVE_LOCATION<a class="headerlink" href="#drive_location" title="Permanent link">¶</a></h3>
 <p>This setting is useful if you are running multiple instances of SASjs Server and would like to re-use the same Drive folder, Macros, Packages, and appStream config.</p>
 <p>The DRIVE_LOCATION can be shared across instances, but the SASJS_ROOT can't - as it will cause conflicts with sessions / uploads etc.</p>
