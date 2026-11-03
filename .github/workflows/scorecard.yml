@@ -1,0 +1,73 @@
+name: Scorecard supply-chain security
+
+# OpenSSF Scorecard scores this repository's own supply-chain posture - branch
+# protection, review requirements, pinned dependencies, a security policy,
+# dangerous workflow patterns - and publishes the result so the score can be
+# read without running anything.
+#
+# It runs on every push to main, weekly in case nothing changes but a check's
+# rules do, and when a branch protection rule changes, which is the event most
+# of the repository-settings checks are about.
+#
+# The results go two places: the Security tab as SARIF, and the OpenSSF API when
+# `publish_results` is true, which is what the badge reads. Publishing needs a
+# public repository and the `id-token` permission below, because the result is
+# signed with the workflow's OIDC token so nobody can post a score for a
+# repository they do not control.
+
+on:
+  branch_protection_rule:
+  schedule:
+    - cron: "30 6 * * 1"
+  push:
+    branches:
+      - main
+
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      # Uploading the SARIF result to code scanning.
+      security-events: write
+      # Signing the published result, so the OpenSSF API accepts it.
+      id-token: write
+      # Scorecard reads the repository to score it.
+      contents: read
+      # Reading workflow runs, which the token-permissions and dangerous-workflow
+      # checks inspect.
+      actions: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # The analysis needs the files, not a credential that could push.
+          persist-credentials: false
+
+      - name: Run Scorecard
+        uses: ossf/scorecard-action@v2.5.0
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+
+      - name: Upload the result as an artifact
+        # Kept beside the code-scanning upload so a score can be read from the
+        # run itself, which is where it is looked at while tuning the repository
+        # rather than while reading an alert.
+        uses: actions/upload-artifact@v7
+        with:
+          name: scorecard-results
+          path: results.sarif
+          retention-days: 5
+
+      - name: Upload the result to code scanning
+        # An upload failure does not fail the job by default, and a score nobody
+        # can see is the failure this workflow exists to avoid.
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: results.sarif
