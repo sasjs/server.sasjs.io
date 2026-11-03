@@ -20,7 +20,7 @@ Code is saved in local storage, so you don't lose your work if you close the bro
 
 ## Saving
 
-The disk icon above the editor saves the file, as does Ctrl+S. When the editor holds changes the drive does not have yet, a blue dot sits on the disk. Saving clears it.
+The disk icon above the editor saves the file, as does Ctrl+S. When the editor holds changes the drive does not have yet, a blue dot sits on the disk. Saving clears it. While the file matches what the drive holds the disk is greyed out, so a click on it always has something to do.
 
 A JSON file that is stored on one line opens indented, so a generated config reads as a document rather than one long line. The file on the drive keeps its one-line form until it is saved, and a JSON file that already carries its own indentation opens exactly as it is stored.
 
