@@ -7,6 +7,7 @@
         "http://localhost:8787/apps/",
         "http://localhost:8787/sessions/",
         "http://localhost:8787/storedprograms/",
+        "http://localhost:8787/testing-va-embed/",
         "http://localhost:8787/settings/"
       ],
       "numberOfRuns": 3,

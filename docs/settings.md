@@ -143,6 +143,23 @@ Options: [mongodb|cosmos_mongodb]
 Default: mongodb
 
 
+### DDC_HOST_ENABLED
+
+Serves a development page at `/ddc-host` that embeds an application the way SAS Visual Analytics embeds data-driven content: an iframe carrying VA's sandbox attribute set, and a message posted into it on a chosen timing.  Use it to check that an embedded application works inside that sandbox, which opening it as a top-level page does not exercise.  The page and its script are both served behind this setting.
+
+Options: [YES|NO]
+
+Default: NO.  The page frames whatever URL it is given, so it belongs on a development server rather than on one a browser user can reach.
+
+Example:
+
+`DDC_HOST_ENABLED=YES`
+
+See also:
+
+* [Testing VA embedding](/testing-va-embed)
+
+
 ### DRIVE_LOCATION
 
 This setting is useful if you are running multiple instances of SASjs Server and would like to re-use the same Drive folder, Macros, Packages, and appStream config.

@@ -12,6 +12,7 @@ nav:
       - API: api.md
       - Sessions: sessions.md
       - Stored Programs: storedprograms.md
+      - Testing VA embedding: testing-va-embed.md
   - Admin Guide:
       - Deployment: deployment.md
       - Authentication: auth.md
