@@ -20,13 +20,13 @@ Code is saved in local storage, so you don't lose your work if you close the bro
 
 ## Saving
 
-The disk icon above the editor saves the file, as does Ctrl+S. When the editor holds changes the drive does not have yet, a blue dot sits on the disk. Saving clears it.
+The disk icon above the editor saves the file, as does Ctrl+S. When the editor holds changes the drive does not have yet, a blue dot sits on the disk. Saving clears it. While the file matches what the drive holds the disk is greyed out, so a click on it always has something to do.
 
-A JSON file that is stored on one line opens indented, so a generated config reads as a document rather than one long line. The file on the drive keeps its one-line form until it is saved, and a JSON file that already carries its own indentation opens exactly as it is stored.
+A JSON file that is minified - one line with no spaces between the tokens - opens indented, so a generated config reads as a document rather than one long line. The editor only re-indents text it can reproduce character for character, so a one-line file with its own spacing, or one that already carries indentation, opens exactly as it is stored. The file on the drive keeps its bytes either way until it is saved.
 
 ## Clipboard
 
-Pasting is a keyboard action - Ctrl+V, or Paste in the editor's own menu. A right click or a middle click does not paste, so text cannot appear in the program from a mouse gesture.
+Pasting is a keyboard action - Ctrl+V, or Paste in the editor's own menu. A paste that follows a right or middle click on the code is ignored, so text cannot appear in the program from a mouse gesture. The keyboard is never suppressed: the key press clears that guard before the paste it produces, so Ctrl+V works as usual.
 
 ## SAS specific
 
