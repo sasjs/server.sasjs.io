@@ -33,10 +33,12 @@
  *   <!-- server-docs-ignore: /SASjsApi/auth/viyaclientid -->
  *   <!-- server-docs-ignore: SAS_OPTIONS SASV9_OPTIONS -->
  *
- * The server is read from a checkout, by default a shallow clone of the release
- * tag named by --server-ref (or SERVER_DOCS_REF). Point --server-src at a local
- * checkout to check against work in progress instead:
+ * The server is read from a checkout: a shallow clone of the release tag named
+ * by --server-ref (or SERVER_DOCS_REF), which may also be `latest` - the newest
+ * published vX.Y.Z tag, resolved from the repository's tags. Point --server-src
+ * at a local checkout to check against work in progress instead:
  *
+ *   node scripts/check-server-docs.mjs --server-ref latest
  *   node scripts/check-server-docs.mjs --server-ref v3.9.0
  *   node scripts/check-server-docs.mjs --server-src ../server
  */
@@ -61,7 +63,7 @@ const readArg = (name, fallback) => {
   return index > -1 ? process.argv[index + 1] : fallback
 }
 
-const serverRef = readArg('--server-ref', process.env.SERVER_DOCS_REF || 'main')
+const requestedRef = readArg('--server-ref', process.env.SERVER_DOCS_REF || 'main')
 const docsDir = path.join(repoRoot, readArg('--docs', 'docs'))
 const navFile = path.join(repoRoot, readArg('--nav', 'mkdocs.yml'))
 const specFile = path.join(docsDir, 'swagger.yaml')
@@ -73,6 +75,55 @@ const run = (command, args, options = {}) =>
   execFileSync(command, args, { encoding: 'utf8', stdio: 'pipe', ...options })
 
 // ------------------------------------------------------------------ the server
+
+/** `latest` means the newest published release, resolved from the tags rather
+ * than from the GitHub API: `git ls-remote` needs no token, has no rate limit,
+ * and reports what a clone would find. A ref that is not `latest` is used as
+ * given, so a branch name and a tag both work. */
+const resolveLatestTag = () => {
+  const output = run('git', [
+    'ls-remote',
+    '--tags',
+    '--refs',
+    'https://github.com/sasjs/server'
+  ])
+
+  const tags = output
+    .split('\n')
+    .map((line) => line.split('refs/tags/')[1])
+    .filter(Boolean)
+    .map((tag) => ({
+      tag,
+      version: tag
+        .replace(/^v/, '')
+        .split('.')
+        .map((part) => parseInt(part, 10))
+    }))
+    .filter((entry) => entry.version.length === 3 && entry.version.every((n) => !isNaN(n)))
+
+  tags.sort(
+    (a, b) =>
+      b.version[0] - a.version[0] ||
+      b.version[1] - a.version[1] ||
+      b.version[2] - a.version[2]
+  )
+
+  return tags.length ? tags[0].tag : ''
+}
+
+const serverRef =
+  requestedRef === 'latest' ? resolveLatestTag() : requestedRef
+
+if (!serverRef) {
+  console.error(
+    'could not resolve --server-ref latest: no vX.Y.Z tags found on sasjs/server'
+  )
+  process.exit(1)
+}
+
+if (serverRef !== requestedRef) {
+  console.log(`--server-ref latest resolved to ${serverRef}`)
+}
 
 let serverRoot = readArg('--server-src', '')
 let tempServer = ''
