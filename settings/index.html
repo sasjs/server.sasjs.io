@@ -1818,6 +1818,7 @@ More details on this can be found in the Morgan documentation here:<a href="http
 </ul>
 <h3 id="sasjs_root">SASJS_ROOT<a class="headerlink" href="#sasjs_root" title="Permanent link">¶</a></h3>
 <p>If omitted, this will be the SASjs Server installation directory.  The location is used for SAS WORK, staged files, DRIVE, configuration etc</p>
+<p>A standalone executable also unpacks the assets it serves into a <code>tmp</code> subfolder here, and removes it when the process exits. A start also removes leftover folders from earlier runs once they are a day old, so a process that was killed does not leave one behind for good.</p>
 <p>Example:</p>
 <p><code>SASJS_ROOT=./sasjs_root</code></p>
 <h3 id="whitelist">WHITELIST<a class="headerlink" href="#whitelist" title="Permanent link">¶</a></h3>

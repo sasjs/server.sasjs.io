@@ -573,6 +573,7 @@ directory, and that directory also gets <code>./sasjs_root</code>. Without a tag
 <p>macOS is the same package name changed: download <code>macos.zip</code>, and the executable inside is <code>api-macos</code>.</p>
 <p>On Windows, download <code>windows.zip</code> and launch <code>api-win.exe</code>. You can ignore or cancel the popup; the app does not require administrative privileges.</p>
 <p>The executables are built for x64 only. On arm64 - Apple Silicon, Graviton, a Raspberry Pi - use the <a href="#npm">npm package</a>.</p>
+<p>The executable unpacks the assets it serves into a <code>tmp</code> folder inside <code>SASJS_ROOT</code>, and removes it when the process exits, so nothing accumulates in the service account's home directory. See <a href="/settings/#sasjs_root"><code>SASJS_ROOT</code></a> to choose the location.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
 <p>After installation, there is only one mandatory input:</p>
 <ul>
