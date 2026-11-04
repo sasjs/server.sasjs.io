@@ -591,6 +591,8 @@ See also:
 
 If omitted, this will be the SASjs Server installation directory.  The location is used for SAS WORK, staged files, DRIVE, configuration etc
 
+A standalone executable also unpacks the assets it serves into a `tmp` subfolder here, and removes it when the process exits. A start also removes leftover folders from earlier runs once they are a day old, so a process that was killed does not leave one behind for good.
+
 Example:
 
 `SASJS_ROOT=./sasjs_root`
