@@ -42,6 +42,8 @@ On Windows, download `windows.zip` and launch `api-win.exe`. You can ignore or c
 
 The executables are built for x64 only. On arm64 - Apple Silicon, Graviton, a Raspberry Pi - use the [npm package](#npm).
 
+The executable unpacks the assets it serves into a `tmp` folder inside `SASJS_ROOT`, and removes it when the process exits, so nothing accumulates in the service account's home directory. See [`SASJS_ROOT`](/settings/#sasjs_root) to choose the location.
+
 ## Configuration
 
 After installation, there is only one mandatory input:
