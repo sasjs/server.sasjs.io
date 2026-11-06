@@ -1003,7 +1003,8 @@
 <h3 id="_program"><code>_PROGRAM</code><a class="headerlink" href="#_program" title="Permanent link">¶</a></h3>
 <p>This is a required input, and will point to the Stored Program location in SASjs Drive.  The extension may be omitted, subject to the behaviour in the <a href="/settings/#run_times">RUN_TIMES</a> setting.</p>
 <h3 id="_debug"><code>_DEBUG</code><a class="headerlink" href="#_debug" title="Permanent link">¶</a></h3>
-<p>Setting this to 131 or greater will result in the log being returned.  The log will have the following UUID, which can be used as a seperator:  <code>SASJS_LOGS_SEPARATOR_163ee17b6ff24f028928972d80a26784</code></p>
+<p>Setting this to 131 or greater will result in the log being returned.  The log is framed by the following UUID:  <code>SASJS_LOGS_SEPARATOR_163ee17b6ff24f028928972d80a26784</code></p>
+<p>The log can itself contain that UUID - a program's source is echoed into its log, so the literal appears wherever <code>ms_runstp</code> or <code>ms_testservice</code> is part of the submitted code, and a service that calls another puts the nested response in it.  The framing adds exactly two occurrences, one either side of the log: <code>webout</code> is everything before the first, the log everything between the first and the last, and the print output what follows the last.  That holds while <code>webout</code> and the print output carry no occurrence of their own - neither is anything the server adds, though a program that echoes another response into <code>_webout</code> can put one there.</p>
 <p>Setting <code>_DEBUG</code> also results in the creation of a <code>Content-Type</code> header of <code>text/plain</code>.</p>
 <h2 id="sas-programs">SAS Programs<a class="headerlink" href="#sas-programs" title="Permanent link">¶</a></h2>
 <h3 id="input-variables">Input Variables<a class="headerlink" href="#input-variables" title="Permanent link">¶</a></h3>
