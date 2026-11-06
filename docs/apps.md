@@ -25,6 +25,22 @@ Alternative deployment approaches include:
 * Use the `/SASjsApi/drive/deploy/upload` API
 * Use the `/SASjsApi/drive/deploy` API
 
+### Deployment limits
+
+A deploy is measured before anything is written, and refused with `413` when the tree is over any of these:
+
+| Limit | Value |
+| --- | --- |
+| Entries | 10,000, folders included |
+| Total size | 100 MB, decoded |
+| A single file | 20 MB |
+
+The refusal names the limit and the figure it reached, for example `The file tree exceeds the deploy limit: 10001 entries (maximum 10000).` Nothing is written before the checks pass, so a refused deploy leaves the drive exactly as it was.
+
+Sizes are decoded bytes. A file member's contents travel as base64 - four characters for every three bytes - so a tree at the total limit is up to a third larger on the wire than on the drive, and the transport admits that much. `POST /SASjsApi/drive/deploy/upload` applies the same limits to the tree it unpacks from the archive, not to the archive itself.
+
+Member names are checked in the same pass: a name carrying `/`, `\` or `..` would write outside the deployment folder, so the tree is refused with `400` instead.
+
 ## Securing Apps
 
 If you are running in "Server" mode you can grant permissions at the level of User or Group to any uploaded application - just click on your username, then "Settings", then "Permissions", to create the necessary rule(s).
