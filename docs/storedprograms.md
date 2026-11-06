@@ -29,7 +29,9 @@ The following variables are "special":
 This is a required input, and will point to the Stored Program location in SASjs Drive.  The extension may be omitted, subject to the behaviour in the [RUN_TIMES](/settings/#run_times) setting.
 
 ### `_DEBUG`
-Setting this to 131 or greater will result in the log being returned.  The log will have the following UUID, which can be used as a seperator:  `SASJS_LOGS_SEPARATOR_163ee17b6ff24f028928972d80a26784`
+Setting this to 131 or greater will result in the log being returned.  The log is framed by the following UUID:  `SASJS_LOGS_SEPARATOR_163ee17b6ff24f028928972d80a26784`
+
+The log can itself contain that UUID - a program's source is echoed into its log, so the literal appears wherever `ms_runstp` or `ms_testservice` is part of the submitted code, and a service that calls another puts the nested response in it.  The framing adds exactly two occurrences, one either side of the log: `webout` is everything before the first, the log everything between the first and the last, and the print output what follows the last.  That holds while `webout` and the print output carry no occurrence of their own - neither is anything the server adds, though a program that echoes another response into `_webout` can put one there.
 
 Setting `_DEBUG` also results in the creation of a `Content-Type` header of `text/plain`.
 
