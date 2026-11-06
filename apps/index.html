@@ -291,6 +291,19 @@
       
     </span>
 </a>
+<nav aria-label="Deploying Apps" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-limits">
+<span class="md-ellipsis">
+      
+        Deployment limits
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#securing-apps">
@@ -634,6 +647,19 @@
       
     </span>
 </a>
+<nav aria-label="Deploying Apps" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-limits">
+<span class="md-ellipsis">
+      
+        Deployment limits
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#securing-apps">
@@ -788,6 +814,33 @@
 <li>Use the <code>/SASjsApi/drive/deploy/upload</code> API</li>
 <li>Use the <code>/SASjsApi/drive/deploy</code> API</li>
 </ul>
+<h3 id="deployment-limits">Deployment limits<a class="headerlink" href="#deployment-limits" title="Permanent link">¶</a></h3>
+<p>A deploy is measured before anything is written, and refused with <code>413</code> when the tree is over any of these:</p>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entries</td>
+<td>10,000, folders included</td>
+</tr>
+<tr>
+<td>Total size</td>
+<td>100 MB, decoded</td>
+</tr>
+<tr>
+<td>A single file</td>
+<td>20 MB</td>
+</tr>
+</tbody>
+</table>
+<p>The refusal names the limit and the figure it reached, for example <code>The file tree exceeds the deploy limit: 10001 entries (maximum 10000).</code> Nothing is written before the checks pass, so a refused deploy leaves the drive exactly as it was.</p>
+<p>Sizes are decoded bytes. A file member's contents travel as base64 - four characters for every three bytes - so a tree at the total limit is up to a third larger on the wire than on the drive, and the transport admits that much. <code>POST /SASjsApi/drive/deploy/upload</code> applies the same limits to the tree it unpacks from the archive, not to the archive itself.</p>
+<p>Member names are checked in the same pass: a name carrying <code>/</code>, <code>\</code> or <code>..</code> would write outside the deployment folder, so the tree is refused with <code>400</code> instead.</p>
 <h2 id="securing-apps">Securing Apps<a class="headerlink" href="#securing-apps" title="Permanent link">¶</a></h2>
 <p>If you are running in "Server" mode you can grant permissions at the level of User or Group to any uploaded application - just click on your username, then "Settings", then "Permissions", to create the necessary rule(s).</p>
 <h2 id="available-apps">Available Apps<a class="headerlink" href="#available-apps" title="Permanent link">¶</a></h2>
